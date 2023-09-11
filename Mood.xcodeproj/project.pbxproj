@@ -11,6 +11,7 @@
 		AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */; };
 		AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */; };
 		AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */; };
+		AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +53,11 @@
 		AF6BFA2B2AAFCD2C005B4DDA /* Mood */ = {
 			isa = PBXGroup;
 			children = (
-				AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */,
+				AF6BFA402AAFCDC0005B4DDA /* App */,
+				AF6BFA3F2AAFCDBC005B4DDA /* Core */,
+				AF6BFA3E2AAFCDBA005B4DDA /* Extensions */,
+				AF6BFA3B2AAFCDA3005B4DDA /* Model */,
+				AF6BFA3A2AAFCD80005B4DDA /* Services */,
 				AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */,
 				AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */,
 				AF6BFA322AAFCD30005B4DDA /* Preview Content */,
@@ -65,6 +71,83 @@
 				AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AF6BFA3A2AAFCD80005B4DDA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AF6BFA3B2AAFCDA3005B4DDA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AF6BFA3E2AAFCDBA005B4DDA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AF6BFA3F2AAFCDBC005B4DDA /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AF6BFA412AAFCE01005B4DDA /* Authentication */,
+				AF6BFA442AAFCE22005B4DDA /* Feed */,
+				AF6BFA422AAFCE10005B4DDA /* Profile */,
+				AF6BFA432AAFCE1E005B4DDA /* Root */,
+				AF6BFA452AAFCE62005B4DDA /* TabBar */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		AF6BFA402AAFCDC0005B4DDA /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		AF6BFA412AAFCE01005B4DDA /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		AF6BFA422AAFCE10005B4DDA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		AF6BFA432AAFCE1E005B4DDA /* Root */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		AF6BFA442AAFCE22005B4DDA /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		AF6BFA452AAFCE62005B4DDA /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
 				AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */,
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
 			);
