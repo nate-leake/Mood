@@ -7,20 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */; };
+		AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */; };
+		AF2A89822AB0CB5600D05234 /* ContextMoodPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextMoodPair.swift */; };
+		AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A32AB0B839004CF248 /* ProfileView.swift */; };
+		AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */; };
+		AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */; };
 		AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */; };
 		AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */; };
 		AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */; };
 		AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */; };
 		AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */; };
+		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
+		AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */ = {isa = PBXBuildFile; fileRef = AFF2F2F32AB146ED002FB6C7 /* moods.json */; };
+		AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
+		AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsGenerator.swift; sourceTree = "<group>"; };
+		AF2A89812AB0CB5600D05234 /* ContextMoodPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMoodPair.swift; sourceTree = "<group>"; };
+		AF4B33A32AB0B839004CF248 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodView.swift; sourceTree = "<group>"; };
+		AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodView.swift; sourceTree = "<group>"; };
 		AF6BFA292AAFCD2C005B4DDA /* Mood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodApp.swift; sourceTree = "<group>"; };
 		AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
+		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		AFF2F2F32AB146ED002FB6C7 /* moods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moods.json; sourceTree = "<group>"; };
+		AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +52,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF2A89802AB0CAFF00D05234 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AF2A89812AB0CB5600D05234 /* ContextMoodPair.swift */,
+				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
+				AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AF4B33A72AB0BCA4004CF248 /* YourMood */ = {
+			isa = PBXGroup;
+			children = (
+				AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */,
+			);
+			path = YourMood;
+			sourceTree = "<group>";
+		};
+		AF4B33AA2AB0C6B5004CF248 /* GlobalMood */ = {
+			isa = PBXGroup;
+			children = (
+				AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */,
+			);
+			path = GlobalMood;
+			sourceTree = "<group>";
+		};
 		AF6BFA202AAFCD2C005B4DDA = {
 			isa = PBXGroup;
 			children = (
@@ -53,6 +97,7 @@
 		AF6BFA2B2AAFCD2C005B4DDA /* Mood */ = {
 			isa = PBXGroup;
 			children = (
+				AFF2F2F22AB14681002FB6C7 /* Resources */,
 				AF6BFA402AAFCDC0005B4DDA /* App */,
 				AF6BFA3F2AAFCDBC005B4DDA /* Core */,
 				AF6BFA3E2AAFCDBA005B4DDA /* Extensions */,
@@ -76,6 +121,8 @@
 		AF6BFA3A2AAFCD80005B4DDA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */,
+				AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -97,11 +144,13 @@
 		AF6BFA3F2AAFCDBC005B4DDA /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AF2A89802AB0CAFF00D05234 /* Components */,
 				AF6BFA412AAFCE01005B4DDA /* Authentication */,
-				AF6BFA442AAFCE22005B4DDA /* Feed */,
+				AF4B33AA2AB0C6B5004CF248 /* GlobalMood */,
 				AF6BFA422AAFCE10005B4DDA /* Profile */,
 				AF6BFA432AAFCE1E005B4DDA /* Root */,
 				AF6BFA452AAFCE62005B4DDA /* TabBar */,
+				AF4B33A72AB0BCA4004CF248 /* YourMood */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -124,6 +173,7 @@
 		AF6BFA422AAFCE10005B4DDA /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				AF4B33A32AB0B839004CF248 /* ProfileView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -135,19 +185,20 @@
 			path = Root;
 			sourceTree = "<group>";
 		};
-		AF6BFA442AAFCE22005B4DDA /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Feed;
-			sourceTree = "<group>";
-		};
 		AF6BFA452AAFCE62005B4DDA /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
 				AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		AFF2F2F22AB14681002FB6C7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AFF2F2F32AB146ED002FB6C7 /* moods.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +261,7 @@
 			files = (
 				AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */,
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
+				AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,9 +272,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */,
+				AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */,
+				AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */,
+				AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */,
+				AF2A89822AB0CB5600D05234 /* ContextMoodPair.swift in Sources */,
 				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
+				AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */,
 				AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */,
+				AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */,
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
+				AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,10 @@
+{
+    "context":["family", "finances", "health", "identity", "politics", "weather", "work"],
+    "mood": {
+        "happiness":["amused", "confident", "excited", "happy", "hopeful", "peaceful", "satisfied", "wonder"],
+        "sadness":["disappointed", "hopeless", "lonely", "lost", "sad", "withdrawn"],
+        "fear":["afraid", "anxious", "nervous", "stressed", "worried"],
+        "anger":["angry", "annoyed", "frusterated", "furious"],
+        "neutral": ["calm", "indifferent", "content"]
+    }
+}

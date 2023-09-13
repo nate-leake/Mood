@@ -10,22 +10,21 @@ import SwiftUI
 struct MainTabBar: View {
     var body: some View {
         TabView{
-            Text("Moods")
+            GlobalMoodView()
                 .tabItem {
                     Image(systemName: "globe.americas")
                 }
             
-            Text("Your Health")
+            YourMoodView()
                 .tabItem {
                     Image(systemName: "brain")
                 }
             
-            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person")
                 }
         }
-        .tint(.black)
     }
 }
 
