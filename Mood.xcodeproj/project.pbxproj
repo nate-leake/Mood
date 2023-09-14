@@ -18,10 +18,21 @@
 		AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */; };
 		AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */; };
 		AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */; };
+		AF7BB2D32AB3650A0057EE18 /* MoodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7BB2D22AB3650A0057EE18 /* MoodTests.swift */; };
 		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
 		AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */ = {isa = PBXBuildFile; fileRef = AFF2F2F32AB146ED002FB6C7 /* moods.json */; };
 		AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AF7BB2D42AB3650A0057EE18 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6BFA212AAFCD2C005B4DDA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF6BFA282AAFCD2C005B4DDA;
+			remoteInfo = Mood;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
@@ -36,6 +47,8 @@
 		AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF6BFA332AAFCD30005B4DDA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
+		AF7BB2D02AB3650A0057EE18 /* MoodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF7BB2D22AB3650A0057EE18 /* MoodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTests.swift; sourceTree = "<group>"; };
 		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		AFF2F2F32AB146ED002FB6C7 /* moods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moods.json; sourceTree = "<group>"; };
 		AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
@@ -43,6 +56,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		AF6BFA262AAFCD2C005B4DDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF7BB2CD2AB3650A0057EE18 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -82,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				AF6BFA2B2AAFCD2C005B4DDA /* Mood */,
+				AF7BB2D12AB3650A0057EE18 /* MoodTests */,
 				AF6BFA2A2AAFCD2C005B4DDA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				AF6BFA292AAFCD2C005B4DDA /* Mood.app */,
+				AF7BB2D02AB3650A0057EE18 /* MoodTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,6 +215,14 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		AF7BB2D12AB3650A0057EE18 /* MoodTests */ = {
+			isa = PBXGroup;
+			children = (
+				AF7BB2D22AB3650A0057EE18 /* MoodTests.swift */,
+			);
+			path = MoodTests;
+			sourceTree = "<group>";
+		};
 		AFF2F2F22AB14681002FB6C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +251,24 @@
 			productReference = AF6BFA292AAFCD2C005B4DDA /* Mood.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AF7BB2CF2AB3650A0057EE18 /* MoodTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF7BB2D62AB3650A0057EE18 /* Build configuration list for PBXNativeTarget "MoodTests" */;
+			buildPhases = (
+				AF7BB2CC2AB3650A0057EE18 /* Sources */,
+				AF7BB2CD2AB3650A0057EE18 /* Frameworks */,
+				AF7BB2CE2AB3650A0057EE18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF7BB2D52AB3650A0057EE18 /* PBXTargetDependency */,
+			);
+			name = MoodTests;
+			productName = MoodTests;
+			productReference = AF7BB2D02AB3650A0057EE18 /* MoodTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -233,6 +281,10 @@
 				TargetAttributes = {
 					AF6BFA282AAFCD2C005B4DDA = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					AF7BB2CF2AB3650A0057EE18 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = AF6BFA282AAFCD2C005B4DDA;
 					};
 				};
 			};
@@ -250,6 +302,7 @@
 			projectRoot = "";
 			targets = (
 				AF6BFA282AAFCD2C005B4DDA /* Mood */,
+				AF7BB2CF2AB3650A0057EE18 /* MoodTests */,
 			);
 		};
 /* End PBXProject section */
@@ -262,6 +315,13 @@
 				AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */,
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
 				AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF7BB2CE2AB3650A0057EE18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +346,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF7BB2CC2AB3650A0057EE18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF7BB2D32AB3650A0057EE18 /* MoodTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AF7BB2D52AB3650A0057EE18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF6BFA282AAFCD2C005B4DDA /* Mood */;
+			targetProxy = AF7BB2D42AB3650A0057EE18 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AF6BFA352AAFCD30005B4DDA /* Debug */ = {
@@ -413,17 +489,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = mood;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -431,6 +510,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nateleake.Mood;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -442,17 +524,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = mood;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,9 +545,54 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nateleake.Mood;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AF7BB2D72AB3650A0057EE18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BK7GR7SKX2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nateleake.MoodTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mood.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mood";
+			};
+			name = Debug;
+		};
+		AF7BB2D82AB3650A0057EE18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BK7GR7SKX2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nateleake.MoodTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mood.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mood";
 			};
 			name = Release;
 		};
@@ -483,6 +613,15 @@
 			buildConfigurations = (
 				AF6BFA382AAFCD30005B4DDA /* Debug */,
 				AF6BFA392AAFCD30005B4DDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF7BB2D62AB3650A0057EE18 /* Build configuration list for PBXNativeTarget "MoodTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF7BB2D72AB3650A0057EE18 /* Debug */,
+				AF7BB2D82AB3650A0057EE18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
