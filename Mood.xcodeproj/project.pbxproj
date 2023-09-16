@@ -54,17 +54,17 @@
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsGenerator.swift; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextMoodPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMoodPair.swift; sourceTree = "<group>"; };
-		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
-		AF3008812AB4F02D0068F3B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = Mood/Extensions/LoginView.swift; sourceTree = SOURCE_ROOT; };
+		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
+		AF3008812AB4F02D0068F3B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = Mood/Core/Authentication/View/LoginView.swift; sourceTree = SOURCE_ROOT; };
 		AF4B33A32AB0B839004CF248 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodView.swift; sourceTree = "<group>"; };
 		AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodView.swift; sourceTree = "<group>"; };
-		AF5B87702AB521BB000E204F /* AddEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddEmailView.swift; path = Mood/Core/Components/AddEmailView.swift; sourceTree = SOURCE_ROOT; };
+		AF5B87702AB521BB000E204F /* AddEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddEmailView.swift; path = Mood/Core/Authentication/View/AddEmailView.swift; sourceTree = SOURCE_ROOT; };
 		AF5B87722AB525D1000E204F /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
-		AF5B87742AB5277B000E204F /* CreatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreatePasswordView.swift; path = Mood/Core/Components/CreatePasswordView.swift; sourceTree = SOURCE_ROOT; };
-		AF5B87762AB52904000E204F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignUpView.swift; path = Mood/Core/Components/SignUpView.swift; sourceTree = SOURCE_ROOT; };
-		AF5B87782AB52C59000E204F /* AddBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddBirthdayView.swift; path = Mood/Core/Components/AddBirthdayView.swift; sourceTree = SOURCE_ROOT; };
-		AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteSignUpView.swift; path = Mood/Core/Components/CompleteSignUpView.swift; sourceTree = SOURCE_ROOT; };
+		AF5B87742AB5277B000E204F /* CreatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreatePasswordView.swift; path = Mood/Core/Authentication/View/CreatePasswordView.swift; sourceTree = SOURCE_ROOT; };
+		AF5B87762AB52904000E204F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignUpView.swift; path = Mood/Core/Authentication/View/SignUpView.swift; sourceTree = SOURCE_ROOT; };
+		AF5B87782AB52C59000E204F /* AddBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddBirthdayView.swift; path = Mood/Core/Authentication/View/AddBirthdayView.swift; sourceTree = SOURCE_ROOT; };
+		AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteSignUpView.swift; path = Mood/Core/Authentication/View/CompleteSignUpView.swift; sourceTree = SOURCE_ROOT; };
 		AF6BFA292AAFCD2C005B4DDA /* Mood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodApp.swift; sourceTree = "<group>"; };
 		AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				AF8AB5AB2AB38D7500BE810A /* Service */,
-				AF8AB5AA2AB38D5A00BE810A /* View */,
+				AFDC4C412AB662A500B22C6C /* View */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -261,20 +261,6 @@
 			path = MoodTests;
 			sourceTree = "<group>";
 		};
-		AF8AB5AA2AB38D5A00BE810A /* View */ = {
-			isa = PBXGroup;
-			children = (
-				AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */,
-				AF3008812AB4F02D0068F3B0 /* LoginView.swift */,
-				AF5B87762AB52904000E204F /* SignUpView.swift */,
-				AF5B87702AB521BB000E204F /* AddEmailView.swift */,
-				AF5B87742AB5277B000E204F /* CreatePasswordView.swift */,
-				AF5B87782AB52C59000E204F /* AddBirthdayView.swift */,
-				AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		AF8AB5AB2AB38D7500BE810A /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +283,20 @@
 				AF8AB5B12AB38F0000BE810A /* ContentViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AFDC4C412AB662A500B22C6C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */,
+				AF3008812AB4F02D0068F3B0 /* LoginView.swift */,
+				AF5B87762AB52904000E204F /* SignUpView.swift */,
+				AF5B87702AB521BB000E204F /* AddEmailView.swift */,
+				AF5B87742AB5277B000E204F /* CreatePasswordView.swift */,
+				AF5B87782AB52C59000E204F /* AddBirthdayView.swift */,
+				AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		AFF2F2F22AB14681002FB6C7 /* Resources */ = {
