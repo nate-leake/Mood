@@ -47,8 +47,9 @@ struct WelcomeView: View {
                             .foregroundStyle(.white)
                         
                         HStack(spacing:20){
-                            Button{
-                                print("User has an account")
+                            NavigationLink{
+                                LoginView()
+                                    .navigationBarBackButtonHidden()
                             } label: {
                                 Text("yes")
                                     .font(.headline)
@@ -59,8 +60,9 @@ struct WelcomeView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
                             }
                             
-                            Button{
-                                print("User needs to make an account")
+                            NavigationLink{
+                                SignUpView()
+                                    .navigationBarBackButtonHidden()
                             } label: {
                                 Text("no")
                                     .font(.headline)

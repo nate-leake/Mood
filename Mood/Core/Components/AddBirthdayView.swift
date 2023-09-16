@@ -7,9 +7,63 @@
 
 import SwiftUI
 
+var globalDate = Date.now
+
 struct AddBirthdayView: View {
+    @Environment(\.dismiss) var dismiss
+    @State var birthday: Date = globalDate
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            Color.appPurple
+                .ignoresSafeArea()
+            
+                        
+            VStack{
+                Text("add your birthday")
+                    .font(.title)
+                    .foregroundStyle(.white)
+                    .fontWeight(.bold)
+//                Text("you'll use this to sign in")
+//                    .foregroundStyle(.white)
+                
+                Rectangle()
+                    .frame(width: 300, height: 0.5)
+                    .foregroundStyle(.white)
+                
+
+                
+                DatePicker(selection: $birthday, in: ...Date.now, displayedComponents: .date){}
+                    .datePickerStyle(.wheel)
+                    .tint(.accent)
+                    .frame(width: 200, alignment: .center)
+                
+                NavigationLink{
+                    CompleteSignUpView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("Next")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .frame(width: 360, height: 44)
+                        .foregroundStyle(.appPurple)
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+                
+                Spacer()
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading){
+                Image(systemName: "chevron.left")
+                    .foregroundStyle(.white)
+                    .imageScale(.large)
+                    .onTapGesture {
+                        dismiss()
+                    }
+            }
+        }
     }
 }
 

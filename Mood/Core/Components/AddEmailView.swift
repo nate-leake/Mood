@@ -16,27 +16,38 @@ struct AddEmailView: View {
             Color.appPurple
                 .ignoresSafeArea()
             
+                        
             VStack{
-                Text("no problem")
+                Text("add your email")
                     .font(.title)
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
-                Text("we only need three things from you")
+                Text("you'll use this to sign in")
                     .foregroundStyle(.white)
                 
                 Rectangle()
                     .frame(width: 300, height: 0.5)
                     .foregroundStyle(.white)
                 
-                Spacer()
                 
-                Text("lets start with your email")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                
-                TextField("email", text: $email)
+                TextField("", text: $email, prompt: Text("email").foregroundStyle(.gray))
                     .textInputAutocapitalization(.none)
                     .modifier(TextFieldModifier())
+                    .padding(.vertical)
+                    
+                
+                NavigationLink{
+                    CreatePasswordView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("Next")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .frame(width: 360, height: 44)
+                        .foregroundStyle(.appPurple)
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
                 
                 Spacer()
             }
