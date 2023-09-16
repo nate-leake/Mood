@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddEmailView: View {
     @Environment(\.dismiss) var dismiss
-    @State private var email = ""
+    @EnvironmentObject var viewModel: RegistrationViewModel
     
     var body: some View {
         ZStack{
@@ -30,7 +30,7 @@ struct AddEmailView: View {
                     .foregroundStyle(.white)
                 
                 
-                TextField("", text: $email, prompt: Text("email").foregroundStyle(.gray))
+                TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
                     .textInputAutocapitalization(.none)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
