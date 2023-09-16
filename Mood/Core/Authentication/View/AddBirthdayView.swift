@@ -11,7 +11,7 @@ var globalDate = Date.now
 
 struct AddBirthdayView: View {
     @Environment(\.dismiss) var dismiss
-    @State var birthday: Date = globalDate
+    @EnvironmentObject var viewModel: RegistrationViewModel
     
     var body: some View {
         ZStack{
@@ -33,7 +33,7 @@ struct AddBirthdayView: View {
                 
 
                 
-                DatePicker(selection: $birthday, in: ...Date.now, displayedComponents: .date){}
+                DatePicker(selection: $viewModel.birthday, in: ...Date.now, displayedComponents: .date){}
                     .datePickerStyle(.wheel)
                     .tint(.accent)
                     .frame(width: 200, alignment: .center)

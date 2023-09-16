@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreatePasswordView: View {
     @Environment(\.dismiss) var dismiss
-    @State var passwd = ""
+    @EnvironmentObject var viewModel: RegistrationViewModel
     
     var body: some View {
         ZStack{
@@ -29,7 +29,7 @@ struct CreatePasswordView: View {
                     .frame(width: 300, height: 0.5)
                     .foregroundStyle(.white)
                 
-                SecureField("", text: $passwd, prompt: Text("password").foregroundStyle(.gray))
+                SecureField("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
                     .textInputAutocapitalization(.none)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
