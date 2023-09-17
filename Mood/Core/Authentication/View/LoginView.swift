@@ -10,8 +10,7 @@ import SwiftUI
 struct LoginView: View {
     @Environment(\.dismiss) var dismiss
     
-    @State private var email = ""
-    @State private var passwd = ""
+    @StateObject var viewModel = LoginViewModel()
     
     var body: some View {
         ZStack{
@@ -24,16 +23,16 @@ struct LoginView: View {
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
                 
-                TextField("", text: $email, prompt: Text("email").foregroundStyle(.gray))
+                TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
                     .textInputAutocapitalization(.none)
                     .modifier(TextFieldModifier())
                 
-                SecureField("", text: $passwd, prompt: Text("password").foregroundStyle(.gray))
+                SecureField("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
                     .textInputAutocapitalization(.none)
                     .modifier(TextFieldModifier())
                 
                 Button{
-                    print("User is logging in")
+                    Task { try await viewModel.signin()}
                 } label: {
                     Text("log in")
                         .font(.headline)
