@@ -31,7 +31,7 @@ struct AddEmailView: View {
                 
                 
                 TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
-                    .textInputAutocapitalization(.none)
+                    .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
                     
