@@ -24,11 +24,11 @@ struct LoginView: View {
                     .fontWeight(.bold)
                 
                 TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
-                    .textInputAutocapitalization(.none)
+                    .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                 
                 SecureField("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
-                    .textInputAutocapitalization(.none)
+                    .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                 
                 Button{

@@ -30,7 +30,7 @@ struct CreatePasswordView: View {
                     .foregroundStyle(.white)
                 
                 SecureField("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
-                    .textInputAutocapitalization(.none)
+                    .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
                 
