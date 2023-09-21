@@ -6,9 +6,10 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
 import Combine
 
+@MainActor
 class ContentViewModel: ObservableObject {
     private let service = AuthService.shared
     private var cancellables = Set<AnyCancellable>()
