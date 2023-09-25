@@ -6,23 +6,51 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct ContextMoodJSON: Decodable {
-    let contexts: [String]
-    let moods: [String:[String]]
+class Mood: Codable {
+    var name: String
+    var emotions: [Emotion]
     
-    enum RootKeys: String, CodingKey {
-        case context, mood, emotion
+    init(name: String, emotions: [Emotion]) {
+        self.name = name
+        self.emotions = emotions
     }
     
-    enum MoodKeys: String, CodingKey {
-        case happiness, sadness, fear, anger, neutral
+    func getColor() -> Color {
+        return Color(self.name)
     }
     
+    static let allMoods: [Mood] = Bundle.main.decode(file: "moods.json")
+    static let sampleMood: Mood = allMoods[0]
+}
+
+
+class Emotion: Codable {
+    var name: String
     
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: RootKeys.self)
-        contexts = try values.decode([String].self, forKey: .context)
-        moods = try values.decode([String:[String]].self, forKey: .mood)
+    init(name: String) {
+        self.name = name
+    }
+}
+
+
+extension Bundle {
+    func decode<T: Decodable>(file:String) -> T {
+        guard let url = self.url(forResource: file, withExtension: nil) else {
+            fatalError("Could not find \(file) in the project")
+        }
+        
+        guard let data = try? Data(contentsOf: url) else {
+            fatalError("Could not load \(file) in the porject")
+        }
+        
+        let decoder = JSONDecoder()
+        
+        guard let loadedData = try? decoder.decode(T.self, from: data) else {
+            fatalError("Could not decode \(file) in the project")
+        }
+        
+        return loadedData
     }
 }
