@@ -9,21 +9,21 @@ import SwiftUI
 
 struct GlobalPercentView: View {
     var context: String
-    var color: Color
     var percent: Int
-    
-    
+    var mood: Mood
+    var emotion: Emotion
     
     private var gradient: LinearGradient
     
-    init(context: String, color: Color, percent: Int) {
+    init(context: String, percent: Int, mood: Mood, emotion: Emotion) {
         self.context = context
-        self.color = color
         self.percent = percent
+        self.mood = mood
+        self.emotion = emotion
         
         let stops = [
-            Gradient.Stop(color: color, location: CGFloat(percent)/100),
-            Gradient.Stop(color: color.opacity(0.5), location: CGFloat(percent)/100)
+            Gradient.Stop(color: mood.getColor(), location: CGFloat(percent)/100),
+            Gradient.Stop(color: mood.getColor().opacity(0.5), location: CGFloat(percent)/100)
         ]
         
         self.gradient = LinearGradient(stops: stops, startPoint: .leading, endPoint: .trailing)
@@ -43,15 +43,21 @@ struct GlobalPercentView: View {
                     .frame(height: 70)
                     .padding(.horizontal, 20)
                 
-                Text("\(percent)%")
-                    .foregroundStyle(.black.opacity(0.7))
-                    .font(.title)
-                    .fontWeight(.bold)
+                VStack{
+                    Text("\(percent)%")
+                        .foregroundStyle(.appBlack.opacity(0.7))
+                        .font(.title)
+                        .fontWeight(.bold)
+                    Text("\(emotion.name)")
+                        .foregroundStyle(.appBlack.opacity(0.7))
+                        .font(.subheadline)
+                }
             }
         }
+        .padding(.top, 10)
     }
 }
 
 #Preview {
-    GlobalPercentView(context: "family", color: .anger, percent: 50)
+    GlobalPercentView(context: "family", percent: 62, mood: Mood.allMoods[0], emotion: Mood.allMoods[0].emotions[0])
 }
