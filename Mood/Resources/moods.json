@@ -1,10 +1,64 @@
-{
-    "context":["family", "finances", "health", "identity", "politics", "weather", "work"],
-    "mood": {
-        "happiness":["amused", "confident", "excited", "happy", "hopeful", "peaceful", "satisfied", "wonder"],
-        "sadness":["disappointed", "hopeless", "lonely", "lost", "sad", "withdrawn"],
-        "fear":["afraid", "anxious", "nervous", "stressed", "worried"],
-        "anger":["angry", "annoyed", "frusterated", "furious"],
-        "neutral": ["calm", "indifferent", "content"]
+[
+    {
+        "name": "happiness",
+        "emotions": [
+            {"name": "amused"},
+            {"name": "confident"},
+            {"name": "excited"},
+            {"name": "happy"},
+            {"name": "hopeful"},
+            {"name": "peaceful"},
+            {"name": "satisfied"},
+            {"name": "wonder"}
+        ]
+        
+        
+    },
+    
+    {
+        "name": "sadness",
+        "emotions": [
+            {"name": "disappointed"},
+            {"name": "hopeless"},
+            {"name": "lonely"},
+            {"name": "lost"},
+            {"name": "sad"},
+            {"name": "withdrawn"}
+        ]
+        
+    },
+    
+    {
+        "name": "fearful",
+        "emotions": [
+            {"name": "afraid"},
+            {"name": "anxious"},
+            {"name": "nervous"},
+            {"name": "stressed"}, 
+            {"name": "worried"}
+        ]
+        
+    },
+    
+    {
+        "name": "anger",
+        "emotions": [
+            {"name": "angry"},
+            {"name": "annoyed"},
+            {"name": "frusterated"},
+            {"name": "furious"}
+        ]
+        
+    },
+    
+    {
+        "name": "neutrality",
+        "emotions": [
+            {"name": "calm"},
+            {"name": "indifferent"},
+            {"name": "content"}
+        ]
+        
     }
-}
+    
+]

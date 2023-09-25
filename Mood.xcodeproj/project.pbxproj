@@ -16,6 +16,7 @@
 		AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A32AB0B839004CF248 /* ProfileView.swift */; };
 		AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */; };
 		AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */; };
+		AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */; };
 		AF519BCD2ABBA5BB00850DD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF519BCC2ABBA5BB00850DD4 /* User.swift */; };
 		AF5B87712AB521BB000E204F /* AddEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B87702AB521BB000E204F /* AddEmailView.swift */; };
 		AF5B87732AB525D1000E204F /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B87722AB525D1000E204F /* TextFieldModifier.swift */; };
@@ -63,6 +64,7 @@
 		AF4B33A32AB0B839004CF248 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodView.swift; sourceTree = "<group>"; };
 		AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodView.swift; sourceTree = "<group>"; };
+		AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPercentView.swift; sourceTree = "<group>"; };
 		AF519BCC2ABBA5BB00850DD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AF5B87702AB521BB000E204F /* AddEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddEmailView.swift; path = Mood/Core/Authentication/View/AddEmailView.swift; sourceTree = SOURCE_ROOT; };
 		AF5B87722AB525D1000E204F /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */,
 				AF5B87722AB525D1000E204F /* TextFieldModifier.swift */,
+				AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */,
 				AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */,
 				AF5B87752AB5277B000E204F /* CreatePasswordView.swift in Sources */,
+				AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */,
 				AF5B87732AB525D1000E204F /* TextFieldModifier.swift in Sources */,
 				AF2A89822AB0CB5600D05234 /* ContextMoodPair.swift in Sources */,
 				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
@@ -608,7 +612,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -644,7 +648,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
