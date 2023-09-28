@@ -35,10 +35,10 @@ struct CreatePasswordView: View {
                     .padding(.vertical)
                 
                 NavigationLink{
-                    AddBirthdayView()
+                    AddNameView()
                         .navigationBarBackButtonHidden()
                 } label: {
-                    Text("Next")
+                    Text("next")
                         .font(.headline)
                         .fontWeight(.bold)
                         .frame(width: 360, height: 44)
