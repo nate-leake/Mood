@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
+    var user : User
+    
+    private let dateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        return formatter
+    }()
     
     var body: some View {
         NavigationStack {
@@ -31,22 +38,22 @@ struct ProfileView: View {
                         HStack{
                             Text("name")
                             Spacer()
-                            Text("Bob")
-                                .font(.footnote)
+                            Text("\(user.name)")
+                                .font(.callout)
                                 .foregroundStyle(.gray)
                         }
                         HStack{
                             Text("email")
                             Spacer()
-                            Text(verbatim: "bob@gmail.com")
-                                .font(.footnote)
+                            Text(verbatim: "\(user.email)")
+                                .font(.callout)
                                 .foregroundStyle(.gray)
                         }
                         HStack{
                             Text("birthday")
                             Spacer()
-                            Text("August 12, 3019")
-                                .font(.footnote)
+                            Text("\(dateFormatter.string(from: user.birthday))")
+                                .font(.callout)
                                 .foregroundStyle(.gray)
                         }
                         
@@ -77,5 +84,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(user: User.MOCK_USERS[0])
 }
