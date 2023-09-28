@@ -8,6 +8,7 @@
 import Foundation
 
 enum Weight : Int {
+    case none = 0
     case slight = 1
     case moderate = 2
     case extreme = 3
