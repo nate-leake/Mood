@@ -51,7 +51,7 @@ struct ProfileView: View {
                         }
                         
                     }
-                    .listRowBackground(Color(.appPurple).opacity(0.1))
+                    .modifier(ListRowBackgroundModifer())
                     
                     Button {
                         AuthService.shared.signout()
@@ -63,7 +63,7 @@ struct ProfileView: View {
                             Spacer()
                         }
                     }
-                    .listRowBackground(Color(.appPurple).opacity(0.1))
+                    .modifier(ListRowBackgroundModifer())
                 }
                 .scrollContentBackground(.hidden)
             }

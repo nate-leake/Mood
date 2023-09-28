@@ -125,7 +125,7 @@ struct YourMoodView: View {
                         
                     }
                 }
-                .listRowBackground(Color(.appPurple).opacity(0.1))
+                .modifier(ListRowBackgroundModifer())
                 
                 Section {
                     NavigationLink {
@@ -175,7 +175,7 @@ struct YourMoodView: View {
                         }
                     }
                 }
-                .listRowBackground(Color(.appPurple).opacity(0.1))
+                .modifier(ListRowBackgroundModifer())
                 
                 Section{
                     VStack{
@@ -275,7 +275,7 @@ struct YourMoodView: View {
                         }
                     }
                 }
-                .listRowBackground(Color(.appPurple).opacity(0.1))
+                .modifier(ListRowBackgroundModifer())
             }
             .scrollContentBackground(.hidden)
             
