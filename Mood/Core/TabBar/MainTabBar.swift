@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainTabBar: View {
+    let user: User
     var body: some View {
         TabView{
             GlobalMoodView()
@@ -20,7 +21,7 @@ struct MainTabBar: View {
                     Image(systemName: "brain")
                 }
             
-            ProfileView()
+            ProfileView(user: user)
                 .tabItem {
                     Image(systemName: "person")
                 }
@@ -29,5 +30,5 @@ struct MainTabBar: View {
 }
 
 #Preview {
-    MainTabBar()
+    MainTabBar(user: User.MOCK_USERS[0])
 }
