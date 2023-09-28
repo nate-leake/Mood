@@ -14,6 +14,7 @@
 		AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */; };
 		AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3008812AB4F02D0068F3B0 /* LoginView.swift */; };
 		AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */; };
+		AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF40154F2AC61FAA003DE7DE /* AddNameView.swift */; };
 		AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A32AB0B839004CF248 /* ProfileView.swift */; };
 		AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */; };
 		AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */; };
@@ -63,6 +64,7 @@
 		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
 		AF3008812AB4F02D0068F3B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = Mood/Core/Authentication/View/LoginView.swift; sourceTree = SOURCE_ROOT; };
 		AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowBackgroundModifer.swift; sourceTree = "<group>"; };
+		AF40154F2AC61FAA003DE7DE /* AddNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameView.swift; sourceTree = "<group>"; };
 		AF4B33A32AB0B839004CF248 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodView.swift; sourceTree = "<group>"; };
 		AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				AF5B87762AB52904000E204F /* SignUpView.swift */,
 				AF5B87702AB521BB000E204F /* AddEmailView.swift */,
 				AF5B87742AB5277B000E204F /* CreatePasswordView.swift */,
+				AF40154F2AC61FAA003DE7DE /* AddNameView.swift */,
 				AF5B87782AB52C59000E204F /* AddBirthdayView.swift */,
 				AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */,
 			);
@@ -446,6 +449,7 @@
 				AF8AB5B22AB38F0000BE810A /* ContentViewModel.swift in Sources */,
 				AF519BCD2ABBA5BB00850DD4 /* User.swift in Sources */,
 				AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */,
+				AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */,
 				AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */,
 				AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */,
 				AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */,
@@ -616,7 +620,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -652,7 +656,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;

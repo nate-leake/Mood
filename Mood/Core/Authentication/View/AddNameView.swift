@@ -1,13 +1,13 @@
 //
-//  SignUpView.swift
+//  AddNameView.swift
 //  Mood
 //
-//  Created by Nate Leake on 9/15/23.
+//  Created by Nate Leake on 9/28/23.
 //
 
 import SwiftUI
 
-struct AddEmailView: View {
+struct AddNameView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
     
@@ -18,11 +18,11 @@ struct AddEmailView: View {
             
                         
             VStack{
-                Text("add your email")
+                Text("add a name")
                     .font(.title)
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
-                Text("you'll use this to sign in")
+                Text("this is what we'll call you")
                     .foregroundStyle(.white)
                 
                 Rectangle()
@@ -30,14 +30,14 @@ struct AddEmailView: View {
                     .foregroundStyle(.white)
                 
                 
-                TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
+                TextField("", text: $viewModel.name, prompt: Text("name").foregroundStyle(.gray))
                     .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
                     
                 
                 NavigationLink{
-                    CreatePasswordView()
+                    AddBirthdayView()
                         .navigationBarBackButtonHidden()
                 } label: {
                     Text("next")
@@ -62,10 +62,9 @@ struct AddEmailView: View {
                     }
             }
         }
-        
     }
 }
 
 #Preview {
-    AddEmailView()
+    AddNameView()
 }

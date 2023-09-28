@@ -22,7 +22,7 @@ struct SignUpView: View {
                     .font(.title)
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
-                Text("we'll need these three things from you")
+                Text("we'll need these few things from you")
                     .foregroundStyle(.white)
                 
                 Rectangle()
@@ -32,17 +32,22 @@ struct SignUpView: View {
                 Spacer()
                 
                 VStack(spacing: 45){
-                    Text("email")
+                    Text("\u{2022} email")
                         .font(.title2)
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
                     
-                    Text("password")
+                    Text("\u{2022} password")
                         .font(.title2)
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
                     
-                    Text("birthday")
+                    Text("\u{2022} name")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                    
+                    Text("\u{2022} birthday")
                         .font(.title2)
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
@@ -54,7 +59,7 @@ struct SignUpView: View {
                     AddEmailView()
                         .navigationBarBackButtonHidden()
                 } label: {
-                    Text("Next")
+                    Text("next")
                         .font(.headline)
                         .fontWeight(.bold)
                         .frame(width: 360, height: 44)
