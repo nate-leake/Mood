@@ -18,7 +18,7 @@ struct LoginView: View {
                 .ignoresSafeArea()
             
             VStack{
-                Text("we're gald you're back")
+                Text("we're glad you're back")
                     .font(.title)
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
