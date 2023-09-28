@@ -9,12 +9,13 @@ import Foundation
 
 struct User: Codable {
     let email: String // email is currently let which will prohibit the user from updating this informarion.
+    var name: String
     var birthday: Date
     
 }
 
 extension User {
     static var MOCK_USERS: [User] = [
-        .init(email: "playerguy@gmail.com", birthday: Date.now)
+        .init(email: "playerguy@gmail.com", name: "bill", birthday: Date.now)
     ]
 }

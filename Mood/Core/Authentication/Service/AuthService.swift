@@ -31,12 +31,12 @@ class AuthService {
     }
     
     @MainActor
-    func createUser(email:String, password: String, birthday: Date) async throws {
+    func createUser(email:String, password: String, name: String, birthday: Date) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             print("DEBUG: Did create user...")
-            await self.uploaduserData(uid: result.user.uid, email: email, birthday: birthday)
+            await self.uploaduserData(uid: result.user.uid, email: email, name: name, birthday: birthday)
             print("DEBUG: Did upload user data...")
         } catch {
             print("DEBUG: Failed to register user with error: \(error.localizedDescription)")
@@ -52,8 +52,8 @@ class AuthService {
         self.userSession = nil
     }
     
-    private func uploaduserData(uid: String, email: String, birthday: Date) async {
-        let user = User(email: email, birthday: birthday)
+    private func uploaduserData(uid: String, email: String, name: String, birthday: Date) async {
+        let user = User(email: email, name: name, birthday: birthday)
         guard let encodedUser = try? Firestore.Encoder().encode(user) else {return}
         
         try? await Firestore.firestore().collection("users").document(uid).setData(encodedUser)
