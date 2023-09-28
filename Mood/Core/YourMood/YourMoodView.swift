@@ -55,7 +55,52 @@ struct YourMoodView: View {
                         Text("More charts go here!")
                     } label: {
                         HStack {
-                            Text("recent moods")
+                            VStack{
+                                HStack{
+                                    Text("recent moods")
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(.appBlack.opacity(0.5))
+                                    Spacer()
+                                }
+                                Spacer()
+                                HStack{
+                                    HStack{
+                                        HStack{
+                                            Circle()
+                                                .fill(.happiness)
+                                                .frame(width: 5)
+                                            Text("happy")
+                                                .font(.caption)
+                                        }
+                                        
+                                        HStack{
+                                            Circle()
+                                                .fill(.anger)
+                                                .frame(width: 5)
+                                            Text("angry").font(.caption)
+                                        }
+                                    }
+                                    HStack{
+                                        
+                                        HStack{
+                                            Circle()
+                                                .fill(.fearful)
+                                                .frame(width: 5)
+                                            Text("fearful").font(.caption)
+                                        }
+                                        
+                                        HStack{
+                                            Circle()
+                                                .fill(.sadness)
+                                                .frame(width: 5)
+                                            Text("sad").font(.caption)
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                                
+                                Spacer()
+                            }
                             Spacer()
                             Chart {
                                 SectorMark(angle: .value("mood", 23), innerRadius: .ratio(0.618), angularInset: 1.5)
@@ -87,33 +132,38 @@ struct YourMoodView: View {
                         Text("More charts go here too!!")
                     } label: {
                         HStack {
-                            Text("recent emotions")
+                            VStack{
+                                Text("recent emotions")
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.appBlack.opacity(0.5))
+                                Spacer()
+                            }
                             Spacer()
                             Chart {
                                 BarMark(x: .value("logs", 20), y: .value("mood", "peaceful"))
                                     .foregroundStyle(.happiness)
-                                    .cornerRadius(5)
+                                    .cornerRadius(4)
                                     .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
                                         Text("peaceful").font(.caption)
                                     })
                                 
                                 BarMark(x: .value("logs", 14), y: .value("mood", "confident"))
                                     .foregroundStyle(.happiness)
-                                    .cornerRadius(5)
+                                    .cornerRadius(4)
                                     .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
                                         Text("confident").font(.caption)
                                     })
                                 
                                 BarMark(x: .value("logs", 12), y: .value("mood", "calm"))
                                     .foregroundStyle(.neutrality)
-                                    .cornerRadius(5)
+                                    .cornerRadius(4)
                                     .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
                                         Text("calm").font(.caption)
                                     })
                                 
                                 BarMark(x: .value("logs", 9), y: .value("mood", "annoyed"))
                                     .foregroundStyle(.anger)
-                                    .cornerRadius(5)
+                                    .cornerRadius(4)
                                     .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
                                         Text("annoyed").font(.caption)
                                     })
@@ -129,7 +179,17 @@ struct YourMoodView: View {
                 
                 Section{
                     VStack{
-                        Text("your mood today")
+                        HStack{
+                            Text("today's feelings")
+                                .fontWeight(.bold)
+                                .foregroundStyle(.appBlack.opacity(0.5))
+                                .padding(.vertical, 5)
+                            Spacer()
+                        }
+                        HStack{
+                            Text("**identity** had the biggest impact on you")
+                            Spacer()
+                        }
                         Spacer()
                         
                         Chart {
@@ -182,7 +242,7 @@ struct YourMoodView: View {
                                     Text("frusterated").font(.caption)
                                 })
                         }
-                        .aspectRatio(contentMode: .fit)
+                        .aspectRatio(0.9, contentMode: .fit)
                         .chartXScale(domain: [0, 3.55])
                         .chartYAxis {
                             AxisMarks(stroke: StrokeStyle(lineWidth: 0))
