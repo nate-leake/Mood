@@ -279,7 +279,7 @@ struct YourMoodView: View {
             }
             .scrollContentBackground(.hidden)
             
-            .navigationTitle("Your moods")
+            .navigationTitle("your moods")
             .navigationBarTitleDisplayMode(.inline)
         }
         

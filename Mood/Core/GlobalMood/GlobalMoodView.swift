@@ -51,7 +51,7 @@ struct GlobalMoodView: View {
                     
             }
             
-            .navigationTitle("Global mood")
+            .navigationTitle("global mood")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
