@@ -34,6 +34,7 @@ struct AddEmailView: View {
                     .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
+                    .keyboardType(.emailAddress)
                     
                 
                 NavigationLink{
