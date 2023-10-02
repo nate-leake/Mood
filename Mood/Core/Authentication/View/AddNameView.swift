@@ -11,6 +11,8 @@ struct AddNameView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
     
+    private let nameMaxLenght: Int = 12
+    
     var body: some View {
         ZStack{
             Color.appPurple
@@ -34,6 +36,9 @@ struct AddNameView: View {
                     .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
+                    .onChange(of: viewModel.name) {
+                        viewModel.name = String(viewModel.name.prefix(nameMaxLenght))
+                    }
                     
                 
                 NavigationLink{
