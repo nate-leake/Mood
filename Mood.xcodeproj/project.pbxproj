@@ -26,6 +26,7 @@
 		AF5B87772AB52904000E204F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B87762AB52904000E204F /* SignUpView.swift */; };
 		AF5B87792AB52C59000E204F /* AddBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B87782AB52C59000E204F /* AddBirthdayView.swift */; };
 		AF5B877B2AB53273000E204F /* CompleteSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */; };
+		AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6315CF2ACB5373005561B9 /* SecureInputView.swift */; };
 		AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */; };
 		AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */; };
 		AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		AF5B87762AB52904000E204F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignUpView.swift; path = Mood/Core/Authentication/View/SignUpView.swift; sourceTree = SOURCE_ROOT; };
 		AF5B87782AB52C59000E204F /* AddBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddBirthdayView.swift; path = Mood/Core/Authentication/View/AddBirthdayView.swift; sourceTree = SOURCE_ROOT; };
 		AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteSignUpView.swift; path = Mood/Core/Authentication/View/CompleteSignUpView.swift; sourceTree = SOURCE_ROOT; };
+		AF6315CF2ACB5373005561B9 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		AF6BFA292AAFCD2C005B4DDA /* Mood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodApp.swift; sourceTree = "<group>"; };
 		AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				AF5B87722AB525D1000E204F /* TextFieldModifier.swift */,
 				AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */,
 				AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */,
+				AF6315CF2ACB5373005561B9 /* SecureInputView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */,
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
 				AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */,
+				AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */,
 				AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,7 +624,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -656,7 +660,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
