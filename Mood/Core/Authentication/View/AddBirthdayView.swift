@@ -13,6 +13,13 @@ struct AddBirthdayView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
     
+    
+    var dateClosedRange: ClosedRange<Date> {
+        let min = Calendar.current.date(byAdding: .year, value: -125, to: Date())!
+        let max = Calendar.current.date(byAdding: .year, value: -13, to: Date())!
+        return min...max
+    }
+    
     var body: some View {
         ZStack{
             Color.appPurple
@@ -24,8 +31,8 @@ struct AddBirthdayView: View {
                     .font(.title)
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
-//                Text("you'll use this to sign in")
-//                    .foregroundStyle(.white)
+                Text("you'll need to be at least 13")
+                    .foregroundStyle(.white)
                 
                 Rectangle()
                     .frame(width: 300, height: 0.5)
@@ -33,7 +40,7 @@ struct AddBirthdayView: View {
                 
 
                 
-                DatePicker(selection: $viewModel.birthday, in: ...Date.now, displayedComponents: .date){}
+                DatePicker(selection: $viewModel.birthday, in: dateClosedRange, displayedComponents: .date){}
                     .datePickerStyle(.wheel)
                     .tint(.accent)
                     .frame(width: 200, alignment: .center)
