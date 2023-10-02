@@ -28,8 +28,7 @@ struct LoginView: View {
                     .modifier(TextFieldModifier())
                     .keyboardType(.emailAddress)
                 
-                SecureField("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
-                    .textInputAutocapitalization(.never)
+                SecureInputView("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
                     .modifier(TextFieldModifier())
                 
                 Button{
