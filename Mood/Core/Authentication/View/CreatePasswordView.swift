@@ -65,8 +65,8 @@ struct CreatePasswordView: View {
                     .frame(width: 300, height: 0.5)
                     .foregroundStyle(.white)
                 
-                SecureField("", text: $viewModel.passwd, prompt: Text("password").foregroundStyle(.gray))
-                    .textInputAutocapitalization(.never)
+                SecureInputView("", text: $viewModel.passwd, 
+                                prompt: Text("password").foregroundStyle(.gray))
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
                     .onChange(of: viewModel.passwd) {
