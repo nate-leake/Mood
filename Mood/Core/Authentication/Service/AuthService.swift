@@ -58,6 +58,7 @@ class AuthService {
         self.currentUser = nil
     }
     
+    @MainActor
     private func uploaduserData(uid: String, email: String, name: String, birthday: Date) async {
         let user = User(email: email, name: name, birthday: birthday)
         self.currentUser = user
