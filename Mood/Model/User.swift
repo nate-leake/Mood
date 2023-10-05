@@ -16,6 +16,6 @@ struct User: Codable {
 
 extension User {
     static var MOCK_USERS: [User] = [
-        .init(email: "playerguy@gmail.com", name: "bill", birthday: Date.now)
+        .init(email: "swiftui@preview.com", name: "Preview", birthday: Date.now)
     ]
 }
