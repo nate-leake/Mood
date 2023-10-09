@@ -13,13 +13,6 @@ struct LogDailyMoodSuggestionView: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Text("log today's mood")
-                .fontWeight(.bold)
-                .foregroundStyle(.appBlack.opacity(0.75))
-            Rectangle()
-                .frame(height: 0.5)
-                .opacity(0.5)
-            Spacer()
             
             HStack{
                 Text("logging consistently can help build awareness")
@@ -43,10 +36,7 @@ struct LogDailyMoodSuggestionView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                 }
             }
-            
-            Spacer()
         }
-            
     }
 }
 

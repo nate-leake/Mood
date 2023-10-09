@@ -54,9 +54,15 @@ struct YourMoodView: View {
             List {
                 if !hasLoggedToday {
                     Section {
+                        Text("log today's mood")
+                            .fontWeight(.bold)
+                            .foregroundStyle(.appBlack.opacity(0.75))
+                            .modifier(ListRowBackgroundModifer(foregroundColor: .appYellow))
                         LogDailyMoodSuggestionView(hlt: self.$hasLoggedToday)
+                            .modifier(ListRowBackgroundModifer())
+                            .padding(.vertical, 10)
                     }
-                    .modifier(ListRowBackgroundModifer(foregroundColor: .appGreen.opacity(0.50)))
+                    
                 }
                 
                 Section {
