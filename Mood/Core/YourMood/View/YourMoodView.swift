@@ -8,42 +8,6 @@
 import SwiftUI
 import Charts
 
-struct MoodData: Identifiable {
-    var id: UUID {return UUID()}
-    var date: Date
-    var mood: Mood
-    var weight: Weight
-    
-    static var happyExample: [MoodData] = [
-        .init(date: Date(), mood: Mood.allMoods[0], weight: .moderate),
-        .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, mood: Mood.allMoods[0], weight: .slight),
-        .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, mood: Mood.allMoods[0], weight: .extreme)
-    ]
-    
-    static var sadExample: [MoodData] = [
-        .init(date: Date(), mood: Mood.allMoods[1], weight: .none),
-        .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, mood: Mood.allMoods[1], weight: .none),
-        .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, mood: Mood.allMoods[1], weight: .none)
-    ]
-    
-    static var fearExample: [MoodData] = [
-        .init(date: Date(), mood: Mood.allMoods[2], weight: .slight),
-        .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, mood: Mood.allMoods[2], weight: .slight),
-        .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, mood: Mood.allMoods[2], weight: .none)
-    ]
-    
-    static var angerExample: [MoodData] = [
-        .init(date: Date(), mood: Mood.allMoods[3], weight: .slight),
-        .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, mood: Mood.allMoods[3], weight: .extreme),
-        .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, mood: Mood.allMoods[3], weight: .slight)
-    ]
-    
-    static var neutralExample: [MoodData] = [
-        .init(date: Date(), mood: Mood.allMoods[4], weight: .moderate),
-        .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, mood: Mood.allMoods[4], weight: .slight),
-        .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, mood: Mood.allMoods[4], weight: .slight)
-    ]
-}
 
 struct YourMoodView: View {
     
