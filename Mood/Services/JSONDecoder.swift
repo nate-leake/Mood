@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class Mood: Codable {
+class Mood: Codable, Equatable {
     var name: String
     var emotions: [Emotion]
     
@@ -19,6 +19,10 @@ class Mood: Codable {
     
     func getColor() -> Color {
         return Color(self.name)
+    }
+    
+    static func ==(lhs: Mood, rhs: Mood) -> Bool {
+        return lhs.name == rhs.name
     }
     
     static let allMoods: [Mood] = Bundle.main.decode(file: "moods.json")
