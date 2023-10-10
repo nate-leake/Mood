@@ -14,10 +14,10 @@ enum Weight : Int {
     case extreme = 3
 }
 
-struct ContextMoodPair {
-    var context : String
-    var moods : [String]
-    var weight: Weight
+class ContextMoodPair : ObservableObject {
+    @Published var context : String
+    @Published var moods : [String]
+    @Published var weight: Weight
     
     init(context: String, moods: [String], weight: Weight) {
         self.context = context
