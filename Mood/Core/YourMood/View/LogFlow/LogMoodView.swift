@@ -44,26 +44,29 @@ struct LogMoodView: View {
             }
             MoodTagView(selectedMoods: $selectedMood)
             
-            if selectedMood != nil {
-                Divider()
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
-                
-                HStack{
-                    Text("emotion")
-                        .padding(.leading, 10)
-                        .opacity(0.7)
-                        .fontWeight(.bold)
-                    Spacer()
+            VStack{
+                if selectedMood != nil {
+                    Divider()
+                        .padding(.top, 20)
+                        .padding(.bottom, 10)
+                    
+                    HStack{
+                        Text("emotion")
+                            .padding(.leading, 10)
+                            .opacity(0.7)
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    EmotionTagView(selectedEmotions: $selectedEmotions, mood: selectedMood!)
                 }
-                EmotionTagView(selectedEmotions: $selectedEmotions, mood: selectedMood!)
             }
+            
             
             if !selectedEmotions.isEmpty {
                 Divider()
                     .padding(.top, 20)
                     .padding(.bottom, 10)
-            
+                
                 HStack{
                     Text("intensity")
                         .padding(.leading, 10)
@@ -82,6 +85,7 @@ struct LogMoodView: View {
                 .tint(selectedMood!.getColor())
             }
             
+            
             Spacer()
             
             HStack{
@@ -94,7 +98,7 @@ struct LogMoodView: View {
                     HStack{
                         Image(systemName: "arrow.left")
                         Text("back")
-                            
+                        
                     }
                     .font(.headline)
                     .foregroundStyle(.appBlack)
@@ -108,11 +112,9 @@ struct LogMoodView: View {
                 if contextIndex+1 < contexts.count {
                     NavigationLink{
                         LogMoodView(contexts: contexts, contextIndex: contextIndex+1)
+                            .environmentObject(viewModel)
                             .onAppear{
-                                print("context: \(contexts[contextIndex])")
-                                print("emotions: \(selectedEmotions)")
-                                print("weight: \(String(describing: Weight(rawValue: Int(intensity))))")
-//                                viewModel.dailyData.pairs.append(ContextMoodPair(context: contexts[contextIndex], moods: <#T##[String]#>, weight: Weight(rawValue: Int(intensity)) ?? .none))
+                                viewModel.dailyData.pairs.append(ContextEmotionPair(context: contexts[contextIndex], emotions: selectedEmotions, weight: Weight(rawValue: Int(intensity)) ?? .none))
                             }
                     } label: {
                         HStack{
@@ -127,9 +129,15 @@ struct LogMoodView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .animation(.easeInOut, value: (selectedEmotions.isEmpty))
                     }
+                    .disabled(selectedEmotions.isEmpty)
                 } else {
-                    Button {
-                        print("finished")
+                    NavigationLink {
+                        MoodLoggedView()
+                            .onAppear{
+                                print("finished")
+                                viewModel.dailyData.date = Date()
+                                print("DailyData: \(viewModel.dailyData)")
+                            }
                         
                     } label: {
                         HStack{
@@ -144,17 +152,17 @@ struct LogMoodView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .animation(.easeInOut, value: (selectedEmotions.isEmpty))
                     }
+                    .disabled(selectedEmotions.isEmpty)
                 }
                 
                 Spacer()
             }
         }
         .padding()
-        .transition(.opacity)
-        
     }
 }
 
 #Preview {
     LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"])
+        .environmentObject(LogDailyMoodViewModel())
 }
