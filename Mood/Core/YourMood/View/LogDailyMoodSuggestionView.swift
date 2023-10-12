@@ -10,6 +10,7 @@ import SwiftUI
 struct LogDailyMoodSuggestionView: View {
     @StateObject var model = LogDailyMoodViewModel()
     @Binding var hlt: Bool
+    @State var showingSheet = false
     
     var body: some View {
         VStack(alignment: .leading){
@@ -21,14 +22,12 @@ struct LogDailyMoodSuggestionView: View {
                 
                 Spacer()
                 
-                NavigationLink{
-                    LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"])
-                        .environmentObject(model)
-                    
+                Button{
 //                    withAnimation {
 //                        hlt = true
 //                        print(hlt)
 //                    }
+                    showingSheet.toggle()
                 } label: {
                     Text("log")
                         .font(.headline)
@@ -37,6 +36,12 @@ struct LogDailyMoodSuggestionView: View {
                         .foregroundStyle(.white)
                         .background(.appPurple)
                         .clipShape(RoundedRectangle(cornerRadius: 18))
+                }
+                .fullScreenCover(isPresented: $showingSheet){
+                    NavigationStack{
+                        LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"])
+                            .environmentObject(model)
+                    }
                 }
             }
         }
