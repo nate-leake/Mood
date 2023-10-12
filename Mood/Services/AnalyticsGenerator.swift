@@ -55,7 +55,7 @@ struct AnalyticsGenerator {
         
         for day in DailyData.MOCK_DATA {
             for pair in day.pairs {
-                for mood in pair.moods{
+                for mood in pair.emotions{
                     totals[mood] = totals[mood]! + 1
                 }
                 

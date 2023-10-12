@@ -10,9 +10,9 @@ import Foundation
 
 struct DailyData {
     var date: Date
-    var pairs: [ContextMoodPair]
+    var pairs: [ContextEmotionPair]
     
-    init(date: Date, pairs: [ContextMoodPair]) {
+    init(date: Date, pairs: [ContextEmotionPair]) {
         self.date = date
         self.pairs = pairs
     }
@@ -21,32 +21,32 @@ struct DailyData {
 extension DailyData {
     static var MOCK_DATA : [DailyData] = [
         .init(date: Date(),
-              pairs: [ContextMoodPair(context: "family", moods: ["happy", "indifferent"], weight: .slight),
-                      ContextMoodPair(context: "health", moods: ["calm"], weight: .slight),
-                      ContextMoodPair(context: "identity", moods: ["content", "confident"], weight: .moderate),
-                      ContextMoodPair(context: "finances", moods: ["happy", "satisfied"], weight: .moderate),
-                      ContextMoodPair(context: "politics", moods: ["indifferent"], weight: .slight),
-                      ContextMoodPair(context: "weather", moods: ["happy", "peaceful"], weight: .moderate),
-                      ContextMoodPair(context: "work", moods: ["indifferent", "hopeful"], weight: .slight)
+              pairs: [ContextEmotionPair(context: "family", emotions: ["happy", "indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "health", emotions: ["calm"], weight: .slight),
+                      ContextEmotionPair(context: "identity", emotions: ["content", "confident"], weight: .moderate),
+                      ContextEmotionPair(context: "finances", emotions: ["happy", "satisfied"], weight: .moderate),
+                      ContextEmotionPair(context: "politics", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "weather", emotions: ["happy", "peaceful"], weight: .moderate),
+                      ContextEmotionPair(context: "work", emotions: ["indifferent", "hopeful"], weight: .slight)
                      ]),
         .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
-              pairs: [ContextMoodPair(context: "family", moods: ["indifferent"], weight: .slight),
-                      ContextMoodPair(context: "health", moods: ["indifferent"], weight: .slight),
-                      ContextMoodPair(context: "identity", moods: ["happy"], weight: .slight),
-                      ContextMoodPair(context: "finances", moods: ["calm", "satisfied"], weight: .moderate),
-                      ContextMoodPair(context: "politics", moods: ["anxious"], weight: .slight),
-                      ContextMoodPair(context: "weather", moods: ["sad", "disappointed"], weight: .moderate),
-                      ContextMoodPair(context: "work", moods: ["indifferent"], weight: .slight)
+              pairs: [ContextEmotionPair(context: "family", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "health", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "identity", emotions: ["happy"], weight: .slight),
+                      ContextEmotionPair(context: "finances", emotions: ["calm", "satisfied"], weight: .moderate),
+                      ContextEmotionPair(context: "politics", emotions: ["anxious"], weight: .slight),
+                      ContextEmotionPair(context: "weather", emotions: ["sad", "disappointed"], weight: .moderate),
+                      ContextEmotionPair(context: "work", emotions: ["indifferent"], weight: .slight)
                      ]
              ),
         .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
-              pairs: [ContextMoodPair(context: "family", moods: ["happy"], weight: .extreme),
-                      ContextMoodPair(context: "health", moods: ["indifferent"], weight: .slight),
-                      ContextMoodPair(context: "identity", moods: ["happy", "confident"], weight: .moderate),
-                      ContextMoodPair(context: "finances", moods: ["excited"], weight: .slight),
-                      ContextMoodPair(context: "politics", moods: ["nervous"], weight: .moderate),
-                      ContextMoodPair(context: "weather", moods: ["indifferent"], weight: .slight),
-                      ContextMoodPair(context: "work", moods: ["angry", "disappointed"], weight: .moderate)
+              pairs: [ContextEmotionPair(context: "family", emotions: ["happy"], weight: .extreme),
+                      ContextEmotionPair(context: "health", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "identity", emotions: ["happy", "confident"], weight: .moderate),
+                      ContextEmotionPair(context: "finances", emotions: ["excited"], weight: .slight),
+                      ContextEmotionPair(context: "politics", emotions: ["nervous"], weight: .moderate),
+                      ContextEmotionPair(context: "weather", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "work", emotions: ["angry", "disappointed"], weight: .moderate)
                      ]
              )
     ]
