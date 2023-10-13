@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LogMoodView: View {
     @EnvironmentObject var viewModel: LogDailyMoodViewModel
+    @Binding var isPresented: Bool
     var contexts: [String]
     var contextIndex: Int
     @State var selectedMood: Mood?/* = Mood.allMoods[0]*/
@@ -19,8 +20,9 @@ struct LogMoodView: View {
     var max = Weight.extreme.rawValue
     var step = 1.0
     
-    init(contexts: [String], contextIndex: Int = 0) {
+    init(contexts: [String], isPresented: Binding<Bool>, contextIndex: Int = 0) {
         self.contexts = contexts
+        self._isPresented = isPresented
         self.contextIndex = contextIndex
     }
     
@@ -92,26 +94,29 @@ struct LogMoodView: View {
                 
                 Spacer()
                 
-                Button{
-                    print("back")
-                } label: {
-                    HStack{
-                        Image(systemName: "arrow.left")
-                        Text("back")
-                        
+                if contextIndex == 0{
+                    Button{
+                        print("close")
+                        isPresented = false
+                    } label: {
+                        HStack{
+                            Image(systemName: "xmark")
+                            Text("close")
+                            
+                        }
+                        .font(.headline)
+                        .foregroundStyle(.appBlack)
+                        .frame(width: 150, height: 44)
+                        .background(.appBlack.opacity(0.15))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                    .font(.headline)
-                    .foregroundStyle(.appBlack)
-                    .frame(width: 150, height: 44)
-                    .background(.appBlack.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    Spacer()
                 }
-                
-                Spacer()
                 
                 if contextIndex+1 < contexts.count {
                     NavigationLink{
-                        LogMoodView(contexts: contexts, contextIndex: contextIndex+1)
+                        LogMoodView(contexts: contexts, isPresented: $isPresented, contextIndex: contextIndex+1)
                             .environmentObject(viewModel)
                             .onAppear{
                                 viewModel.dailyData.pairs.append(ContextEmotionPair(context: contexts[contextIndex], emotions: selectedEmotions, weight: Weight(rawValue: Int(intensity)) ?? .none))
@@ -124,7 +129,8 @@ struct LogMoodView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
-                        .frame(width: 150, height: 44)
+                        .frame(height: 44)
+                        .frame(maxWidth: contextIndex == 0 ? 150 : .infinity)
                         .background((!selectedEmotions.isEmpty) ? .appPurple : .appPurple.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .animation(.easeInOut, value: (selectedEmotions.isEmpty))
@@ -132,11 +138,12 @@ struct LogMoodView: View {
                     .disabled(selectedEmotions.isEmpty)
                 } else {
                     NavigationLink {
-                        MoodLoggedView()
+                        MoodLoggedView(isPresented: $isPresented)
+                            .navigationBarBackButtonHidden(true)
                             .onAppear{
                                 print("finished")
                                 viewModel.dailyData.date = Date()
-                                print("DailyData: \(viewModel.dailyData)")
+                                print("DailyData length: \(viewModel.dailyData.pairs.count)")
                             }
                         
                     } label: {
@@ -147,7 +154,8 @@ struct LogMoodView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
-                        .frame(width: 150, height: 44)
+                        .frame(height: 44)
+                        .frame(maxWidth: .infinity)
                         .background((!selectedEmotions.isEmpty) ? .appPurple : .appPurple.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .animation(.easeInOut, value: (selectedEmotions.isEmpty))
@@ -163,6 +171,8 @@ struct LogMoodView: View {
 }
 
 #Preview {
-    LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"])
+    @State var isPresented: Bool = true
+    
+    return LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"], isPresented: $isPresented)
         .environmentObject(LogDailyMoodViewModel())
 }

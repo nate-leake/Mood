@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoodLoggedView: View {
-    @Environment(\.dismiss) var dismiss
+    @Binding var isPresented: Bool 
     
     @State private var play0 = false
     @State private var play1 = false
@@ -80,13 +80,15 @@ struct MoodLoggedView: View {
                 }
             }
             
-            _ = Timer.scheduledTimer(withTimeInterval: 3.5, repeats: false) { (closeTimer) in
-                self.dismiss()
+            _ = Timer.scheduledTimer(withTimeInterval: 4.5, repeats: false) { (closeTimer) in
+                self.isPresented = false
             }
         }
     }
 }
 
 #Preview {
-    MoodLoggedView()
+    @State var isPresented = true
+    
+    return MoodLoggedView(isPresented: $isPresented)
 }

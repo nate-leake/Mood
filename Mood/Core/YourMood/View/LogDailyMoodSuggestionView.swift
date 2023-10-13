@@ -39,7 +39,7 @@ struct LogDailyMoodSuggestionView: View {
                 }
                 .fullScreenCover(isPresented: $showingSheet){
                     NavigationStack{
-                        LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"])
+                        LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"], isPresented: $showingSheet)
                             .environmentObject(model)
                     }
                 }
