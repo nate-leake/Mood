@@ -36,6 +36,18 @@ class Emotion: Codable {
     init(name: String) {
         self.name = name
     }
+    
+    func getParentMood() -> Mood? {
+        var parent: Mood?
+        for mood in Mood.allMoods {
+            for emotion in mood.emotions {
+                if self.name == emotion.name{
+                    parent = mood
+                }
+            }
+        }
+        return parent
+    }
 }
 
 
