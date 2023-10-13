@@ -119,7 +119,7 @@ struct LogMoodView: View {
                         LogMoodView(contexts: contexts, isPresented: $isPresented, contextIndex: contextIndex+1)
                             .environmentObject(viewModel)
                             .onAppear{
-                                viewModel.dailyData.pairs.append(ContextEmotionPair(context: contexts[contextIndex], emotions: selectedEmotions, weight: Weight(rawValue: Int(intensity)) ?? .none))
+                                viewModel.dailyData.addPair(pair: ContextEmotionPair(context: contexts[contextIndex], emotions: selectedEmotions, weight: Weight(rawValue: Int(intensity)) ?? .none))
                             }
                     } label: {
                         HStack{
@@ -164,6 +164,25 @@ struct LogMoodView: View {
                 }
                 
                 Spacer()
+            }
+        }
+        .onAppear{
+            if let pair = viewModel.dailyData.containsPair(withContext: contexts[contextIndex]) {
+                
+                if let mood = Emotion(name: pair.emotions[0]).getParentMood(){
+                    self.selectedMood = mood
+                } else {
+                    print("cannot find a parent mood for emotion \(pair.emotions[0])")
+                }
+                
+                var previousSelectedEmotions: [Emotion] = []
+                for emotion in pair.emotions {
+                    previousSelectedEmotions.append(Emotion(name: emotion))
+                }
+                
+                
+                self.selectedEmotions = previousSelectedEmotions
+                self.intensity = Double(pair.weight.rawValue)
             }
         }
         .padding()
