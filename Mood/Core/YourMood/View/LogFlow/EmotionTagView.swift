@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EmotionTagView: View {
     @Binding var selectedEmotions: [Emotion]
-    @State private var selectedTags: [Emotion] = []
     var mood: Mood
     
     @State private var totalHeight = CGFloat.zero       // << variant for ScrollView/List
@@ -20,7 +19,6 @@ struct EmotionTagView: View {
             GeometryReader { geometry in
                 self.generateContent(in: geometry)
                     .onChange(of: mood, {
-                        selectedTags.removeAll()
                         selectedEmotions.removeAll()
                     })
             }
@@ -61,11 +59,9 @@ struct EmotionTagView: View {
                     })
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.25)){
-                            if self.selectedTags.contains(where: {$0.name == tag.name}){
-                                self.selectedTags.removeAll{$0.name == tag.name}
+                            if self.selectedEmotions.contains(where: {$0.name == tag.name}){
                                 self.selectedEmotions.removeAll{$0.name == tag.name}
                             } else {
-                                self.selectedTags.append(tag)
                                 self.selectedEmotions.append(tag)
                             }
                             
@@ -76,7 +72,7 @@ struct EmotionTagView: View {
     }
     
     private func item(for emotion: Emotion) -> some View {
-        let isSelected = selectedTags.contains(where: {$0.name == emotion.name})
+        let isSelected = selectedEmotions.contains(where: {$0.name == emotion.name})
         var foregroundColorSelected: Color
         var foregroundColorNotSelected: Color
         

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MoodTagView: View {
     @Binding var selectedMoods: Mood?
-    @State private var selectedTag: Mood?
     var tags: [Mood] = Mood.allMoods
     
     
@@ -60,7 +59,6 @@ struct MoodTagView: View {
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.25)) {
                             self.selectedMoods = tag
-                            self.selectedTag = tag
                         }
                     }
             }
@@ -68,7 +66,7 @@ struct MoodTagView: View {
     }
     
     private func item(for mood: Mood) -> some View {
-        let isSelected = mood.name == selectedTag?.name
+        let isSelected = mood.name == selectedMoods?.name
         
         var foregroundColorSelected: Color
         var foregroundColorNotSelected: Color
