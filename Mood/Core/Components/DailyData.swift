@@ -8,13 +8,34 @@
 import Foundation
 
 
-struct DailyData {
+class DailyData {
     var date: Date
     var pairs: [ContextEmotionPair]
     
     init(date: Date, pairs: [ContextEmotionPair]) {
         self.date = date
         self.pairs = pairs
+    }
+    
+    func addPair(pair: ContextEmotionPair){
+        var matchedPair = self.containsPair(withContext: pair.context)
+        
+        if matchedPair != nil {
+            matchedPair?.emotions = pair.emotions
+        } else {
+            self.pairs.append(pair)
+        }
+    }
+    
+    func containsPair(withContext: String) -> ContextEmotionPair? {
+        var matchedPair: ContextEmotionPair?
+        for p in pairs {
+            if p.context == withContext{
+                matchedPair = p
+            }
+        }
+        
+        return matchedPair
     }
 }
 
