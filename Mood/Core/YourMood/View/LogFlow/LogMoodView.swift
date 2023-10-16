@@ -139,6 +139,7 @@ struct LogMoodView: View {
                 } else {
                     NavigationLink {
                         MoodLoggedView(isPresented: $isPresented)
+                            .environmentObject(viewModel)
                             .navigationBarBackButtonHidden(true)
                             .onAppear{
                                 print("finished")
