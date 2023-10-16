@@ -7,17 +7,27 @@
 
 import Foundation
 
-enum Weight : Int, Codable {
+enum Weight : Int, Codable, Hashable {
     case none = 0
     case slight = 1
     case moderate = 2
     case extreme = 3
 }
 
-class ContextEmotionPair : ObservableObject, Codable {
+class ContextEmotionPair : ObservableObject, Codable, Hashable {
     @Published var context : String
     @Published var emotions : [String]
     @Published var weight: Weight
+    
+    // conform to Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(context)
+    }
+    
+    // conform to Equatable
+    static func ==(lhs: ContextEmotionPair, rhs: ContextEmotionPair) -> Bool {
+        return lhs.context == rhs.context
+    }
     
     // Coding keys to conform to Codable
     private enum CodingKeys: String, CodingKey {
