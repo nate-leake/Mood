@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoodLoggedView: View {
-    @EnvironmentObject var viewModel: LogDailyMoodViewModel
+    @EnvironmentObject var viewModel: UploadMoodViewModel
     @Binding var isPresented: Bool
     
     @State private var play0 = false
@@ -87,6 +87,10 @@ struct MoodLoggedView: View {
         }
         .transition(.slide)
         .onAppear{
+            
+            Task {
+                try await viewModel.uploadMood()
+            }
             
             _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer0) in
                 self.play0.toggle()
