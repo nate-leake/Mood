@@ -14,14 +14,6 @@ struct MoodData: Hashable, Codable {
     let emotion: String
     let intensity: Int
 }
-
-struct MoodPost: Identifiable, Hashable, Codable {
-    let id: String
-    let ownerUid: String
-    var moods: [MoodData]
-    let timestamp: Date
-}
-
 extension MoodData {
     static var MOCK_DATA : [MoodData] = [
         .init(id: NSUUID().uuidString, context: "family", moodType: "happiness", emotion: "happy", intensity: 2),
@@ -33,3 +25,28 @@ extension MoodData {
         .init(id: NSUUID().uuidString, context: "work", moodType: "happy", emotion: "hopeful", intensity: 1)
     ]
 }
+
+
+struct MoodPost: Identifiable, Hashable, Codable {
+    let id: String
+    let ownerUid: String
+    var data: DailyData
+}
+
+extension MoodPost {
+    static var MOCK_DATA : [MoodPost] = [
+        .init(id: NSUUID().uuidString,
+              ownerUid: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[0]
+             ),
+        .init(id: NSUUID().uuidString,
+              ownerUid: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[1]
+             ),
+        .init(id: NSUUID().uuidString,
+              ownerUid: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[2]
+             )
+    ]
+}
+
