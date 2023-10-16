@@ -137,8 +137,6 @@
 		AF2A89802AB0CAFF00D05234 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
-				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */,
 				AF5B87722AB525D1000E204F /* TextFieldModifier.swift */,
 				AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */,
@@ -221,6 +219,8 @@
 			children = (
 				AF519BCC2ABBA5BB00850DD4 /* User.swift */,
 				AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */,
+				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
+				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
