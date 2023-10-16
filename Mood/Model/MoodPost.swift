@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct MoodData: Hashable, Codable {
     let id: String
@@ -29,24 +30,32 @@ extension MoodData {
 
 struct MoodPost: Identifiable, Hashable, Codable {
     let id: String
-    let ownerUid: String
-    var data: DailyData
+    var timestamp: Date
+    var data: [ContextEmotionPair]
+    
+    
+    init(id: String, data: DailyData) {
+        self.id = id
+        self.timestamp = data.date
+        
+        var tmpData: [ContextEmotionPair] = []
+        for pair in data.pairs {
+            tmpData.append(pair)
+        }
+        self.data = tmpData
+    }
 }
 
 extension MoodPost {
     static var MOCK_DATA : [MoodPost] = [
         .init(id: NSUUID().uuidString,
-              ownerUid: NSUUID().uuidString,
               data: DailyData.MOCK_DATA[0]
              ),
         .init(id: NSUUID().uuidString,
-              ownerUid: NSUUID().uuidString,
               data: DailyData.MOCK_DATA[1]
              ),
         .init(id: NSUUID().uuidString,
-              ownerUid: NSUUID().uuidString,
               data: DailyData.MOCK_DATA[2]
              )
     ]
 }
-
