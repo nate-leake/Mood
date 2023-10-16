@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LogDailyMoodSuggestionView: View {
-    @StateObject var model = LogDailyMoodViewModel()
+    @StateObject var model = UploadMoodViewModel()
     @Binding var hlt: Bool
     @State var showingSheet = false
     
