@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LogMoodView: View {
-    @EnvironmentObject var viewModel: LogDailyMoodViewModel
+    @EnvironmentObject var viewModel: UploadMoodViewModel
     @Binding var isPresented: Bool
     var contexts: [String]
     var contextIndex: Int
@@ -194,5 +194,5 @@ struct LogMoodView: View {
     @State var isPresented: Bool = true
     
     return LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"], isPresented: $isPresented)
-        .environmentObject(LogDailyMoodViewModel())
+        .environmentObject(UploadMoodViewModel())
 }

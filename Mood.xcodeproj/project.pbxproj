@@ -42,7 +42,6 @@
 		AF8AB5B22AB38F0000BE810A /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8AB5B12AB38F0000BE810A /* ContentViewModel.swift */; };
 		AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */; };
 		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
-		AFBC29182AD5DA0D00BB99AD /* LogDailyMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC29172AD5DA0D00BB99AD /* LogDailyMoodViewModel.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
 		AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */; };
@@ -99,7 +98,6 @@
 		AF8AB5B12AB38F0000BE810A /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLoggedView.swift; sourceTree = "<group>"; };
 		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
-		AFBC29172AD5DA0D00BB99AD /* LogDailyMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodViewModel.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
@@ -137,8 +135,6 @@
 		AF2A89802AB0CAFF00D05234 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
-				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */,
 				AF5B87722AB525D1000E204F /* TextFieldModifier.swift */,
 				AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */,
@@ -221,6 +217,8 @@
 			children = (
 				AF519BCC2ABBA5BB00850DD4 /* User.swift */,
 				AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */,
+				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
+				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */,
-				AFBC29172AD5DA0D00BB99AD /* LogDailyMoodViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -505,7 +502,6 @@
 				AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */,
 				AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */,
 				AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */,
-				AFBC29182AD5DA0D00BB99AD /* LogDailyMoodViewModel.swift in Sources */,
 				AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */,
 				AF5B87752AB5277B000E204F /* CreatePasswordView.swift in Sources */,
 				AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */,
@@ -680,7 +676,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -716,7 +712,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;

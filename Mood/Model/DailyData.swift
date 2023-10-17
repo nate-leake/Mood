@@ -8,9 +8,19 @@
 import Foundation
 
 
-class DailyData {
+class DailyData: Codable, Hashable{
     var date: Date
     var pairs: [ContextEmotionPair]
+    
+    // conform to Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(date)
+    }
+    
+    // conform to Equatable
+    static func ==(lhs: DailyData, rhs: DailyData) -> Bool {
+        return lhs.date == rhs.date
+    }
     
     init(date: Date, pairs: [ContextEmotionPair]) {
         self.date = date
@@ -18,7 +28,7 @@ class DailyData {
     }
     
     func addPair(pair: ContextEmotionPair){
-        var matchedPair = self.containsPair(withContext: pair.context)
+        let matchedPair = self.containsPair(withContext: pair.context)
         
         if matchedPair != nil {
             matchedPair?.emotions = pair.emotions
