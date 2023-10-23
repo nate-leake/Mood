@@ -11,6 +11,7 @@ import FirebaseAuth
 
 enum CustomError: Error {
     case invalidUID
+    case firestoreEncoding
 }
 
 extension Date
@@ -50,9 +51,10 @@ class DailyDataService : ObservableObject{
     }
     
     @MainActor
-    func uploadMood(dailyData: DailyData) async throws{
+    func uploadMood(dailyData: DailyData) async throws -> Bool {
         print("DEBUG: uploading mood post...")
-        guard let uid = Auth.auth().currentUser?.uid else {return}
+        var uploadSuccess = false
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
         print(dateFormatter.string(from: dailyData.date))
         let dailyPostRef = Firestore.firestore().collection("dailyPosts").document()
@@ -61,12 +63,19 @@ class DailyDataService : ObservableObject{
         let dailyPost = MoodPost(id: dailyPostRef.documentID, data: dailyData)
         let privatePost = MoodPost(id: uid, data: dailyData)
         
-        guard let encodedDailyPost = try? Firestore.Encoder().encode(dailyPost) else {return}
-        guard let encodedPrivatePost = try? Firestore.Encoder().encode(privatePost) else {return}
+        guard let encodedDailyPost = try? Firestore.Encoder().encode(dailyPost) else {throw CustomError.firestoreEncoding}
+        guard let encodedPrivatePost = try? Firestore.Encoder().encode(privatePost) else {throw CustomError.firestoreEncoding}
         
-        try await dailyPostRef.setData(encodedDailyPost)
-        try await privatePostRef.setData(encodedPrivatePost)
-        print("DEBUG: post uploaded.")
+        do {
+            try await dailyPostRef.setData(encodedDailyPost)
+            try await privatePostRef.setData(encodedPrivatePost)
+            uploadSuccess = true
+            print("DEBUG: uploaded mood post")
+        } catch {
+            print("DEBUG: failed to upload mood post")
+        }
+        
+        return uploadSuccess
     }
     
     // this function will fetch a specified number of documents and return them as an array
