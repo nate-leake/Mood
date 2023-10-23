@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct GlobalMoodView: View {
-    @EnvironmentObject var dailyDataService: DailyDataService
-    
+struct GlobalMoodView: View {    
     var body: some View {
         NavigationStack {
             ScrollView{
