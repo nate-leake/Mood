@@ -13,7 +13,7 @@ struct MainTabBar: View {
     
     var body: some View {
         TabView{
-            GlobalMoodView()
+            GlobalMoodViewWrapper()
                 .environmentObject(dailyDataService)
                 .tabItem {
                     Image(systemName: "globe.americas")
