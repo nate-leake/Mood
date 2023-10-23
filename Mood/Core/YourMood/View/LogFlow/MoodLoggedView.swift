@@ -20,6 +20,8 @@ struct MoodLoggedView: View {
     
     @State var globeColors: [Color] = [.appGreen, .appGreen, .appGreen]
     
+    @State var uploaded:Bool = false
+    
     func getHighestIntesityMoods() -> [Color]{
         var top3:[Color] = []
         var emotionWeights: [String: Int] = [:]
@@ -89,8 +91,7 @@ struct MoodLoggedView: View {
         .onAppear{
             
             Task {
-                try await DailyDataService.shared.uploadMood(dailyData:viewModel.dailyData)
-                DailyDataService.shared.userHasLoggedToday = true 
+                uploaded = try await DailyDataService.shared.uploadMood(dailyData:viewModel.dailyData)
             }
             
             _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer0) in
@@ -119,6 +120,9 @@ struct MoodLoggedView: View {
             
             _ = Timer.scheduledTimer(withTimeInterval: 4.5, repeats: false) { (closeTimer) in
                 self.isPresented = false
+                if uploaded{
+                    DailyDataService.shared.userHasLoggedToday = true
+                }
             }
         }
     }
