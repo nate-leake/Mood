@@ -89,7 +89,8 @@ struct MoodLoggedView: View {
         .onAppear{
             
             Task {
-                try await viewModel.uploadMood()
+                try await DailyDataService.shared.uploadMood(dailyData:viewModel.dailyData)
+                DailyDataService.shared.userHasLoggedToday = true 
             }
             
             _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer0) in
