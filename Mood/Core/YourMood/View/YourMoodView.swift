@@ -10,19 +10,19 @@ import Charts
 
 
 struct YourMoodView: View {
-    
+    @EnvironmentObject var dailyDataService : DailyDataService
     @State private var hasLoggedToday : Bool = false
     
     var body: some View {
         NavigationStack {
             List {
-                if !hasLoggedToday {
+                if !dailyDataService.userHasLoggedToday {
                     Section {
                         Text("log today's mood")
                             .fontWeight(.bold)
                             .foregroundStyle(.appBlack.opacity(0.75))
                             .modifier(ListRowBackgroundModifer(foregroundColor: .appYellow))
-                        LogDailyMoodSuggestionView(hlt: self.$hasLoggedToday)
+                        LogDailyMoodSuggestionView()
                             .modifier(ListRowBackgroundModifer())
                             .padding(.vertical, 10)
                     }
@@ -156,7 +156,7 @@ struct YourMoodView: View {
                 }
                 .modifier(ListRowBackgroundModifer())
                 
-                if hasLoggedToday{
+                if dailyDataService.userHasLoggedToday{
                     Section{
                         VStack{
                             HStack{

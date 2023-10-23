@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct MainTabBar: View {
+    @EnvironmentObject var dailyDataService: DailyDataService
     let user: User
+    
     var body: some View {
         TabView{
             GlobalMoodView()
+                .environmentObject(dailyDataService)
                 .tabItem {
                     Image(systemName: "globe.americas")
                 }
             
             YourMoodView()
+                .environmentObject(dailyDataService)
                 .tabItem {
                     Image(systemName: "brain")
                 }
