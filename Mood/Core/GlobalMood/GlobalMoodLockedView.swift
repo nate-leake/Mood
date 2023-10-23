@@ -9,7 +9,16 @@ import SwiftUI
 
 struct GlobalMoodLockedView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 20){
+            Image(systemName: "lock.circle.dotted")
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(.black, .appPurple)
+                .font(.system(size: 100))
+                
+            
+            Text("Log your mood to view global data")
+                .font(.title3)
+        }
     }
 }
 
