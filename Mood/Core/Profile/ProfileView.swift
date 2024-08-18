@@ -7,8 +7,22 @@
 
 import SwiftUI
 
+
+
 struct ProfileView: View {
+    @EnvironmentObject var dailyDataService: DailyDataService
+    @State private var numberOfEntries: Int? = nil
     var user : User
+    
+    func fetchResult() async {
+        do {
+            let value = try await dailyDataService.getNumberOfEntries()
+            numberOfEntries = value
+        } catch {
+            print(error.localizedDescription)
+            numberOfEntries = 0
+        }
+    }
     
     private let dateFormatter = {
         let formatter = DateFormatter()
@@ -20,7 +34,7 @@ struct ProfileView: View {
         NavigationStack {
             VStack{
                 VStack{
-                    Text("37")
+                    Text("\(numberOfEntries ?? 0)")
                         .font(.title)
                     Text("entries")
                 }
@@ -32,6 +46,11 @@ struct ProfileView: View {
                 )
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                .onAppear {
+                    Task {
+                        await fetchResult()
+                    }
+                }
                 
                 List{
                     Section{

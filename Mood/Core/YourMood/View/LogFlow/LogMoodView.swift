@@ -142,6 +142,7 @@ struct LogMoodView: View {
                             .environmentObject(viewModel)
                             .navigationBarBackButtonHidden(true)
                             .onAppear{
+                                viewModel.dailyData.addPair(pair: ContextEmotionPair(context: contexts[contextIndex], emotions: selectedEmotions, weight: Weight(rawValue: Int(intensity)) ?? .none))
                                 print("finished")
                                 viewModel.dailyData.date = Date()
                                 print("DailyData length: \(viewModel.dailyData.pairs.count)")
@@ -191,7 +192,7 @@ struct LogMoodView: View {
 }
 
 #Preview {
-    @State var isPresented: Bool = true
+    @Previewable @State var isPresented: Bool = true
     
     return LogMoodView(contexts: ["family","health","identity","finances","politics","weather","work"], isPresented: $isPresented)
         .environmentObject(UploadMoodViewModel())

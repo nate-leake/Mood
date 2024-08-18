@@ -46,7 +46,7 @@ struct SecureInputView: View {
 }
 
 #Preview {
-    @State var text: String = ""
+    @Previewable @State var text: String = ""
     
     return SecureInputView("", text: $text, prompt: Text("password").foregroundStyle(.gray))
 }

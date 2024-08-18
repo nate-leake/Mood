@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GlobalMoodView: View {
+struct GlobalMoodView: View {    
     var body: some View {
         NavigationStack {
             ScrollView{

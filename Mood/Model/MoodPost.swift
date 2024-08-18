@@ -31,12 +31,14 @@ extension MoodData {
 struct MoodPost: Identifiable, Hashable, Codable {
     let id: String
     var timestamp: Date
+    var timeZoneOffset: Int
     var data: [ContextEmotionPair]
     
     
     init(id: String, data: DailyData) {
         self.id = id
         self.timestamp = data.date
+        self.timeZoneOffset = data.timeZoneOffset
         
         var tmpData: [ContextEmotionPair] = []
         for pair in data.pairs {

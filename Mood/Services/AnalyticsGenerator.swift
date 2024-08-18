@@ -11,7 +11,7 @@ struct AnalyticsGenerator {
     private var moods: [Mood] = Mood.allMoods
     private var contexts: [String] = ["family", "finances", "health", "identity", "politics", "weather", "work"]
     
-    func biggestImpact() -> [String] {
+    func biggestImpact(data: [DailyData]) -> [String] {
         var impacts: [String] = []
         
         var totals : [String: Int] = [:]
@@ -20,7 +20,7 @@ struct AnalyticsGenerator {
             totals[context] = 0
         }
         
-        for day in DailyData.MOCK_DATA {
+        for day in data {
             for pair in day.pairs {
                 totals[pair.context] = totals[pair.context]! + pair.weight.rawValue
             }

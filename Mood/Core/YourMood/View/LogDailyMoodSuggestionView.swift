@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LogDailyMoodSuggestionView: View {
     @StateObject var model = UploadMoodViewModel()
-    @Binding var hlt: Bool
     @State var showingSheet = false
     
     var body: some View {
@@ -23,10 +22,6 @@ struct LogDailyMoodSuggestionView: View {
                 Spacer()
                 
                 Button{
-//                    withAnimation {
-//                        hlt = true
-//                        print(hlt)
-//                    }
                     showingSheet.toggle()
                 } label: {
                     Text("log")
@@ -49,7 +44,5 @@ struct LogDailyMoodSuggestionView: View {
 }
 
 #Preview {
-    @State var logger = false
-    
-    return LogDailyMoodSuggestionView(hlt: $logger)
+    return LogDailyMoodSuggestionView()
 }
