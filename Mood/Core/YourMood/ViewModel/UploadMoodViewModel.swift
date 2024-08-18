@@ -10,5 +10,5 @@ import SwiftUI
 import Firebase
 
 class UploadMoodViewModel: ObservableObject {
-    @Published var dailyData: DailyData = DailyData(date: Date(), pairs: [])
+    @Published var dailyData: DailyData = DailyData(date: Date(), timeZoneOffset: TimeZone.current.secondsFromGMT(for: Date()), pairs: [])
 }

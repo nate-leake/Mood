@@ -14,7 +14,7 @@ struct GlobalMoodViewWrapper: View {
         if dailyDataService.userHasLoggedToday{
             GlobalMoodView()
         } else {
-            GlobalMoodLockedView()
+            GlobalMoodLockedView(logWindowOpen: dailyDataService.logWindowOpen)
         }
     }
 }

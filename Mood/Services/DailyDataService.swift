@@ -39,6 +39,8 @@ class CustomDateFormatter{
 
 class DailyDataService : ObservableObject{
     @Published var userHasLoggedToday: Bool = false
+    @Published var logWindowOpen: Bool = false
+    @Published var todaysDailyData: DailyData?
     
     static let shared = DailyDataService()
     
@@ -50,6 +52,9 @@ class DailyDataService : ObservableObject{
         }
     }
     
+    /// Uploads the user's DailyData wrapped in a MoodPost to the database
+    /// - Parameter dailyData: The DailyData object to be uploaded
+    /// - Returns: The success or failure of the upload represented as a true or false boolean
     @MainActor
     func uploadMood(dailyData: DailyData) async throws -> Bool {
         print("DEBUG: uploading mood post...")
@@ -78,7 +83,6 @@ class DailyDataService : ObservableObject{
         return uploadSuccess
     }
     
-    // this function will fetch a specified number of documents and return them as an array
     func fetchDocuments(limit: Int) async throws -> QuerySnapshot{
         print("DEBUG: fetching documents...")
         
@@ -94,24 +98,33 @@ class DailyDataService : ObservableObject{
         
     }
     
-    // move some functionality to get all documents to fetchDocuments
-    // use fetchDocuments as await function call?
-    // process this returned element as .data(MoodPost.self) and get its timestamp
-    func fetchLastLoggedDate() async throws -> Date? {
-        print("DEBUG: fetching last logged...")
-        
-        var lastLoggedDate: Date?
-        
+    @MainActor
+    func fetchLastLoggedMoodPost() async throws -> MoodPost? {
         let snapshot = try await fetchDocuments(limit: 1)
+        var post: MoodPost?
         
         if snapshot.count > 0 {
-            let document = snapshot.documents[0]
-            
-            print("zeroth index: \(try document.data(as: MoodPost.self))")
-            
-            lastLoggedDate = try document.data(as: MoodPost.self).timestamp
-            
-            print("DEBUG: fetched last logged.")
+            post = try snapshot.documents[0].data(as: MoodPost.self)
+            if let p = post{
+                self.todaysDailyData = DailyData(date: p.timestamp, timeZoneOffset: p.timeZoneOffset, pairs: p.data)
+            }
+        }
+        
+        return post
+    }
+    
+    func fetchLastLoggedDate() async throws -> [String: Any]? {
+        print("DEBUG: fetching last logged date...")
+        
+        var lastLoggedDate: [String: Any]?
+        
+        let post = try await fetchLastLoggedMoodPost()
+        
+        if let p = post {
+            lastLoggedDate = ["logDate": p.timestamp,
+                              "timezoneOffset": p.timeZoneOffset]
+            print("DEBUG: fetched last logged date")
+            print(lastLoggedDate ?? "No last log date retreived")
         }
         
         return lastLoggedDate
@@ -119,26 +132,41 @@ class DailyDataService : ObservableObject{
     
     @MainActor
     func getLoggedToday() async throws{
-        let fetchedDate: Date? = try await fetchLastLoggedDate()
+        let fetchedDate: [String: Any]? = try await fetchLastLoggedDate()
+        let logDate = fetchedDate?["logDate"] as? Timestamp ?? Timestamp()
+        let lastLogDate = logDate.dateValue()
+        let lastOffset = fetchedDate?["timezoneOffset"] as? Int ?? 0
         
-        if let date = fetchedDate {
-            print("Date collected! \(date)")
-            print(Date())
-            print(Date().get(.day).day ?? "no day")
-            if let getDay = date.get(.day).day {
-                if let currentDay = Date().get(.day).day {
-                    if getDay < currentDay {
-                        print("has not logged today")
-                        self.userHasLoggedToday = false
-                    } else {
-                        print("has logged today")
-                        self.userHasLoggedToday = true
-                    }
-                }
-            }
-        } else {
-            print("Date not collected")
+        let now = Date()
+        let currentOffset = TimeZone.current.secondsFromGMT(for: now)
+        
+        // Adjust last log date to the current timezone
+        let adjustedLastLogDate = lastLogDate.addingTimeInterval(TimeInterval(currentOffset - lastOffset))
+        
+        // Get the current time and compare
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: now)
+        let logWindowStart = calendar.date(byAdding: .hour, value: 19, to: startOfToday)!
+        
+        print(adjustedLastLogDate, ">=", logWindowStart, "&&", adjustedLastLogDate, "<", now)
+        
+        // Check if the log window has oponed
+        if now >= logWindowStart{
+            self.logWindowOpen = true
         }
+        
+        
+        // Check if last log is within today’s window
+        if adjustedLastLogDate >= logWindowStart && adjustedLastLogDate < now {
+            print("Has logged today")
+            self.userHasLoggedToday = true  // Already logged today
+        } else {
+            print("Did not log yet")
+            self.userHasLoggedToday = false   // Can log today
+        }
+        
     }
+    
+    
     
 }
