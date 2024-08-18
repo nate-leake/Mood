@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Displays a titled percentage bar with a color that corresponds to the emotion
 struct GlobalPercentView: View {
     var context: String
     var percent: Int

@@ -16,6 +16,8 @@ struct YourMoodView: View {
     var body: some View {
         NavigationStack {
             List {
+                // checks if the user has logged alreay
+                // and that if they have not logged yet that the logging window is open
                 if !dailyDataService.userHasLoggedToday && dailyDataService.logWindowOpen {
                     Section {
                         Text("log today's mood")

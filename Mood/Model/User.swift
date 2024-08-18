@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Contains basic information about the user
 struct User: Codable {
     let email: String // email is currently let which will prohibit the user from updating this informarion.
     var name: String

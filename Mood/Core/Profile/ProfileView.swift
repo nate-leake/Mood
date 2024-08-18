@@ -14,6 +14,7 @@ struct ProfileView: View {
     @State private var numberOfEntries: Int? = nil
     var user : User
     
+    /// gets the number of entries the user has from the DailyDataService in an async environment
     func fetchResult() async {
         do {
             let value = try await dailyDataService.getNumberOfEntries()

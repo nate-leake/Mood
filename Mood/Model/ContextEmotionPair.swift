@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The intensity of the emotion ranging from 0-3
 enum Weight : Int, Codable, Hashable {
     case none = 0
     case slight = 1
@@ -14,6 +15,7 @@ enum Weight : Int, Codable, Hashable {
     case extreme = 3
 }
 
+/// Groups the context to the user's emotions and the emotions to an intensity
 class ContextEmotionPair : ObservableObject, Codable, Hashable {
     @Published var context : String
     @Published var emotions : [String]
@@ -52,12 +54,22 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
         try container.encode(weight, forKey: .weight)
     }
     
+    /// Create a ContextEmotionPair using [String] for the emotions rather than [Emotion]
+    /// - Parameters:
+    ///   - context: A String of the context to provide with the emotion
+    ///   - emotions: A list of emotions that the user feels as a String
+    ///   - weight: The intesnity of the emotions
     init(context: String, emotions: [String], weight: Weight) {
         self.context = context
         self.emotions = emotions
         self.weight = weight
     }
     
+    /// Create a ContectEmotionPair using [Emotion] for the emotions rather than [String]
+    /// - Parameters:
+    ///   - context:A String of the context to provide with the emotion
+    ///   - emotions: A list of emotions that the user feels as an Emotion
+    ///   - weight: The intesnity of the emotions
     init(context: String, emotions: [Emotion], weight: Weight) {
         self.context = context
         self.emotions = []

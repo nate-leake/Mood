@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+/// A mood with the acceptable emotions associated to it
 class Mood: Codable, Equatable {
     var name: String
     var emotions: [Emotion]
@@ -37,6 +38,8 @@ class Emotion: Codable {
         self.name = name
     }
     
+    /// Looks up what Mood this Emotion belongs to
+    /// - Returns: An Optional Mood that this emotion belongs to
     func getParentMood() -> Mood? {
         var parent: Mood?
         for mood in Mood.allMoods {
