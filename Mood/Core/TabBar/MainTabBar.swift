@@ -29,6 +29,7 @@ struct MainTabBar: View {
                 .tag(2)
             
             ProfileView(user: user)
+                .environmentObject(dailyDataService)
                 .tabItem {
                     Image(systemName: "person")
                 }

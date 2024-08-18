@@ -52,6 +52,17 @@ class DailyDataService : ObservableObject{
         }
     }
     
+    func getNumberOfEntries() async throws -> Int {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userPostsCollection = userDocument.collection("posts")
+        
+        let snapshot = try await userPostsCollection.count.getAggregation(source: .server)
+        print("user has \(Int(truncating: snapshot.count)) entries")
+        return Int(truncating: snapshot.count)
+    }
+    
     /// Uploads the user's DailyData wrapped in a MoodPost to the database
     /// - Parameter dailyData: The DailyData object to be uploaded
     /// - Returns: The success or failure of the upload represented as a true or false boolean
