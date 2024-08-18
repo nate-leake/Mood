@@ -1,7 +1,31 @@
 {
   "images" : [
     {
-      "filename" : "moodAppIcon_iOS.png",
+      "filename" : "mood_1024_light.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "mood_1024_dark.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "mood_1024_tint.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
