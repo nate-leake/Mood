@@ -8,6 +8,7 @@
 import Foundation
 
 
+/// Stores the ContextEmotionPairs from the user's log for that day
 class DailyData: Codable, Hashable{
     var date: Date
     var timeZoneOffset: Int

@@ -7,10 +7,14 @@
 
 import Foundation
 
+/// On device calulations for analytics of the recent data
 struct AnalyticsGenerator {
     private var moods: [Mood] = Mood.allMoods
     private var contexts: [String] = ["family", "finances", "health", "identity", "politics", "weather", "work"]
     
+    /// Sorts contexts by their weight
+    /// - Parameter data: A list of DailyData that should be analyzed
+    /// - Returns: A list of type String which is the context. This is sorted greatest to least by weight
     func biggestImpact(data: [DailyData]) -> [String] {
         var impacts: [String] = []
         
@@ -41,6 +45,8 @@ struct AnalyticsGenerator {
         return impacts
     }
     
+    /// Sorts the top 4 most frequently logged emotions
+    /// - Returns: A sorted list of type String of the top 4 most logged emotions
     func biggestEmotions() -> [String] {
         var emotions: [String] = []
         let limit = 4

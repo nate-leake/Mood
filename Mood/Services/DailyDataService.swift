@@ -37,6 +37,7 @@ class CustomDateFormatter{
     }
 }
 
+/// The DailyDataService is responsable for handling the user's daily logs
 class DailyDataService : ObservableObject{
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
@@ -52,6 +53,8 @@ class DailyDataService : ObservableObject{
         }
     }
     
+    /// Loads the number of posts the user has made over all time
+    /// - Returns: An Int of the user's post count
     func getNumberOfEntries() async throws -> Int {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
@@ -86,29 +89,27 @@ class DailyDataService : ObservableObject{
             try await dailyPostRef.setData(encodedDailyPost)
             try await privatePostRef.setData(encodedPrivatePost)
             uploadSuccess = true
-            print("DEBUG: uploaded mood post")
         } catch {
-            print("DEBUG: failed to upload mood post")
         }
         
         return uploadSuccess
     }
     
+    /// Gets a certain number of documents from the users "posts" collection
+    /// - Parameter limit: The number of post documents to retreive
+    /// - Returns: QuerySnapshot of the posts
     func fetchDocuments(limit: Int) async throws -> QuerySnapshot{
-        print("DEBUG: fetching documents...")
-        
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
         let userDocument = Firestore.firestore().collection("users").document(uid)
         let userPostsCollection = userDocument.collection("posts")
         let query = userPostsCollection.order(by: "timestamp", descending: true).limit(to: limit)
-        
-        print("DEBUG: fetched documents.")
-        
+                
         return try await query.getDocuments()
-        
     }
     
+    /// Gets the last mood post that the user uploaded
+    /// - Returns: An Optional MoodPost which will be the most recent post from the user
     @MainActor
     func fetchLastLoggedMoodPost() async throws -> MoodPost? {
         let snapshot = try await fetchDocuments(limit: 1)
@@ -124,6 +125,8 @@ class DailyDataService : ObservableObject{
         return post
     }
     
+    /// Derives the date and timezone offset from the last logged MoodPost
+    /// - Returns: A dictionary containing the logDate and the timezoneOffset
     func fetchLastLoggedDate() async throws -> [String: Any]? {
         print("DEBUG: fetching last logged date...")
         
@@ -141,6 +144,7 @@ class DailyDataService : ObservableObject{
         return lastLoggedDate
     }
     
+    /// Checks if the user has logged today or not and sets the DailyDataService.userHasLoggedToday
     @MainActor
     func getLoggedToday() async throws{
         let fetchedDate: [String: Any]? = try await fetchLastLoggedDate()
@@ -168,6 +172,10 @@ class DailyDataService : ObservableObject{
         
         
         // Check if last log is within today’s window
+        // Potential bug in this logic. The last log does not need to be within the current day's
+        // window due to timezone changes and it is also not the objective of this line of code.
+        // The starting window needs to be less than the current dateTime and the last log date
+        // shouldn't share the same date as the current date
         if adjustedLastLogDate >= logWindowStart && adjustedLastLogDate < now {
             print("Has logged today")
             self.userHasLoggedToday = true  // Already logged today

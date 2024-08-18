@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 
+/// A structure for holding information that relates to one of the contexts. It provides the "path" to the emotion by storing the moodType. This is used for loading the database back into the app and displaying it properly.
 struct MoodData: Hashable, Codable {
     let id: String
     let context: String
@@ -28,6 +29,7 @@ extension MoodData {
 }
 
 
+/// A wrapper for DailyData that gets uploaded to the database. The extra data that is added is used
 struct MoodPost: Identifiable, Hashable, Codable {
     let id: String
     var timestamp: Date
@@ -35,6 +37,10 @@ struct MoodPost: Identifiable, Hashable, Codable {
     var data: [ContextEmotionPair]
     
     
+    /// Reformats the DailyData object and wraps it with other information to be uploaded to the database
+    /// - Parameters:
+    ///   - id: The unique ID to be used for the MoodPost
+    ///   - data: The DailyData that should be included in the post
     init(id: String, data: DailyData) {
         self.id = id
         self.timestamp = data.date

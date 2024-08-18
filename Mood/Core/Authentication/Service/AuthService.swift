@@ -43,6 +43,7 @@ class AuthService {
         }
     }
     
+    /// Loads data about the user's profile only
     @MainActor
     func loadUserData() async throws{
         self.userSession = Auth.auth().currentUser
