@@ -29,7 +29,7 @@ extension MoodData {
 }
 
 
-/// A wrapper for DailyData that gets uploaded to the database. The extra data that is added is used
+/// A wrapper for DailyData that gets uploaded to the database. The extra data that is added is used to track log time.
 struct MoodPost: Identifiable, Hashable, Codable {
     let id: String
     var timestamp: Date

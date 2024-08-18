@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// On device calulations for analytics of the recent data
+/// On device calculations for analytics of the recent data
 struct AnalyticsGenerator {
     private var moods: [Mood] = Mood.allMoods
     private var contexts: [String] = ["family", "finances", "health", "identity", "politics", "weather", "work"]

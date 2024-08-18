@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainTabBar: View {
-    // selection forces the default selected tab to match the tag assigned to that tabItem
+    // selection var forces the default selected tab to match the tag assigned to that tabItem
     @State private var selection = 2
     @EnvironmentObject var dailyDataService: DailyDataService
     let user: User

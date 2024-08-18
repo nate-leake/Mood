@@ -38,7 +38,7 @@ class Emotion: Codable {
         self.name = name
     }
     
-    /// Looks up to what Mood this Emotion belongs to
+    /// Looks up what Mood this Emotion belongs to
     /// - Returns: An Optional Mood that this emotion belongs to
     func getParentMood() -> Mood? {
         var parent: Mood?
