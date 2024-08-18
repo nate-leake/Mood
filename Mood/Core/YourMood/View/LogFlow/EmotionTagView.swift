@@ -104,7 +104,7 @@ struct EmotionTagView: View {
 }
 
 #Preview {
-    @State var selectedEmotions: [Emotion] = []
+    @Previewable @State var selectedEmotions: [Emotion] = []
     
     return EmotionTagView(selectedEmotions: $selectedEmotions, mood: Mood.allMoods[0])
 }

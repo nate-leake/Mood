@@ -100,7 +100,7 @@ struct MoodTagView: View {
 
 
 #Preview {
-    @State var selectedMood: Mood?
+    @Previewable @State var selectedMood: Mood?
     
     return MoodTagView(selectedMoods: $selectedMood)
 }

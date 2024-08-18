@@ -92,6 +92,9 @@ struct MoodLoggedView: View {
             
             Task {
                 uploaded = try await DailyDataService.shared.uploadMood(dailyData:viewModel.dailyData)
+                if uploaded {
+                    try await DailyDataService.shared.fetchLastLoggedMoodPost()
+                }
             }
             
             _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer0) in
@@ -129,7 +132,7 @@ struct MoodLoggedView: View {
 }
 
 #Preview {
-    @State var isPresented = true
+    @Previewable @State var isPresented = true
     
     return MoodLoggedView(isPresented: $isPresented)
 }
