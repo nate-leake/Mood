@@ -7,12 +7,18 @@
 
 import SwiftUI
 
+private struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
+
 struct EmotionTagView: View {
     @Binding var selectedEmotions: [Emotion]
     var mood: Mood
     
-    @State private var totalHeight = CGFloat.zero       // << variant for ScrollView/List
-    //    = CGFloat.infinity   // << variant for VStack
+    @State private var totalHeight = CGFloat.zero
     
     var body: some View {
         VStack {
@@ -23,8 +29,7 @@ struct EmotionTagView: View {
                     })
             }
         }
-        .frame(height: totalHeight)// << variant for ScrollView/List
-        //.frame(maxHeight: totalHeight) // << variant for VStack
+        .frame(height: totalHeight) // Use the updated height
     }
     
     private func generateContent(in g: GeometryProxy) -> some View {
@@ -73,16 +78,8 @@ struct EmotionTagView: View {
     
     private func item(for emotion: Emotion) -> some View {
         let isSelected = selectedEmotions.contains(where: {$0.name == emotion.name})
-        var foregroundColorSelected: Color
-        var foregroundColorNotSelected: Color
-        
-        if mood.name == Mood.allMoods[0].name || mood.name == Mood.allMoods[4].name {
-            foregroundColorSelected = .appBlack
-            foregroundColorNotSelected = .appBlack
-        } else {
-            foregroundColorSelected = .white
-            foregroundColorNotSelected = .appBlack
-        }
+        let foregroundColorSelected: Color = mood.getColor().isLight() ? .black : .white
+        let foregroundColorNotSelected: Color = .appBlack
         
         return Text(emotion.name)
             .padding(.all, 7)
@@ -95,12 +92,13 @@ struct EmotionTagView: View {
     }
     
     private func viewHeightReader(_ binding: Binding<CGFloat>) -> some View {
-        return GeometryReader { geometry in
-            Color.clear.onAppear {
-                binding.wrappedValue = geometry.size.height
+            GeometryReader { geometry in
+                Color.clear.preference(key: ViewHeightKey.self, value: geometry.size.height)
+            }
+            .onPreferenceChange(ViewHeightKey.self) { height in
+                binding.wrappedValue = height
             }
         }
-    }
 }
 
 #Preview {
