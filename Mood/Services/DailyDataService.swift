@@ -104,7 +104,7 @@ class DailyDataService : ObservableObject{
         let userDocument = Firestore.firestore().collection("users").document(uid)
         let userPostsCollection = userDocument.collection("posts")
         let query = userPostsCollection.order(by: "timestamp", descending: true).limit(to: limit)
-                
+        
         return try await query.getDocuments()
     }
     
@@ -148,41 +148,46 @@ class DailyDataService : ObservableObject{
     @MainActor
     func getLoggedToday() async throws{
         let fetchedDate: [String: Any]? = try await fetchLastLoggedDate()
-        let logDate = fetchedDate?["logDate"] as? Timestamp ?? Timestamp()
-        let lastLogDate = logDate.dateValue()
-        let lastOffset = fetchedDate?["timezoneOffset"] as? Int ?? 0
+        let logDate = fetchedDate?["logDate"] as? Date ?? Date()
         
         let now = Date()
         let currentOffset = TimeZone.current.secondsFromGMT(for: now)
-        
-        // Adjust last log date to the current timezone
-        let adjustedLastLogDate = lastLogDate.addingTimeInterval(TimeInterval(currentOffset - lastOffset))
-        
+                
         // Get the current time and compare
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: now)
         let logWindowStart = calendar.date(byAdding: .hour, value: 19, to: startOfToday)!
-        
-        print(adjustedLastLogDate, ">=", logWindowStart, "&&", adjustedLastLogDate, "<", now)
         
         // Check if the log window has oponed
         if now >= logWindowStart{
             self.logWindowOpen = true
         }
         
-        
-        // Check if last log is within today’s window
-        // Potential bug in this logic. The last log does not need to be within the current day's
-        // window due to timezone changes and it is also not the objective of this line of code.
-        // The starting window needs to be less than the current dateTime and the last log date
-        // shouldn't share the same date as the current date
-        if adjustedLastLogDate >= logWindowStart && adjustedLastLogDate < now {
-            print("Has logged today")
-            self.userHasLoggedToday = true  // Already logged today
+        // *******************************************************************************
+        // UNLUESS THERE IS A CONFIRMED BUG WITH THE LINES BELOW THIS STATEMENT, DO NOT ALTER THIS CODE
+        // This took me so long and so many tries to get right.
+        // This code works by getting the start of the last log date
+        // We then compare that start of the day to the start of the current day
+        // If they are the same day, the user already logged
+        // If they are not the same day then the user has not logged (or the user time traveled)
+        // This is a LOT less convoluted than the code I spend hours writing
+        // NOTE: Apple uses UTC for Date objects and I think Calendar dates are formatted to local time
+                
+        // Determine if the user has logged today
+        let startOfAdjustedLogDay = calendar.startOfDay(for: logDate)
+                
+        // If the adjusted last log date falls within today’s date range
+        if startOfAdjustedLogDay == startOfToday {
+            self.userHasLoggedToday = true
         } else {
-            print("Did not log yet")
-            self.userHasLoggedToday = false   // Can log today
+            self.userHasLoggedToday = false
         }
+        
+        // DO NOT ALTER THE ABOVE LINES OF CODE!
+        // See explination above :)
+        
+        print("User has logged today: \(userHasLoggedToday)")
+        print("Log window open: \(logWindowOpen)")
         
     }
     
