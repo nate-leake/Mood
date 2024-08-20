@@ -46,6 +46,15 @@ struct MoodLoggedView: View {
                 break
             }
         }
+        
+        if top3.count == 1 {
+            top3.append(top3[0])
+            top3.append(top3[0])
+        } else if top3.count == 2 {
+            top3.append(top3[1])
+            top3[1] = top3[0]
+        }
+        
         print(top3)
         return top3
     }
@@ -93,7 +102,9 @@ struct MoodLoggedView: View {
             Task {
                 uploaded = try await DailyDataService.shared.uploadMood(dailyData:viewModel.dailyData)
                 if uploaded {
-                    try await DailyDataService.shared.fetchLastLoggedMoodPost()
+                    DailyDataService.shared.userHasLoggedToday = true
+                } else {
+                    print("Something went wrong uploading mood post!")
                 }
             }
             
@@ -123,9 +134,6 @@ struct MoodLoggedView: View {
             
             _ = Timer.scheduledTimer(withTimeInterval: 4.5, repeats: false) { (closeTimer) in
                 self.isPresented = false
-                if uploaded{
-                    DailyDataService.shared.userHasLoggedToday = true
-                }
             }
         }
     }
