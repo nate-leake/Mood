@@ -12,9 +12,7 @@ struct MoodTagView: View {
     var tags: [Mood] = Mood.allMoods
     
     
-    @State private var totalHeight
-    = CGFloat.zero       // << variant for ScrollView/List
-    //    = CGFloat.infinity   // << variant for VStack
+    @State private var totalHeight = CGFloat.zero
     
     var body: some View {
         VStack {
@@ -22,8 +20,8 @@ struct MoodTagView: View {
                 self.generateContent(in: geometry)
             }
         }
-        .frame(height: totalHeight)// << variant for ScrollView/List
-        //.frame(maxHeight: totalHeight) // << variant for VStack
+        //.frame(height: totalHeight)// << variant for ScrollView/List
+        .frame(maxHeight: totalHeight) // << variant for VStack
     }
     
     private func generateContent(in g: GeometryProxy) -> some View {
@@ -68,16 +66,8 @@ struct MoodTagView: View {
     private func item(for mood: Mood) -> some View {
         let isSelected = mood.name == selectedMoods?.name
         
-        var foregroundColorSelected: Color
-        var foregroundColorNotSelected: Color
-        
-        if mood.name == Mood.allMoods[0].name || mood.name == Mood.allMoods[4].name {
-            foregroundColorSelected = .appBlack
-            foregroundColorNotSelected = .appBlack
-        } else {
-            foregroundColorSelected = .white
-            foregroundColorNotSelected = .appBlack
-        }
+        let foregroundColorSelected: Color = mood.getColor().isLight() ? .black : .white
+        let foregroundColorNotSelected: Color = .appBlack
         
         return Text(mood.name)
             .padding(.all, 7)
