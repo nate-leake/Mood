@@ -28,6 +28,7 @@ struct MoodApp: App {
                     UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 #endif
                 }
+            NotificationService()
         }
         
     }
