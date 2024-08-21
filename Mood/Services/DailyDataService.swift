@@ -88,6 +88,7 @@ class DailyDataService : ObservableObject{
         do {
             try await dailyPostRef.setData(encodedDailyPost)
             try await privatePostRef.setData(encodedPrivatePost)
+            DailyDataService.shared.todaysDailyData = dailyData
             uploadSuccess = true
         } catch {
         }
@@ -151,7 +152,6 @@ class DailyDataService : ObservableObject{
         let logDate = fetchedDate?["logDate"] as? Date ?? Date()
         
         let now = Date()
-        let currentOffset = TimeZone.current.secondsFromGMT(for: now)
                 
         // Get the current time and compare
         let calendar = Calendar.current
