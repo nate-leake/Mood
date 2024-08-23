@@ -49,6 +49,7 @@
 		AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */; };
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
 		AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */; };
+		AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE59E812C768BCA002285E8 /* NotificationService.swift */; };
 		AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */; };
 		AFEC9B3B2AD4581800F35F8B /* MoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */; };
 		AFEC9B3E2AD45FB200F35F8B /* LogMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3D2AD45FB200F35F8B /* LogMoodView.swift */; };
@@ -109,6 +110,7 @@
 		AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysFeelingsView.swift; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
+		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
 		AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPost.swift; sourceTree = "<group>"; };
 		AFEC9B3D2AD45FB200F35F8B /* LogMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogMoodView.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		AF6BFA3A2AAFCD80005B4DDA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AFE59E812C768BCA002285E8 /* NotificationService.swift */,
 				AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */,
 				AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */,
 				AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */,
@@ -528,6 +531,7 @@
 				AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */,
 				AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */,
 				AFAADDF82ADF32D20065E9CE /* DailyDataService.swift in Sources */,
+				AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */,
 				AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */,
 				AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */,
 				AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */,
@@ -692,7 +696,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -728,7 +732,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
