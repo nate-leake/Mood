@@ -43,6 +43,7 @@
 		AF8D74992AE6FABE00C0729E /* GlobalMoodViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */; };
 		AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */; };
 		AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */; };
+		AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */; };
 		AFAADDF82ADF32D20065E9CE /* DailyDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */; };
 		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
@@ -104,6 +105,7 @@
 		AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodViewWrapper.swift; sourceTree = "<group>"; };
 		AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodLockedView.swift; sourceTree = "<group>"; };
 		AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLoggedView.swift; sourceTree = "<group>"; };
+		AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataService.swift; sourceTree = "<group>"; };
 		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		AF6BFA202AAFCD2C005B4DDA = {
 			isa = PBXGroup;
 			children = (
+				AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */,
 				AF6BFA2B2AAFCD2C005B4DDA /* Mood */,
 				AF7BB2D12AB3650A0057EE18 /* MoodTests */,
 				AF6BFA2A2AAFCD2C005B4DDA /* Products */,
@@ -489,6 +492,7 @@
 				AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */,
 				AFF276772AB37DC900BCA717 /* GoogleService-Info.plist in Resources */,
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
+				AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */,
 				AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,7 +700,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -706,6 +710,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -732,7 +737,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -742,6 +747,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
