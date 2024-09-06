@@ -9,22 +9,30 @@ import Foundation
 import Firebase
 
 /// A structure for holding information that relates to one of the contexts. It provides the "path" to the emotion by storing the moodType. This is used for loading the database back into the app and displaying it properly.
-struct MoodData: Hashable, Codable {
-    let id: String
-    let context: String
-    let moodType: String
-    let emotion: String
-    let intensity: Int
+struct MoodData: Hashable, Codable, Identifiable {
+    var id: String
+    var date: Date
+    var context: String
+    var moodType: String
+    var intensity: Int
+    
+    init(date: Date, context: String, moodType: String, intensity: Int) {
+        self.id = NSUUID().uuidString
+        self.date = date
+        self.context = context
+        self.moodType = moodType
+        self.intensity = intensity
+    }
 }
 extension MoodData {
     static var MOCK_DATA : [MoodData] = [
-        .init(id: NSUUID().uuidString, context: "family", moodType: "happiness", emotion: "happy", intensity: 2),
-        .init(id: NSUUID().uuidString, context: "health", moodType: "sadness", emotion: "hopeless", intensity: 1),
-        .init(id: NSUUID().uuidString, context: "identity", moodType: "fearful", emotion: "stressed", intensity: 1),
-        .init(id: NSUUID().uuidString, context: "money", moodType: "anger", emotion: "furious", intensity: 3),
-        .init(id: NSUUID().uuidString, context: "politics", moodType: "neutrality", emotion: "indifferent", intensity: 0),
-        .init(id: NSUUID().uuidString, context: "weather", moodType: "sadness", emotion: "disappointed", intensity: 1),
-        .init(id: NSUUID().uuidString, context: "work", moodType: "happy", emotion: "hopeful", intensity: 1)
+        .init(date: Date.now, context: "family", moodType: "happiness", intensity: 2),
+        .init(date: Date.now, context: "health", moodType: "sadness", intensity: 1),
+        .init(date: Date.now, context: "identity", moodType: "fearful", intensity: 1),
+        .init(date: Date.now, context: "money", moodType: "anger", intensity: 3),
+        .init(date: Date.now, context: "politics", moodType: "neutrality", intensity: 0),
+        .init(date: Date.now, context: "weather", moodType: "sadness", intensity: 1),
+        .init(date: Date.now, context: "work", moodType: "happy", intensity: 1)
     ]
 }
 
@@ -64,6 +72,18 @@ extension MoodPost {
              ),
         .init(id: NSUUID().uuidString,
               data: DailyData.MOCK_DATA[2]
+             ),
+        .init(id: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[3]
+             ),
+        .init(id: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[4]
+             ),
+        .init(id: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[5]
+             ),
+        .init(id: NSUUID().uuidString,
+              data: DailyData.MOCK_DATA[6]
              )
     ]
 }
