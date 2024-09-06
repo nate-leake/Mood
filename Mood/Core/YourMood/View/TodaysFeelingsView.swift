@@ -104,5 +104,6 @@ struct TodaysFeelingsView: View {
 }
 
 #Preview {
-    TodaysFeelingsView()
+    TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[0])
+        .environmentObject(DailyDataService())
 }

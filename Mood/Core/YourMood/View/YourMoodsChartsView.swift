@@ -9,7 +9,15 @@ import SwiftUI
 
 struct YourMoodsChartsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            VStack(alignment: .leading){
+                
+                LineChartWithSelection(moodPosts: MoodPost.MOCK_DATA, viewingDataType: .mood, height: 250)
+                    .padding(.horizontal)
+                    .padding(.bottom, 50)
+ 
+            }
+        }
     }
 }
 
