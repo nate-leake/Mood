@@ -27,6 +27,7 @@ class Mood: Codable, Equatable {
     }
     
     static let allMoods: [Mood] = Bundle.main.decode(file: "moods.json")
+    static let allMoodNames: [String] = allMoods.map{$0.name}
     static let sampleMood: Mood = allMoods[0]
 }
 
@@ -51,6 +52,8 @@ class Emotion: Codable {
         }
         return parent
     }
+    
+    static let allEmotionNames: [String] = Mood.allMoods.flatMap{$0.emotions.map{$0.name}}
 }
 
 

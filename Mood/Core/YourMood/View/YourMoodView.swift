@@ -33,7 +33,7 @@ struct YourMoodView: View {
                 
                 Section {
                     NavigationLink{
-                        Text("More charts go here!")
+                        YourMoodsChartsView()
                     } label: {
                         HStack {
                             VStack{
