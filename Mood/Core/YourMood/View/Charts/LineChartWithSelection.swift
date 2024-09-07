@@ -171,7 +171,6 @@ struct LineChartWithSelection: View {
             .onAppear(
                 perform: {
                     prepareData(moodPosts: moodPosts)
-                    
                 }
             )
         }

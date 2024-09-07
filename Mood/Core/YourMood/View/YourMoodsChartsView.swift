@@ -10,6 +10,7 @@ import SwiftUI
 struct YourMoodsChartsView: View {
     @State private var moodPosts: [MoodPost]?
     @State private var loadingSuccess: Bool = false
+    @State private var isLoading: Bool = true
     
     var body: some View {
         ScrollView{
@@ -18,7 +19,11 @@ struct YourMoodsChartsView: View {
                 if loadingSuccess{
                     LineChartWithSelection(moodPosts: moodPosts ?? [], viewingDataType: .mood, height: 250)
                         .padding(.horizontal)
-                        .padding(.bottom, 50)
+                        .padding(.top, 15)
+                } else if isLoading {
+                    VStack {
+                        
+                    }
                 } else {
                     VStack {
                         Image(systemName: "exclamationmark.triangle.fill")
@@ -32,15 +37,19 @@ struct YourMoodsChartsView: View {
                             .font(.caption)
                     }
                 }
- 
+                
             }
             .task {
+                
                 do {
                     moodPosts = try await DailyDataService.shared.fetchRecentMoodPosts(quantity: 7)
-                    loadingSuccess = true
+                    withAnimation(.easeInOut){loadingSuccess = true}
                 } catch {
                     loadingSuccess = false
                 }
+                
+                withAnimation(.easeInOut){isLoading = false}
+                
             }
         }
     }
