@@ -24,23 +24,24 @@ extension Binding {
 }
 
 struct LineChartWithSelection: View {
-    
     @State var moodPosts: [MoodPost]
     let viewingDataType: ViewingDataType
-    @State var operationalData : [MoodData] = []
     var height: CGFloat
     
+    @State var operationalData : [MoodData] = []
     @State var currentSelection: String?
-    let prompt: String = "select"
-    
     @State var options: [String] = []
+    let prompt: String = "select"
     
     func prepareData(moodPosts: [MoodPost]){
         var tmpData: [MoodData] = []
         for post in moodPosts {
             for pair in post.data {
                 tmpData.append(
-                    MoodData(date: Calendar.current.startOfDay(for: post.timestamp), context: pair.context, moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none", intensity: pair.weight.rawValue)
+                    MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
+                             context: pair.context,
+                             moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
+                             intensity: pair.weight.rawValue)
                 )
             }
         }

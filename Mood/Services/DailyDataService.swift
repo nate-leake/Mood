@@ -126,6 +126,34 @@ class DailyDataService : ObservableObject{
         return post
     }
     
+    
+    func fetchRecentMoodPosts(quantity: Int) async throws -> [MoodPost] {
+        var posts: [MoodPost] = []
+        let snapshot = try await fetchDocuments(limit: quantity)
+        
+        print("snapshot count: \(snapshot.count)")
+        
+        if snapshot.count > 0 {
+            print("documents count: \(snapshot.documents.count)")
+            for document in snapshot.documents {
+                let post = try document.data(as: MoodPost.self)
+                posts.append(post)
+            }
+        }
+        
+        let cutoffDate = Calendar.current.date(byAdding: .day, value: userHasLoggedToday ? -7 : -8, to: Date())!
+        var filteredPosts:[MoodPost] = []
+        
+        for post in posts {
+            if Calendar.current.startOfDay(for: post.timestamp) > Calendar.current.startOfDay(for: cutoffDate){
+                filteredPosts.append(post)
+            }
+        }
+        
+        return filteredPosts
+    }
+    
+    
     /// Derives the date and timezone offset from the last logged MoodPost
     /// - Returns: A dictionary containing the logDate and the timezoneOffset
     func fetchLastLoggedDate() async throws -> [String: Any]? {
