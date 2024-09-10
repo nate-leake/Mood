@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
 
@@ -42,6 +43,8 @@ class DailyDataService : ObservableObject{
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
+    @Published var recentMoodPosts: [MoodPost]?
+    @MainActor @Published var appIsReady: Bool = false
     
     static let shared = DailyDataService()
     
@@ -50,6 +53,14 @@ class DailyDataService : ObservableObject{
     init(){
         Task {
             try await getLoggedToday()
+            try await setRecentMoodPosts(quantity: 7)
+            if recentMoodPosts != nil {
+                await MainActor.run {
+                    withAnimation(.easeInOut(duration: 2)){
+                        appIsReady = true
+                    }
+                }
+            }
         }
     }
     
@@ -126,8 +137,34 @@ class DailyDataService : ObservableObject{
         return post
     }
     
+    @MainActor
+    private func setRecentMoodPosts(quantity: Int) async throws {
+        var posts: [MoodPost] = []
+        let snapshot = try await fetchDocuments(limit: quantity)
+        
+        print("snapshot count: \(snapshot.count)")
+        
+        if snapshot.count > 0 {
+            print("documents count: \(snapshot.documents.count)")
+            for document in snapshot.documents {
+                let post = try document.data(as: MoodPost.self)
+                posts.append(post)
+            }
+        }
+        
+        let cutoffDate = Calendar.current.date(byAdding: .day, value: userHasLoggedToday ? -7 : -8, to: Date())!
+        var filteredPosts:[MoodPost] = []
+        
+        for post in posts {
+            if Calendar.current.startOfDay(for: post.timestamp) > Calendar.current.startOfDay(for: cutoffDate){
+                filteredPosts.append(post)
+            }
+        }
+        
+        self.recentMoodPosts = filteredPosts
+    }
     
-    func fetchRecentMoodPosts(quantity: Int) async throws -> [MoodPost] {
+    public func fetchRecentMoodPosts(quantity: Int) async throws -> [MoodPost] {
         var posts: [MoodPost] = []
         let snapshot = try await fetchDocuments(limit: quantity)
         
@@ -180,7 +217,7 @@ class DailyDataService : ObservableObject{
         let logDate = fetchedDate?["logDate"] as? Date ?? Date()
         
         let now = Date()
-                
+        
         // Get the current time and compare
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: now)
@@ -200,10 +237,10 @@ class DailyDataService : ObservableObject{
         // If they are not the same day then the user has not logged (or the user time traveled)
         // This is a LOT less convoluted than the code I spend hours writing
         // NOTE: Apple uses UTC for Date objects and I think Calendar dates are formatted to local time
-                
+        
         // Determine if the user has logged today
         let startOfAdjustedLogDay = calendar.startOfDay(for: logDate)
-                
+        
         // If the adjusted last log date falls within today’s date range
         if startOfAdjustedLogDay == startOfToday {
             self.userHasLoggedToday = true
@@ -218,7 +255,4 @@ class DailyDataService : ObservableObject{
         print("Log window open: \(logWindowOpen)")
         
     }
-    
-    
-    
 }
