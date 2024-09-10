@@ -12,6 +12,81 @@ struct AnalyticsGenerator {
     private var moods: [Mood] = Mood.allMoods
     private var contexts: [String] = ["family", "finances", "health", "identity", "politics", "weather", "work"]
     
+    func aggregateMoodIntensityTotals(moodData: [MoodData]) -> [(mood: String, intensity: Int)] {
+        var groupedItems = [String: Int]()
+        
+        for mood in moodData {
+            groupedItems[mood.moodType, default: 0] += mood.intensity
+        }
+        
+        // Step 2: Convert the dictionary to an array and sort by quantity in descending order
+        let sortedItems = groupedItems.map { (mood: $0.key, intensity: $0.value) }
+            .sorted { $0.intensity > $1.intensity }
+        
+        return sortedItems
+    }
+    
+    func aggregateMoodIntensityByDate(moodPosts: [MoodPost]) -> [MoodData]{
+        var tmpData: [MoodData] = []
+        for post in moodPosts {
+            for pair in post.data {
+                tmpData.append(
+                    MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
+                             context: pair.context,
+                             moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
+                             intensity: pair.weight.rawValue)
+                )
+            }
+        }
+        
+        // Dictionary to hold aggregated values
+        var aggregatedData: [String: [String: Int]] = [:] // [date: [moodType: intensity]]
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Assumes dates are formatted by day
+        
+        for data in tmpData {
+            let dateKey = dateFormatter.string(from: data.date)
+            if aggregatedData[dateKey] == nil {
+                aggregatedData[dateKey] = [:]
+            }
+            aggregatedData[dateKey]![data.moodType, default: 0] += data.intensity
+        }
+        
+        // Convert aggregated data back to MoodData
+        var result: [MoodData] = []
+        
+        for (dateString, moodTypes) in aggregatedData {
+            guard let date = dateFormatter.date(from: dateString) else { continue }
+            for (moodType, intensity) in moodTypes {
+                result.append(MoodData(date: date, context: "", moodType: moodType, intensity: intensity))
+            }
+        }
+        
+        // Ensure each day has exactly 5 mood types
+        let expectedMoodTypes: Set<String> = Set(Mood.allMoodNames) // Update with your specific mood types
+        
+        var finalResult: [MoodData] = []
+        
+        // Iterate through dates to check for missing mood types
+        let groupedByDate = Dictionary(grouping: result, by: { dateFormatter.string(from: $0.date) })
+        
+        for (dateString, moods) in groupedByDate {
+            guard let date = dateFormatter.date(from: dateString) else { continue }
+            let existingMoodTypes = Set(moods.map { $0.moodType })
+            let missingMoodTypes = expectedMoodTypes.subtracting(existingMoodTypes)
+            
+            finalResult.append(contentsOf: moods)
+            
+            // Add missing mood types with intensity 0
+            for moodType in missingMoodTypes {
+                finalResult.append(MoodData(date: date, context: "", moodType: moodType, intensity: 0))
+            }
+        }
+        
+        return finalResult.sorted{ $0.date < $1.date }
+    }
+    
     /// Sorts contexts by their weight
     /// - Parameter data: A list of DailyData that should be analyzed
     /// - Returns: A list of type String which is the context. This is sorted greatest to least by weight
