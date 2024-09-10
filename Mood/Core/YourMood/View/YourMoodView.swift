@@ -9,9 +9,13 @@ import SwiftUI
 import Charts
 
 
+
 struct YourMoodView: View {
     @EnvironmentObject var dailyDataService : DailyDataService
-    @State private var hasLoggedToday : Bool = false
+    @State private var isLoading: Bool = true
+    @State private var loadingSuccess:Bool = false
+    @State private var recentMoods: [(mood: String, intensity: Int)]?
+    @State private var totalMoodScore: Int = 0
     
     var body: some View {
         NavigationStack {
@@ -35,76 +39,67 @@ struct YourMoodView: View {
                     NavigationLink{
                         YourMoodsChartsView()
                     } label: {
-                        HStack {
-                            VStack{
-                                HStack{
-                                    Text("recent moods")
-                                        .fontWeight(.bold)
-                                        .foregroundStyle(.appBlack.opacity(0.5))
-                                    Spacer()
-                                }
-                                Spacer()
-                                HStack{
-                                    HStack{
-                                        HStack{
-                                            Circle()
-                                                .fill(.happiness)
-                                                .frame(width: 5)
-                                            Text("happy")
-                                                .font(.caption)
-                                        }
-                                        
-                                        HStack{
-                                            Circle()
-                                                .fill(.anger)
-                                                .frame(width: 5)
-                                            Text("angry").font(.caption)
-                                        }
-                                    }
-                                    HStack{
-                                        
-                                        HStack{
-                                            Circle()
-                                                .fill(.fearful)
-                                                .frame(width: 5)
-                                            Text("fearful").font(.caption)
-                                        }
-                                        
-                                        HStack{
-                                            Circle()
-                                                .fill(.sadness)
-                                                .frame(width: 5)
-                                            Text("sad").font(.caption)
-                                        }
-                                    }
-                                    Spacer()
-                                }
-                                
-                                Spacer()
-                            }
-                            Spacer()
-                            Chart {
-                                SectorMark(angle: .value("mood", 23), innerRadius: .ratio(0.618), angularInset: 1.5)
-                                    .foregroundStyle(.happiness)
-                                    .cornerRadius(5)
-                                
-                                SectorMark(angle: .value("mood", 14), innerRadius: .ratio(0.618), angularInset: 1.5)
-                                    .foregroundStyle(.anger)
-                                    .cornerRadius(5)
-                                
-                                SectorMark(angle: .value("mood", 12), innerRadius: .ratio(0.618), angularInset: 1.5)
-                                    .foregroundStyle(.fearful)
-                                    .cornerRadius(5)
-                                
-                                SectorMark(angle: .value("mood", 9), innerRadius: .ratio(0.618), angularInset: 1.5)
-                                    .foregroundStyle(.sadness)
-                                    .cornerRadius(5)
-                            }
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 70)
-                        }
                         
+                        HStack {
+                            if loadingSuccess {
+                                VStack{
+                                    HStack{
+                                        Text("recent moods")
+                                            .fontWeight(.bold)
+                                            .foregroundStyle(.appBlack.opacity(0.5))
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                    HStack {
+                                        if let recentMoodData = recentMoods{
+                                            WrappingMoodKey(items: recentMoodData, maxDisplayed: 4)
+                                        }
+                                        Spacer()
+                                    }
+                                    
+                                }
+                                Spacer()
+                                Chart {
+                                    if let recentMoodData = recentMoods {
+                                        ForEach(recentMoodData.prefix(4), id: \.mood) { data in
+                                            SectorMark(angle: .value("mood", (data.intensity*100 / totalMoodScore)), innerRadius: .ratio(0.618), angularInset: 1.5)
+                                                .foregroundStyle(Mood(name: data.mood, emotions: []).getColor())
+                                                .cornerRadius(5)
+                                        }
+                                    }
+                                }
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 70)
+                                
+                            }
+                            else {
+                                VStack{
+                                    HStack{
+                                        Text("recent moods")
+                                            .fontWeight(.bold)
+                                            .foregroundStyle(.appBlack.opacity(0.5))
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                    
+                                }
+                                Spacer()
+                                Chart {
+                                    
+                                    SectorMark(angle: .value("mood", 1),
+                                               innerRadius: .ratio(0.618),
+                                               angularInset: 1.5)
+                                    .foregroundStyle(.appPurple)
+                                    .cornerRadius(5)
+                                    
+                                }
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 70)
+                            }
+                        }
                     }
+                    
+                    
                 }
                 .modifier(ListRowBackgroundModifer())
                 
@@ -165,13 +160,37 @@ struct YourMoodView: View {
                     }
                     .modifier(ListRowBackgroundModifer())
                 }
-                
             }
-            .scrollContentBackground(.hidden)
-            
-            .navigationTitle("your moods")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .scrollContentBackground(.hidden)
+        
+        .navigationTitle("your moods")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: {
+            Task {
+                do {
+                    totalMoodScore = 0
+                    loadingSuccess = false
+                    isLoading = true
+                    
+                    if let moodPosts = dailyDataService.recentMoodPosts {
+                        let ag = AnalyticsGenerator()
+                        let tmp = ag.aggregateMoodIntensityByDate(moodPosts: moodPosts)
+                        recentMoods = ag.aggregateMoodIntensityTotals(moodData: tmp)
+                        
+                        for mood in recentMoods?.prefix(4) ?? [] {
+                            totalMoodScore += mood.intensity
+                        }
+                        withAnimation(.easeInOut){loadingSuccess = true}
+                    } else {
+                        
+                        withAnimation(.easeInOut){loadingSuccess = false}
+                    }
+                }
+                withAnimation(.easeInOut){isLoading = false}
+            }
+        }
+        )
         
     }
 }
