@@ -29,6 +29,7 @@ struct LineChartWithSelection: View {
     var height: CGFloat
     
     @State var operationalData : [MoodData] = []
+    @State var YAxisRangeMax: Int = 10
     @State var currentSelection: String?
     @State var options: [String] = []
     let prompt: String = "select"
@@ -72,7 +73,7 @@ struct LineChartWithSelection: View {
                     }
                 }
                 .frame(height: height-80)
-                //                .chartYScale(domain: [0, 6])
+                .chartYScale(domain: [0, YAxisRangeMax])
                 .chartXScale(domain: .automatic) // Fixed X-axis range for past 7 days
                 .chartXAxis {
                     AxisMarks(values: .stride(by: .day)) { value in
@@ -115,6 +116,8 @@ struct LineChartWithSelection: View {
                     } else if viewingDataType == .mood {
                         options = Mood.allMoodNames
                         operationalData = AnalyticsGenerator().aggregateMoodIntensityByDate(moodPosts: moodPosts)
+                        YAxisRangeMax = operationalData.map{$0.intensity}.max() ?? 8
+                        YAxisRangeMax += 2
                     }
                 }
             )
