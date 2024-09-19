@@ -197,4 +197,5 @@ struct YourMoodView: View {
 
 #Preview {
     YourMoodView()
+        .environmentObject(DailyDataService())
 }
