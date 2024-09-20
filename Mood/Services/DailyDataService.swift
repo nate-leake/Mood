@@ -64,6 +64,20 @@ class DailyDataService : ObservableObject{
         }
     }
     
+    func refreshAppReady(){
+        Task {
+            try await getLoggedToday()
+            try await setRecentMoodPosts(quantity: 7)
+            if recentMoodPosts != nil {
+                await MainActor.run {
+                    withAnimation(.easeInOut(duration: 2)){
+                        appIsReady = true
+                    }
+                }
+            }
+        }
+    }
+    
     /// Loads the number of posts the user has made over all time
     /// - Returns: An Int of the user's post count
     func getNumberOfEntries() async throws -> Int {

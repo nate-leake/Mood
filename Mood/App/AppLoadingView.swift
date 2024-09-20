@@ -21,6 +21,7 @@ struct AppLoadingView: View {
             if !isAnimating {
                 timer.invalidate() // Stop the timer when animation should end
             } else {
+                dailyDataService.refreshAppReady()
                 withAnimation(.snappy(duration: 0.25)) {
                     scale = 1.25
                 }
