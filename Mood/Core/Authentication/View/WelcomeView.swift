@@ -22,9 +22,9 @@ struct WelcomeView: View {
                             Image(systemName: "sun.max")
                                 .foregroundStyle(.appYellow)
                             Image(systemName: "briefcase.fill")
-                                .foregroundStyle(Color(hex: "53555f"))
-                            Image(systemName: "figure.2.and.child.holdinghands")
-                                .foregroundStyle(.blue)
+                                .foregroundStyle(Color(hex: "#53555f"))
+                            Image(systemName: "figure.and.child.holdinghands")
+                                .foregroundStyle(Color(hex: "#009c13"))
                             Image(systemName: "stethoscope")
                                 .foregroundStyle(.appRed)
                         }
