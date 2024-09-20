@@ -185,9 +185,11 @@ struct ContextLogView: View {
             Spacer()
             
             Button{
-                let contextPair = ContextEmotionPair(context: context.name, emotions: selectedEmotions, weight: selectedWeight)
-                dismissSheet()
-                viewModel.addPair(contextPair)
+                if !selectedEmotions.isEmpty{
+                    let contextPair = ContextEmotionPair(context: context.name, emotions: selectedEmotions, weight: selectedWeight)
+                    dismissSheet()
+                    viewModel.addPair(contextPair)
+                }
             } label: {
                 HStack{
                     Image(systemName: "checkmark")
@@ -197,7 +199,8 @@ struct ContextLogView: View {
                 .font(.headline)
                 .foregroundStyle(.appBlack)
                 .frame(width: 150, height: 44)
-                .background(.appPurple.opacity(0.15))
+                .opacity(!selectedEmotions.isEmpty ? 1 : 0.5)
+                .background(!selectedEmotions.isEmpty ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             }
             
