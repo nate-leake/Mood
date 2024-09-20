@@ -10,7 +10,6 @@ import Foundation
 /// On device calculations for analytics of the recent data
 struct AnalyticsGenerator {
     private var moods: [Mood] = Mood.allMoods
-    private var contexts: [String] = ["family", "finances", "health", "identity", "politics", "weather", "work"]
     
     func aggregateMoodIntensityTotals(moodData: [MoodData]) -> [(mood: String, intensity: Int)] {
         var groupedItems = [String: Int]()
@@ -32,7 +31,7 @@ struct AnalyticsGenerator {
             for pair in post.data {
                 tmpData.append(
                     MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
-                             context: pair.context,
+                             context: pair.contextName,
                              moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
                              intensity: pair.weight.rawValue)
                 )
@@ -95,13 +94,14 @@ struct AnalyticsGenerator {
         
         var totals : [String: Int] = [:]
         
-        for context in contexts {
-            totals[context] = 0
+        for context in Context.allContexts {
+            totals[context.name] = 0
         }
+        
         
         for day in data {
             for pair in day.pairs {
-                totals[pair.context] = totals[pair.context]! + pair.weight.rawValue
+                totals[pair.contextName] = totals[pair.contextName]! + pair.weight.rawValue
             }
         }
         

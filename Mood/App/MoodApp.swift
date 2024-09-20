@@ -24,9 +24,9 @@ struct MoodApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-#if DEBUG
-                    UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-#endif
+//#if DEBUG
+//                    UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+//#endif
                 }
             NotificationService()
         }

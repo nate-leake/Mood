@@ -17,18 +17,18 @@ enum Weight : Int, Codable, Hashable {
 
 /// Groups the context to the user's emotions and the emotions to an intensity
 class ContextEmotionPair : ObservableObject, Codable, Hashable {
-    @Published var context : String
+    @Published var contextName : String
     @Published var emotions : [String]
     @Published var weight: Weight
     
     // conform to Hashable
     func hash(into hasher: inout Hasher) {
-        hasher.combine(context)
+        hasher.combine(contextName)
     }
     
     // conform to Equatable
     static func ==(lhs: ContextEmotionPair, rhs: ContextEmotionPair) -> Bool {
-        return lhs.context == rhs.context
+        return lhs.contextName == rhs.contextName
     }
     
     // Coding keys to conform to Codable
@@ -41,7 +41,7 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
     // Conform to Decodable
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        context = try values.decode(String.self, forKey: .context)
+        contextName = try values.decode(String.self, forKey: .context)
         emotions = try values.decode([String].self, forKey: .emotions)
         weight = try values.decode(Weight.self, forKey: .weight)
     }
@@ -49,7 +49,7 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
     // Conform to Encodable
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(context, forKey: .context)
+        try container.encode(contextName, forKey: .context)
         try container.encode(emotions, forKey: .emotions)
         try container.encode(weight, forKey: .weight)
     }
@@ -60,7 +60,7 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
     ///   - emotions: A list of emotions that the user feels as a String
     ///   - weight: The intesnity of the emotions
     init(context: String, emotions: [String], weight: Weight) {
-        self.context = context
+        self.contextName = context
         self.emotions = emotions
         self.weight = weight
     }
@@ -71,7 +71,7 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
     ///   - emotions: A list of emotions that the user feels as an Emotion
     ///   - weight: The intesnity of the emotions
     init(context: String, emotions: [Emotion], weight: Weight) {
-        self.context = context
+        self.contextName = context
         self.emotions = []
         self.weight = weight
         

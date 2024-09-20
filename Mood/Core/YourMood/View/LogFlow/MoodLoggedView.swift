@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoodLoggedView: View {
     @EnvironmentObject var viewModel: UploadMoodViewModel
-    @Binding var isPresented: Bool
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var play0 = false
     @State private var play1 = false
@@ -18,15 +18,14 @@ struct MoodLoggedView: View {
     @State private var slideUp = false
     @State private var appear = false
     
-    @State var globeColors: [Color] = [.appGreen, .appGreen, .appGreen]
+    @State var globeColors: [Color] = [.appBlack, .appBlack, .appBlack]
     
     @State var uploaded:Bool = false
     
-    func getHighestIntesityMoods() -> [Color]{
-        var top3:[Color] = []
+    func setGlobeColors(){
         var emotionWeights: [String: Int] = [:]
         
-        for pair in viewModel.dailyData.pairs {
+        for pair in viewModel.pairs {
             if let mood = Emotion(name: pair.emotions[0]).getParentMood(){
                 if emotionWeights[mood.name] == nil{
                     emotionWeights[mood.name] = pair.weight.rawValue
@@ -35,28 +34,13 @@ struct MoodLoggedView: View {
                 }
             }
         }
-        
         let sortedTotals = emotionWeights.sorted{$0.1 > $1.1}
-        print(sortedTotals)
         
-        for kv in sortedTotals {
-            if top3.count < 3 {
-                top3.append(Color(kv.key))
-            } else {
-                break
+        for (index, element) in sortedTotals.enumerated() {
+            if index <= 2 {
+                globeColors[index] = Color(element.key)
             }
         }
-        
-        if top3.count == 1 {
-            top3.append(top3[0])
-            top3.append(top3[0])
-        } else if top3.count == 2 {
-            top3.append(top3[1])
-            top3[1] = top3[0]
-        }
-        
-        print(top3)
-        return top3
     }
     
     var body: some View {
@@ -81,7 +65,9 @@ struct MoodLoggedView: View {
                         .symbolEffect(.bounce.up, value: play2)
                 }
                 .font(.title)
-                .onAppear{self.globeColors = getHighestIntesityMoods()}
+                .onAppear{
+                    setGlobeColors()
+                }
                 
                 if slideUp {
                     Spacer()
@@ -97,16 +83,20 @@ struct MoodLoggedView: View {
             
         }
         .transition(.slide)
+        .navigationBarBackButtonHidden(true)
         .onAppear{
             
             Task {
-                uploaded = try await DailyDataService.shared.uploadMood(dailyData:viewModel.dailyData)
+                uploaded = try await viewModel.uploadMoodPost()
                 if uploaded {
-                    DailyDataService.shared.userHasLoggedToday = true
+                    print("upload successful!")
                 } else {
                     print("Something went wrong uploading mood post!")
                 }
             }
+            
+            // These timers are carefully coordinated with the ContextTileView dismissal screen
+            // If these values change, the ContexTileView dismissal delay should be re evaluated
             
             _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer0) in
                 self.play0.toggle()
@@ -133,14 +123,15 @@ struct MoodLoggedView: View {
             }
             
             _ = Timer.scheduledTimer(withTimeInterval: 4.5, repeats: false) { (closeTimer) in
-                self.isPresented = false
+                self.presentationMode.wrappedValue.dismiss()
             }
         }
     }
 }
 
 #Preview {
-    @Previewable @State var isPresented = true
+    @Previewable @StateObject var viewModel = UploadMoodViewModel()
     
-    return MoodLoggedView(isPresented: $isPresented)
+    return MoodLoggedView()
+        .environmentObject(UploadMoodViewModel())
 }

@@ -47,12 +47,13 @@ struct LoginView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading){
-                Image(systemName: "chevron.left")
-                    .foregroundStyle(.white)
-                    .imageScale(.large)
-                    .onTapGesture {
-                        dismiss()
-                    }
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.white)
+                        .imageScale(.large)
+                }
             }
         }
         

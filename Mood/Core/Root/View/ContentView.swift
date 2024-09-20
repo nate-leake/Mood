@@ -15,16 +15,16 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if displayingTabView {
-                if viewModel.userSession == nil {
-                    WelcomeView()
-                        .environmentObject(registrationViewModel)
-                } else if let currentUser = viewModel.currentUser {
+            if viewModel.userSession == nil {
+                WelcomeView()
+                    .environmentObject(registrationViewModel)
+            } else if let currentUser = viewModel.currentUser {
+                if displayingTabView {
                     MainTabBar(user: currentUser)
                         .environmentObject(dailyDataService)
+                } else {
+                    AppLoadingView(isShowingTabView: $displayingTabView)
                 }
-            } else {
-                AppLoadingView(isShowingTabView: $displayingTabView)
             }
         }
     }

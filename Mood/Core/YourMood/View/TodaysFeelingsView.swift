@@ -29,10 +29,10 @@ struct TodaysFeelingsView: View {
                 }
                 Spacer()
                 
-                Chart(todaysData!.pairs, id: \.context) { pair in
+                Chart(todaysData!.pairs, id: \.contextName) { pair in
                     BarMark(
                         x: .value("impact", pair.weight.rawValue == 0 ? 0.1 : Double(pair.weight.rawValue)),
-                        y: .value("context", pair.context)
+                        y: .value("context", pair.contextName)
                     )
                     .foregroundStyle(Emotion(name: pair.emotions[0]).getParentMood()?.getColor() ?? .appPurple)
                     .cornerRadius(5)

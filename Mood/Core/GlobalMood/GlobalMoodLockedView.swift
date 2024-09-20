@@ -19,7 +19,7 @@ struct GlobalMoodLockedView: View {
                     .font(.system(size: 100))
                 
                 
-                Text("Log your mood to view global data")
+                Text("log your mood to view global data")
                     .font(.title3)
             } else {
                 Image(systemName: "clock")
@@ -28,7 +28,7 @@ struct GlobalMoodLockedView: View {
                     .font(.system(size: 100))
                 
                 
-                Text("Reflect on your day before logging")
+                Text("reflect on your day before logging")
                     .font(.title3)
             }
         }
