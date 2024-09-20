@@ -1,0 +1,59 @@
+[
+    {
+        "name": "behavior",
+        "iconName": "figure.walk",
+        "colorHex": "#e3c022"
+    },
+    
+    {
+        "name": "family",
+        "iconName": "figure.and.child.holdinghands",
+        "colorHex": "#009c13"
+    },
+    
+    {
+        "name": "health",
+        "iconName": "stethoscope",
+        "colorHex": "#E87461"
+    },
+    
+    {
+        "name": "identity",
+        "iconName": "person.and.background.dotted",
+        "colorHex": "#008080"
+    },
+    
+    {
+        "name": "finances",
+        "iconName": "creditcard.fill",
+        "colorHex": "#568203"
+    },
+    
+    {
+        "name": "politics",
+        "iconName": "building.columns.fill",
+        "colorHex": "#bfbfbf"
+    },
+    
+    {
+        "name": "social",
+        "iconName": "person.line.dotted.person.fill",
+        "colorHex": "#ff8552"
+    },
+    
+    {
+        "name": "weather",
+        "iconName": "cloud.sun.rain.fill",
+        "colorHex": "#9dd9d2"
+    },
+    
+    {
+        "name": "work",
+        "iconName": "briefcase.fill",
+        "colorHex": "#003566"
+    },
+    
+    
+    
+]
+

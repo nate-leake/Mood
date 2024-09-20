@@ -31,7 +31,7 @@ class DailyData: Codable, Hashable{
     }
     
     func addPair(pair: ContextEmotionPair){
-        let matchedPair = self.containsPair(withContext: pair.context)
+        let matchedPair = self.getPair(withContext: pair.contextName)
         
         if matchedPair != nil {
             matchedPair?.emotions = pair.emotions
@@ -40,15 +40,21 @@ class DailyData: Codable, Hashable{
         }
     }
     
-    func containsPair(withContext: String) -> ContextEmotionPair? {
+    func getPair(withContext: String) -> ContextEmotionPair? {
         var matchedPair: ContextEmotionPair?
         for p in pairs {
-            if p.context == withContext{
+            if p.contextName == withContext{
                 matchedPair = p
             }
         }
         
         return matchedPair
+    }
+    
+    func containsPair(withContext contextName: String) -> Bool {
+        // Check logic to return the correct result.
+        print("daily data result for \(contextName):", pairs.contains { $0.contextName == contextName })
+        return pairs.contains { $0.contextName == contextName }
     }
 }
 
