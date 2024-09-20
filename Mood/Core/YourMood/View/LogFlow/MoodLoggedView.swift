@@ -83,6 +83,7 @@ struct MoodLoggedView: View {
             
         }
         .transition(.slide)
+        .navigationBarBackButtonHidden(true)
         .onAppear{
             
             Task {
@@ -93,6 +94,9 @@ struct MoodLoggedView: View {
                     print("Something went wrong uploading mood post!")
                 }
             }
+            
+            // These timers are carefully coordinated with the ContextTileView dismissal screen
+            // If these values change, the ContexTileView dismissal delay should be re evaluated
             
             _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer0) in
                 self.play0.toggle()

@@ -31,6 +31,7 @@ struct ContextTile: View {
 
 
 struct ContextTileView: View {
+    @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: UploadMoodViewModel = UploadMoodViewModel()
     @State var selectedContext: Context?
     
@@ -44,29 +45,7 @@ struct ContextTileView: View {
     ]
     
     var body: some View {
-        VStack {
-            if !viewModel.pairs.isEmpty{
-                NavigationLink{
-                    MoodLoggedView()
-                        .environmentObject(viewModel)
-                } label: {
-                    HStack{
-                        Spacer()
-                        Image(systemName: "checkmark")
-                            .foregroundStyle(.appBlue)
-                        Text("finish")
-                        Spacer()
-                    }
-                    .font(.headline)
-                    .foregroundStyle(.appBlack)
-                    .frame(height: 44)
-                    .background(.appBlue.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
-                }
-                .padding(.horizontal)
-                .frame(maxWidth: .infinity)
-            }
+        ZStack {
             ScrollView{
                 LazyVGrid(columns: layout) {
                     ForEach(contexts, id:\.self) { context in
@@ -107,6 +86,58 @@ struct ContextTileView: View {
                         )
                         .padding(.bottom)
                     }
+                }
+            }
+            if !viewModel.pairs.isEmpty{
+                VStack{
+                    Spacer()
+                    ZStack{
+                        
+                        
+                        NavigationLink{
+                            MoodLoggedView()
+                                .environmentObject(viewModel)
+                        } label: {
+                            HStack{
+                                Spacer()
+                                Image(systemName: "checkmark")
+                                    .opacity(0.8)
+                                
+                                Text("finish")
+                                
+                                Spacer()
+                            }
+                            .foregroundStyle(.appWhite)
+                            .font(.headline)
+                            .frame(height: 44)
+                            .background(.appBlue)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                        
+                        .background(
+                            HStack{
+                                Spacer()
+                                Rectangle()
+                                    .fill(.bar)
+                                Spacer()
+                            }
+                                .frame(height: 52)
+                                .frame(maxWidth: .infinity)
+                        )
+                    }
+                }
+            }
+            
+        }
+        .onChange(of: viewModel.isUploaded) { old, new in
+            if !old && new {
+                
+                // This delay is dependant on the MoodLoggedView timer array
+                _ = Timer.scheduledTimer(withTimeInterval: 4.7, repeats: false) { (closeTimer) in
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             }
         }
