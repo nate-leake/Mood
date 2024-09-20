@@ -10,6 +10,9 @@
 		AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */; };
 		AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */; };
 		AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */; };
+		AF1ECA3A2C9C8745005A225A /* ContextTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA392C9C8745005A225A /* ContextTileView.swift */; };
+		AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* Context.swift */; };
+		AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1ECA3D2C9C8A9B005A225A /* contexts.json */; };
 		AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF237E212C8F597A008963AD /* AppLoadingView.swift */; };
 		AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */; };
 		AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */; };
@@ -49,6 +52,7 @@
 		AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */; };
 		AFA7AF5D2C88EABF002E911B /* LineChartWithSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA7AF5C2C88EABF002E911B /* LineChartWithSelection.swift */; };
 		AFAADDF82ADF32D20065E9CE /* DailyDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */; };
+		AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB789622C9CBD28007B375A /* ContextLogView.swift */; };
 		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
 		AFCABA7B2C8E37B900DA562A /* WrappingHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCABA7A2C8E37B900DA562A /* WrappingHStack.swift */; };
@@ -58,7 +62,6 @@
 		AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE59E812C768BCA002285E8 /* NotificationService.swift */; };
 		AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */; };
 		AFEC9B3B2AD4581800F35F8B /* MoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */; };
-		AFEC9B3E2AD45FB200F35F8B /* LogMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3D2AD45FB200F35F8B /* LogMoodView.swift */; };
 		AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */; };
 		AFF276772AB37DC900BCA717 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFF276762AB37DC900BCA717 /* GoogleService-Info.plist */; };
 		AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */ = {isa = PBXBuildFile; fileRef = AFF2F2F32AB146ED002FB6C7 /* moods.json */; };
@@ -79,6 +82,9 @@
 		AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsGenerator.swift; sourceTree = "<group>"; };
+		AF1ECA392C9C8745005A225A /* ContextTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTileView.swift; sourceTree = "<group>"; };
+		AF1ECA3B2C9C87F0005A225A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		AF1ECA3D2C9C8A9B005A225A /* contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contexts.json; sourceTree = "<group>"; };
 		AF237E212C8F597A008963AD /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEmotionPair.swift; sourceTree = "<group>"; };
 		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
@@ -116,6 +122,7 @@
 		AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AFA7AF5C2C88EABF002E911B /* LineChartWithSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartWithSelection.swift; sourceTree = "<group>"; };
 		AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataService.swift; sourceTree = "<group>"; };
+		AFB789622C9CBD28007B375A /* ContextLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextLogView.swift; sourceTree = "<group>"; };
 		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFCABA7A2C8E37B900DA562A /* WrappingHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingHStack.swift; sourceTree = "<group>"; };
@@ -125,7 +132,6 @@
 		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
 		AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPost.swift; sourceTree = "<group>"; };
-		AFEC9B3D2AD45FB200F35F8B /* LogMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogMoodView.swift; sourceTree = "<group>"; };
 		AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTagView.swift; sourceTree = "<group>"; };
 		AFF276762AB37DC900BCA717 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AFF2F2F32AB146ED002FB6C7 /* moods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moods.json; sourceTree = "<group>"; };
@@ -248,6 +254,7 @@
 				AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */,
 				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
+				AF1ECA3B2C9C87F0005A225A /* Context.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -406,10 +413,11 @@
 		AFEC9B3C2AD45F9C00F35F8B /* LogFlow */ = {
 			isa = PBXGroup;
 			children = (
-				AFEC9B3D2AD45FB200F35F8B /* LogMoodView.swift */,
+				AF1ECA392C9C8745005A225A /* ContextTileView.swift */,
 				AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */,
 				AF4392332AD4D42700E4FC15 /* EmotionTagView.swift */,
 				AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */,
+				AFB789622C9CBD28007B375A /* ContextLogView.swift */,
 			);
 			path = LogFlow;
 			sourceTree = "<group>";
@@ -417,6 +425,7 @@
 		AFF2F2F22AB14681002FB6C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AF1ECA3D2C9C8A9B005A225A /* contexts.json */,
 				AFF2F2F32AB146ED002FB6C7 /* moods.json */,
 			);
 			path = Resources;
@@ -513,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */,
+				AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */,
 				AFF276772AB37DC900BCA717 /* GoogleService-Info.plist in Resources */,
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
 				AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */,
@@ -541,6 +551,7 @@
 				AF8AB5B22AB38F0000BE810A /* ContentViewModel.swift in Sources */,
 				AF5542832C8A0B4A00CD4DC0 /* DropDownView.swift in Sources */,
 				AF519BCD2ABBA5BB00850DD4 /* User.swift in Sources */,
+				AF1ECA3A2C9C8745005A225A /* ContextTileView.swift in Sources */,
 				AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */,
 				AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */,
 				AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */,
@@ -554,7 +565,7 @@
 				AF5B87732AB525D1000E204F /* TextFieldModifier.swift in Sources */,
 				AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */,
 				AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */,
-				AFEC9B3E2AD45FB200F35F8B /* LogMoodView.swift in Sources */,
+				AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */,
 				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
 				AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */,
 				AFA7AF5D2C88EABF002E911B /* LineChartWithSelection.swift in Sources */,
@@ -578,6 +589,7 @@
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
 				AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */,
 				AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */,
+				AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */,
 				AFEC9B3B2AD4581800F35F8B /* MoodPost.swift in Sources */,
 				AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */,
 			);
