@@ -12,6 +12,12 @@
     },
     
     {
+        "name": "hobbies",
+        "iconName": "circle.hexagongrid.fill",
+        "colorHex": "#8E44AD"
+    },
+    
+    {
         "name": "health",
         "iconName": "stethoscope",
         "colorHex": "#E87461"
@@ -51,9 +57,6 @@
         "name": "work",
         "iconName": "briefcase.fill",
         "colorHex": "#003566"
-    },
-    
-    
-    
+    }
 ]
 
