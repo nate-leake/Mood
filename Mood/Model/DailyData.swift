@@ -62,17 +62,16 @@ extension DailyData {
     static var TZO = TimeZone.current.secondsFromGMT(for: Date())
     static var MOCK_DATA : [DailyData] = [
         .init(date: Date(), timeZoneOffset: TZO,
-              pairs: [ContextEmotionPair(context: "family", emotions: ["happy", "indifferent"], weight: .slight),
-                      ContextEmotionPair(context: "health", emotions: ["calm"], weight: .slight),
-                      ContextEmotionPair(context: "identity", emotions: ["content", "confident"], weight: .moderate),
+              pairs: [ContextEmotionPair(context: "behavior", emotions: ["happy", "indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "hobbies", emotions: ["calm"], weight: .none),
                       ContextEmotionPair(context: "finances", emotions: ["happy", "satisfied"], weight: .moderate),
-                      ContextEmotionPair(context: "politics", emotions: ["indifferent"], weight: .slight),
-                      ContextEmotionPair(context: "weather", emotions: ["happy", "peaceful"], weight: .moderate),
+                      ContextEmotionPair(context: "weather", emotions: ["happy", "peaceful"], weight: .extreme),
                       ContextEmotionPair(context: "work", emotions: ["indifferent", "hopeful"], weight: .slight)
                      ]),
         .init(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, timeZoneOffset: TZO,
               pairs: [ContextEmotionPair(context: "family", emotions: ["indifferent"], weight: .slight),
                       ContextEmotionPair(context: "health", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "hobbies", emotions: ["calm"], weight: .moderate),
                       ContextEmotionPair(context: "identity", emotions: ["happy"], weight: .slight),
                       ContextEmotionPair(context: "finances", emotions: ["calm", "satisfied"], weight: .moderate),
                       ContextEmotionPair(context: "politics", emotions: ["anxious"], weight: .slight),
@@ -82,12 +81,10 @@ extension DailyData {
              ),
         .init(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, timeZoneOffset: TZO,
               pairs: [ContextEmotionPair(context: "family", emotions: ["happy"], weight: .extreme),
-                      ContextEmotionPair(context: "health", emotions: ["indifferent"], weight: .slight),
                       ContextEmotionPair(context: "identity", emotions: ["happy", "confident"], weight: .moderate),
                       ContextEmotionPair(context: "finances", emotions: ["excited"], weight: .slight),
-                      ContextEmotionPair(context: "politics", emotions: ["nervous"], weight: .moderate),
                       ContextEmotionPair(context: "weather", emotions: ["indifferent"], weight: .slight),
-                      ContextEmotionPair(context: "work", emotions: ["angry", "disappointed"], weight: .moderate)
+                      ContextEmotionPair(context: "social", emotions: ["angry", "disappointed"], weight: .moderate)
                      ]
              ),
         .init(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, timeZoneOffset: TZO,
@@ -110,33 +107,31 @@ extension DailyData {
                      ]
              ),
         .init(date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!, timeZoneOffset: TZO,
-              pairs: [ContextEmotionPair(context: "family", emotions: ["happy"], weight: .extreme),
+              pairs: [ContextEmotionPair(context: "behavior", emotions: ["happy"], weight: .extreme),
                       ContextEmotionPair(context: "health", emotions: ["indifferent"], weight: .slight),
                       ContextEmotionPair(context: "identity", emotions: ["happy", "confident"], weight: .moderate),
                       ContextEmotionPair(context: "finances", emotions: ["excited"], weight: .slight),
                       ContextEmotionPair(context: "politics", emotions: ["nervous"], weight: .moderate),
-                      ContextEmotionPair(context: "weather", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "weather", emotions: ["calm"], weight: .slight),
                       ContextEmotionPair(context: "work", emotions: ["angry", "disappointed"], weight: .moderate)
                      ]
              ),
         .init(date: Calendar.current.date(byAdding: .day, value: -6, to: Date())!, timeZoneOffset: TZO,
-              pairs: [ContextEmotionPair(context: "family", emotions: ["happy"], weight: .extreme),
-                      ContextEmotionPair(context: "health", emotions: ["indifferent"], weight: .slight),
-                      ContextEmotionPair(context: "identity", emotions: ["happy", "confident"], weight: .moderate),
-                      ContextEmotionPair(context: "finances", emotions: ["excited"], weight: .slight),
-                      ContextEmotionPair(context: "politics", emotions: ["nervous"], weight: .moderate),
-                      ContextEmotionPair(context: "weather", emotions: ["indifferent"], weight: .slight),
-                      ContextEmotionPair(context: "work", emotions: ["angry", "disappointed"], weight: .moderate)
+              pairs: [ContextEmotionPair(context: "hobbies", emotions: ["happy"], weight: .extreme),
+                      ContextEmotionPair(context: "finances", emotions: ["happy", "excited"], weight: .none)
                      ]
              ),
         .init(date: Calendar.current.date(byAdding: .day, value: -7, to: Date())!, timeZoneOffset: TZO,
               pairs: [ContextEmotionPair(context: "family", emotions: ["happy", "indifferent"], weight: .slight),
-                      ContextEmotionPair(context: "health", emotions: ["calm"], weight: .slight),
+                      ContextEmotionPair(context: "health", emotions: ["calm"], weight: .extreme),
+                      ContextEmotionPair(context: "hobbies", emotions: ["excited"], weight: .moderate),
                       ContextEmotionPair(context: "identity", emotions: ["content", "confident"], weight: .moderate),
-                      ContextEmotionPair(context: "finances", emotions: ["happy", "satisfied"], weight: .moderate),
+                      ContextEmotionPair(context: "finances", emotions: ["happy", "satisfied"], weight: .none),
                       ContextEmotionPair(context: "politics", emotions: ["indifferent"], weight: .slight),
+                      ContextEmotionPair(context: "social", emotions: ["lonely", "lost"], weight: .none),
                       ContextEmotionPair(context: "weather", emotions: ["happy", "peaceful"], weight: .moderate),
-                      ContextEmotionPair(context: "work", emotions: ["indifferent", "hopeful"], weight: .slight)
-                     ])
+                      ContextEmotionPair(context: "work", emotions: ["indifferent", "hopeful"], weight: .extreme)
+                     ]
+             )
     ]
 }
