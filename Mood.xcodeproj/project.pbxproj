@@ -14,6 +14,7 @@
 		AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* Context.swift */; };
 		AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1ECA3D2C9C8A9B005A225A /* contexts.json */; };
 		AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF237E212C8F597A008963AD /* AppLoadingView.swift */; };
+		AF26B2072C9E796D00CA616E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF26B2062C9E796D00CA616E /* GoogleService-Info.plist */; };
 		AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */; };
 		AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */; };
 		AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3008812AB4F02D0068F3B0 /* LoginView.swift */; };
@@ -63,7 +64,6 @@
 		AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */; };
 		AFEC9B3B2AD4581800F35F8B /* MoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */; };
 		AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */; };
-		AFF276772AB37DC900BCA717 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFF276762AB37DC900BCA717 /* GoogleService-Info.plist */; };
 		AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */ = {isa = PBXBuildFile; fileRef = AFF2F2F32AB146ED002FB6C7 /* moods.json */; };
 		AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */; };
 /* End PBXBuildFile section */
@@ -86,6 +86,7 @@
 		AF1ECA3B2C9C87F0005A225A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		AF1ECA3D2C9C8A9B005A225A /* contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contexts.json; sourceTree = "<group>"; };
 		AF237E212C8F597A008963AD /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
+		AF26B2062C9E796D00CA616E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEmotionPair.swift; sourceTree = "<group>"; };
 		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
 		AF3008812AB4F02D0068F3B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = Mood/Core/Authentication/View/LoginView.swift; sourceTree = SOURCE_ROOT; };
@@ -133,7 +134,6 @@
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
 		AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPost.swift; sourceTree = "<group>"; };
 		AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTagView.swift; sourceTree = "<group>"; };
-		AFF276762AB37DC900BCA717 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AFF2F2F32AB146ED002FB6C7 /* moods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moods.json; sourceTree = "<group>"; };
 		AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -221,7 +221,7 @@
 				AF6BFA3E2AAFCDBA005B4DDA /* Extensions */,
 				AF6BFA3B2AAFCDA3005B4DDA /* Model */,
 				AF6BFA3A2AAFCD80005B4DDA /* Services */,
-				AFF276762AB37DC900BCA717 /* GoogleService-Info.plist */,
+				AF26B2062C9E796D00CA616E /* GoogleService-Info.plist */,
 				AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */,
 				AF6BFA322AAFCD30005B4DDA /* Preview Content */,
 			);
@@ -523,10 +523,10 @@
 			files = (
 				AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */,
 				AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */,
-				AFF276772AB37DC900BCA717 /* GoogleService-Info.plist in Resources */,
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
 				AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */,
 				AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */,
+				AF26B2072C9E796D00CA616E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
