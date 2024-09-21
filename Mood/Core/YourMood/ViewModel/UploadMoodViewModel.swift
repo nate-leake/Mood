@@ -25,6 +25,11 @@ class UploadMoodViewModel: ObservableObject {
     
     @MainActor
     func uploadMoodPost() async throws -> Bool {
+        
+        for pair in pairs{
+            dailyData.addPair(pair: pair)
+        }
+        
         let uploaded = try await DailyDataService.shared.uploadMood(dailyData: self.dailyData)
         if uploaded {
             DailyDataService.shared.userHasLoggedToday = true

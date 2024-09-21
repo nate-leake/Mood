@@ -13,6 +13,21 @@ struct TodaysFeelingsView: View {
     @State var todaysData: DailyData?
     var analytics = AnalyticsGenerator()
     
+    func createImpactStatement(from items: [String]) -> String {
+        switch items.count {
+        case 0:
+            return "No items"
+        case 1:
+            return "\(items[0])"
+        case 2:
+            return "\(items[0]) and \(items[1])"
+        default:
+            let allButLast = items.dropLast().joined(separator: ", ")
+            let lastItem = items.last!
+            return "\(allButLast), and \(lastItem)"
+        }
+    }
+    
     var body: some View {
         if todaysData != nil {
             VStack{
@@ -24,7 +39,7 @@ struct TodaysFeelingsView: View {
                     Spacer()
                 }
                 HStack{
-                    Text("**\(analytics.biggestImpact(data: [todaysData!])[0])** had the biggest impact on you")
+                    Text("**\( createImpactStatement(from: analytics.biggestImpact(data: [todaysData!])) )** had the biggest impact on you")
                     Spacer()
                 }
                 Spacer()
@@ -49,7 +64,7 @@ struct TodaysFeelingsView: View {
                             )
                     }
                 }
-                .aspectRatio(0.85, contentMode: .fit)
+                .frame(height: CGFloat(todaysData?.pairs.count ?? 6) * 60.0)
                 .chartXScale(domain: [0, 3.55])
                 .chartYAxis {
                     AxisMarks(stroke: StrokeStyle(lineWidth: 0))
@@ -73,6 +88,9 @@ struct TodaysFeelingsView: View {
                             }
                         }
                     }
+                }
+                .onAppear{
+                    print(analytics.biggestImpact(data: [todaysData!]))
                 }
             }
         }
@@ -104,6 +122,6 @@ struct TodaysFeelingsView: View {
 }
 
 #Preview {
-    TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[0])
+    TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[1])
         .environmentObject(DailyDataService())
 }
