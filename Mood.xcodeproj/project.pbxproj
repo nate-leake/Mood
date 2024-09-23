@@ -14,7 +14,6 @@
 		AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* Context.swift */; };
 		AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1ECA3D2C9C8A9B005A225A /* contexts.json */; };
 		AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF237E212C8F597A008963AD /* AppLoadingView.swift */; };
-		AF26B2072C9E796D00CA616E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF26B2062C9E796D00CA616E /* GoogleService-Info.plist */; };
 		AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */; };
 		AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */; };
 		AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3008812AB4F02D0068F3B0 /* LoginView.swift */; };
@@ -86,7 +85,6 @@
 		AF1ECA3B2C9C87F0005A225A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		AF1ECA3D2C9C8A9B005A225A /* contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contexts.json; sourceTree = "<group>"; };
 		AF237E212C8F597A008963AD /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
-		AF26B2062C9E796D00CA616E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEmotionPair.swift; sourceTree = "<group>"; };
 		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
 		AF3008812AB4F02D0068F3B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = Mood/Core/Authentication/View/LoginView.swift; sourceTree = SOURCE_ROOT; };
@@ -221,7 +219,6 @@
 				AF6BFA3E2AAFCDBA005B4DDA /* Extensions */,
 				AF6BFA3B2AAFCDA3005B4DDA /* Model */,
 				AF6BFA3A2AAFCD80005B4DDA /* Services */,
-				AF26B2062C9E796D00CA616E /* GoogleService-Info.plist */,
 				AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */,
 				AF6BFA322AAFCD30005B4DDA /* Preview Content */,
 			);
@@ -526,7 +523,6 @@
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
 				AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */,
 				AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */,
-				AF26B2072C9E796D00CA616E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
