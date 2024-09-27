@@ -43,11 +43,12 @@ class DailyDataService : ObservableObject{
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
-    @Published var recentMoodPosts: [MoodPost]?
+    @Published var recentMoodPosts: [UnsecureMoodPost]?
     @MainActor @Published var appIsReady: Bool = false
     
     static let shared = DailyDataService()
     
+    let securityService = SecurityService()
     let dateFormatter = CustomDateFormatter()
     
     init(){
@@ -66,6 +67,7 @@ class DailyDataService : ObservableObject{
     
     func refreshAppReady(){
         Task {
+            print("current recentMoodPosts: \(String(describing: recentMoodPosts))")
             try await getLoggedToday()
             try await setRecentMoodPosts(quantity: 7)
             if recentMoodPosts != nil {
@@ -101,21 +103,29 @@ class DailyDataService : ObservableObject{
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
         print(dateFormatter.string(from: dailyData.date))
-        let dailyPostRef = Firestore.firestore().collection("dailyPosts").document()
-        let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document(dateFormatter.string(from: dailyData.date))
+        //        let dailyPostRef = Firestore.firestore().collection("dailyPosts").document()
+        let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
         
-        let dailyPost = MoodPost(id: dailyPostRef.documentID, data: dailyData)
-        let privatePost = MoodPost(id: uid, data: dailyData)
+        //        let dailyPost = MoodPost(id: dailyPostRef.documentID, data: dailyData)
+        let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
         
-        guard let encodedDailyPost = try? Firestore.Encoder().encode(dailyPost) else {throw CustomError.firestoreEncoding}
-        guard let encodedPrivatePost = try? Firestore.Encoder().encode(privatePost) else {throw CustomError.firestoreEncoding}
-        
-        do {
-            try await dailyPostRef.setData(encodedDailyPost)
-            try await privatePostRef.setData(encodedPrivatePost)
-            DailyDataService.shared.todaysDailyData = dailyData
-            uploadSuccess = true
-        } catch {
+        if privatePost.data != nil{
+            
+            //        guard let encodedDailyPost = try? Firestore.Encoder().encode(dailyPost) else {throw CustomError.firestoreEncoding}
+            guard let encodedPrivatePost = try? Firestore.Encoder().encode(privatePost) else {throw CustomError.firestoreEncoding}
+            
+            do {
+                //            try await dailyPostRef.setData(encodedDailyPost)
+                try await privatePostRef.setData(encodedPrivatePost)
+                DailyDataService.shared.todaysDailyData = dailyData
+                uploadSuccess = true
+            } catch {
+                print("an error occured while uploading the post: \(error)")
+                uploadSuccess = false
+            }
+            
+        } else {
+            uploadSuccess = false
         }
         
         return uploadSuccess
@@ -137,68 +147,68 @@ class DailyDataService : ObservableObject{
     /// Gets the last mood post that the user uploaded
     /// - Returns: An Optional MoodPost which will be the most recent post from the user
     @MainActor
-    func fetchLastLoggedMoodPost() async throws -> MoodPost? {
+    func fetchLastLoggedMoodPost() async throws -> UnsecureMoodPost? {
         let snapshot = try await fetchDocuments(limit: 1)
-        var post: MoodPost?
+        var securePost: SecureMoodPost?
+        var unsecurePost: UnsecureMoodPost?
         
         if snapshot.count > 0 {
-            post = try snapshot.documents[0].data(as: MoodPost.self)
-            if let p = post{
-                self.todaysDailyData = DailyData(date: p.timestamp, timeZoneOffset: p.timeZoneOffset, pairs: p.data)
+            do{
+                securePost = try snapshot.documents[0].data(as: SecureMoodPost.self)
+                if let post = securePost{
+                    unsecurePost = UnsecureMoodPost(from: post)
+                    if let up = unsecurePost{
+                        self.todaysDailyData = DailyData(date: up.timestamp, timeZoneOffset: up.timeZoneOffset, pairs: up.data)
+                    }
+                }
+            } catch {
+                unsecurePost = try snapshot.documents[0].data(as: UnsecureMoodPost.self)
+                if let post = unsecurePost{
+                    self.todaysDailyData = DailyData(date: post.timestamp, timeZoneOffset: post.timeZoneOffset, pairs: post.data)
+                }
             }
         }
         
-        return post
+        return unsecurePost
     }
     
     @MainActor
     private func setRecentMoodPosts(quantity: Int) async throws {
-        var posts: [MoodPost] = []
-        let snapshot = try await fetchDocuments(limit: quantity)
-        
-        print("snapshot count: \(snapshot.count)")
-        
-        if snapshot.count > 0 {
-            print("documents count: \(snapshot.documents.count)")
-            for document in snapshot.documents {
-                let post = try document.data(as: MoodPost.self)
-                posts.append(post)
-            }
-        }
-        
-        let cutoffDate = Calendar.current.date(byAdding: .day, value: userHasLoggedToday ? -7 : -8, to: Date())!
-        var filteredPosts:[MoodPost] = []
-        
-        for post in posts {
-            if Calendar.current.startOfDay(for: post.timestamp) > Calendar.current.startOfDay(for: cutoffDate){
-                filteredPosts.append(post)
-            }
-        }
-        
-        self.recentMoodPosts = filteredPosts
+        self.recentMoodPosts = try await fetchRecentMoodPosts(quantity: quantity)
     }
     
-    public func fetchRecentMoodPosts(quantity: Int) async throws -> [MoodPost] {
-        var posts: [MoodPost] = []
+    public func fetchRecentMoodPosts(quantity: Int) async throws -> [UnsecureMoodPost] {
+        var posts: [UnsecureMoodPost] = []
         let snapshot = try await fetchDocuments(limit: quantity)
-        
-        print("snapshot count: \(snapshot.count)")
+        var insecureFlag: Bool = false
         
         if snapshot.count > 0 {
-            print("documents count: \(snapshot.documents.count)")
             for document in snapshot.documents {
-                let post = try document.data(as: MoodPost.self)
-                posts.append(post)
+                do {
+                    let securePost = try document.data(as: SecureMoodPost.self)
+                    let post = UnsecureMoodPost(from: securePost)
+                    posts.append(post)
+                } catch {
+                    insecureFlag = true
+                    let unsecurePost = try document.data(as: UnsecureMoodPost.self)
+                    posts.append(unsecurePost)
+                }
             }
+        } else {
+            return []
         }
         
         let cutoffDate = Calendar.current.date(byAdding: .day, value: userHasLoggedToday ? -7 : -8, to: Date())!
-        var filteredPosts:[MoodPost] = []
+        var filteredPosts:[UnsecureMoodPost] = []
         
         for post in posts {
             if Calendar.current.startOfDay(for: post.timestamp) > Calendar.current.startOfDay(for: cutoffDate){
                 filteredPosts.append(post)
             }
+        }
+        
+        if insecureFlag {
+            print("WARNING: One or more posts in firebase firestore is not encrypted.")
         }
         
         return filteredPosts
@@ -218,7 +228,8 @@ class DailyDataService : ObservableObject{
             lastLoggedDate = ["logDate": p.timestamp,
                               "timezoneOffset": p.timeZoneOffset]
             print("DEBUG: fetched last logged date")
-            print(lastLoggedDate ?? "No last log date retreived")
+        } else {
+            print("could not get the last logged date.")
         }
         
         return lastLoggedDate
@@ -265,8 +276,8 @@ class DailyDataService : ObservableObject{
         // DO NOT ALTER THE ABOVE LINES OF CODE!
         // See explination above :)
         
-        print("User has logged today: \(userHasLoggedToday)")
-        print("Log window open: \(logWindowOpen)")
+        //        print("User has logged today: \(userHasLoggedToday)")
+        //        print("Log window open: \(logWindowOpen)")
         
     }
 }
