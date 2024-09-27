@@ -64,6 +64,18 @@ struct SecureMoodPost: Identifiable, Hashable, Codable {
             print("could not encrypt data on init of SecureMoodPost: \(error)")
         }
     }
+    
+    init(from unsecureMoodPost: UnsecureMoodPost) {
+        self.id = unsecureMoodPost.id
+        self.timestamp = unsecureMoodPost.timestamp
+        self.timeZoneOffset = unsecureMoodPost.timeZoneOffset
+        
+        do {
+            self.data = try SecurityService().encryptData(from: unsecureMoodPost.data)
+        } catch {
+            print("could not encrypt data on init of SecureMoodPost: \(error)")
+        }
+    }
 }
 
 
@@ -89,6 +101,24 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
             tmpData.append(pair)
         }
         self.data = tmpData
+    }
+    
+    init(from secureMoodPost: SecureMoodPost){
+        self.id = secureMoodPost.id
+        self.timestamp = secureMoodPost.timestamp
+        self.timeZoneOffset = secureMoodPost.timeZoneOffset
+        self.data = []
+        
+        if let postData = secureMoodPost.data{
+            do {
+                if let decryptedData: [ContextEmotionPair] = try SecurityService().decryptData(postData){
+                    self.data = decryptedData
+                }
+            } catch {
+                print("error initilizing UnsecureMoodPost from SecureMoodPost: \(error)")
+            }
+        }
+        
     }
 }
 
