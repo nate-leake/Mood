@@ -118,6 +118,8 @@ class DailyDataService : ObservableObject{
                 //            try await dailyPostRef.setData(encodedDailyPost)
                 try await privatePostRef.setData(encodedPrivatePost)
                 DailyDataService.shared.todaysDailyData = dailyData
+                DailyDataService.shared.recentMoodPosts?.removeFirst()
+                DailyDataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
                 uploadSuccess = true
             } catch {
                 print("an error occured while uploading the post: \(error)")
