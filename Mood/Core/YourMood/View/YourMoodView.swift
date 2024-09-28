@@ -166,7 +166,7 @@ struct YourMoodView: View {
         
         .navigationTitle("your moods")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(perform: {
+        .onChange(of: dailyDataService.recentMoodPosts, initial: true){
             Task {
                 do {
                     totalMoodScore = 0
@@ -190,7 +190,6 @@ struct YourMoodView: View {
                 withAnimation(.easeInOut){isLoading = false}
             }
         }
-        )
         
     }
 }

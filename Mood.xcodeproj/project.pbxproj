@@ -16,6 +16,7 @@
 		AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF237E212C8F597A008963AD /* AppLoadingView.swift */; };
 		AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */; };
 		AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */; };
+		AF2E2C212CA221FA005F3326 /* SecurityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2C202CA221FA005F3326 /* SecurityService.swift */; };
 		AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3008812AB4F02D0068F3B0 /* LoginView.swift */; };
 		AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */; };
 		AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF40154F2AC61FAA003DE7DE /* AddNameView.swift */; };
@@ -62,7 +63,7 @@
 		AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */; };
 		AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE59E812C768BCA002285E8 /* NotificationService.swift */; };
 		AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */; };
-		AFEC9B3B2AD4581800F35F8B /* MoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */; };
+		AFEC9B3B2AD4581800F35F8B /* UnsecureMoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */; };
 		AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */; };
 		AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */ = {isa = PBXBuildFile; fileRef = AFF2F2F32AB146ED002FB6C7 /* moods.json */; };
 		AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */; };
@@ -88,6 +89,7 @@
 		AF237E212C8F597A008963AD /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEmotionPair.swift; sourceTree = "<group>"; };
 		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
+		AF2E2C202CA221FA005F3326 /* SecurityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityService.swift; sourceTree = "<group>"; };
 		AF3008812AB4F02D0068F3B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = Mood/Core/Authentication/View/LoginView.swift; sourceTree = SOURCE_ROOT; };
 		AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowBackgroundModifer.swift; sourceTree = "<group>"; };
 		AF40154F2AC61FAA003DE7DE /* AddNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameView.swift; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
 		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
-		AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPost.swift; sourceTree = "<group>"; };
+		AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureMoodPost.swift; sourceTree = "<group>"; };
 		AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTagView.swift; sourceTree = "<group>"; };
 		AFF2F2F32AB146ED002FB6C7 /* moods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moods.json; sourceTree = "<group>"; };
 		AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */,
 				AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */,
 				AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */,
+				AF2E2C202CA221FA005F3326 /* SecurityService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -251,7 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				AF519BCC2ABBA5BB00850DD4 /* User.swift */,
-				AFEC9B3A2AD4581800F35F8B /* MoodPost.swift */,
+				AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */,
 				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
 				AF1ECA3B2C9C87F0005A225A /* Context.swift */,
@@ -552,6 +555,7 @@
 				AF5542832C8A0B4A00CD4DC0 /* DropDownView.swift in Sources */,
 				AF519BCD2ABBA5BB00850DD4 /* User.swift in Sources */,
 				AF1ECA3A2C9C8745005A225A /* ContextTileView.swift in Sources */,
+				AF2E2C212CA221FA005F3326 /* SecurityService.swift in Sources */,
 				AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */,
 				AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */,
 				AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */,
@@ -590,7 +594,7 @@
 				AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */,
 				AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */,
 				AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */,
-				AFEC9B3B2AD4581800F35F8B /* MoodPost.swift in Sources */,
+				AFEC9B3B2AD4581800F35F8B /* UnsecureMoodPost.swift in Sources */,
 				AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,7 +744,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -777,7 +781,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;

@@ -89,9 +89,6 @@ struct TodaysFeelingsView: View {
                         }
                     }
                 }
-                .onAppear{
-                    print(analytics.biggestImpact(data: [todaysData!]))
-                }
             }
         }
         else {
@@ -110,7 +107,6 @@ struct TodaysFeelingsView: View {
             .onAppear{
                 if let data = dailyDataService.todaysDailyData{
                     self.todaysData = data
-                    print(self.todaysData ?? "no data can be printed")
                 } else {
                     print("todays feelings could not be loaded")
                 }

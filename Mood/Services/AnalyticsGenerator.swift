@@ -25,7 +25,7 @@ struct AnalyticsGenerator {
         return sortedItems
     }
     
-    func aggregateMoodIntensityByDate(moodPosts: [MoodPost]) -> [MoodData]{
+    func aggregateMoodIntensityByDate(moodPosts: [UnsecureMoodPost]) -> [MoodData]{
         var tmpData: [MoodData] = []
         for post in moodPosts {
             for pair in post.data {

@@ -24,7 +24,7 @@ extension Binding {
 }
 
 struct LineChartWithSelection: View {
-    @State var moodPosts: [MoodPost]
+    @State var moodPosts: [UnsecureMoodPost]
     let viewingDataType: ViewingDataType
     var height: CGFloat
     
@@ -128,7 +128,7 @@ struct LineChartWithSelection: View {
 
 #Preview {
     LineChartWithSelection(
-        moodPosts: MoodPost.MOCK_DATA,
+        moodPosts: UnsecureMoodPost.MOCK_DATA,
         viewingDataType: .mood,
         height: 250
     )

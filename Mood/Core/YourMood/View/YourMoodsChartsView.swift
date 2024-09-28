@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct YourMoodsChartsView: View {
-    @State private var moodPosts: [MoodPost]?
+    @State private var moodPosts: [UnsecureMoodPost]?
     @State private var loadingSuccess: Bool = false
     @State private var isLoading: Bool = true
     
