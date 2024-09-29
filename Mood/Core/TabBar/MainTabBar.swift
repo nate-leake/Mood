@@ -15,12 +15,12 @@ struct MainTabBar: View {
     
     var body: some View {
         TabView(selection:$selection){
-            GlobalMoodViewWrapper()
-                .environmentObject(dailyDataService)
-                .tabItem {
-                    Image(systemName: "globe.americas")
-                }
-                .tag(1)
+//            GlobalMoodViewWrapper()
+//                .environmentObject(dailyDataService)
+//                .tabItem {
+//                    Image(systemName: "globe.americas")
+//                }
+//                .tag(1)
             
             YourMoodView()
                 .environmentObject(dailyDataService)
