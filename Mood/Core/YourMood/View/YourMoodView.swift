@@ -42,6 +42,7 @@ struct YourMoodView: View {
                         
                         HStack {
                             if loadingSuccess {
+                                
                                 VStack{
                                     HStack{
                                         Text("recent moods")
@@ -49,27 +50,34 @@ struct YourMoodView: View {
                                             .foregroundStyle(.appBlack.opacity(0.5))
                                         Spacer()
                                     }
-                                    Spacer()
-                                    HStack {
-                                        if let recentMoodData = recentMoods{
-                                            WrappingMoodKey(items: recentMoodData, maxDisplayed: 4)
-                                        }
+                                    if recentMoods?.count ?? 0 > 0 {
                                         Spacer()
+                                        HStack {
+                                            if let recentMoodData = recentMoods{
+                                                WrappingMoodKey(items: recentMoodData, maxDisplayed: 4)
+                                            }
+                                            Spacer()
+                                        }
+                                    } else {
+                                        Text("charts will be availble after you log your mood at least once")
+                                            .padding(.vertical)
                                     }
                                     
                                 }
                                 Spacer()
-                                Chart {
-                                    if let recentMoodData = recentMoods {
-                                        ForEach(recentMoodData.prefix(4), id: \.mood) { data in
-                                            SectorMark(angle: .value("mood", (data.intensity*100 / totalMoodScore)), innerRadius: .ratio(0.618), angularInset: 1.5)
-                                                .foregroundStyle(Mood(name: data.mood, emotions: []).getColor())
-                                                .cornerRadius(5)
+                                if recentMoods?.count ?? 0 > 0 {
+                                    Chart {
+                                        if let recentMoodData = recentMoods {
+                                            ForEach(recentMoodData.prefix(4), id: \.mood) { data in
+                                                SectorMark(angle: .value("mood", (data.intensity*100 / totalMoodScore)), innerRadius: .ratio(0.618), angularInset: 1.5)
+                                                    .foregroundStyle(Mood(name: data.mood, emotions: []).getColor())
+                                                    .cornerRadius(5)
+                                            }
                                         }
                                     }
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 70)
                                 }
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 70)
                                 
                             }
                             else {
