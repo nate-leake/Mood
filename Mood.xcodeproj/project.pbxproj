@@ -45,6 +45,7 @@
 		AF7BB2E12AB377D90057EE18 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2E02AB377D90057EE18 /* FirebaseFirestoreSwift */; };
 		AF7BB2E32AB377D90057EE18 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2E22AB377D90057EE18 /* FirebaseStorage */; };
 		AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */; };
+		AF88EC372CAC5B5600D02624 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF88EC362CAC5B5600D02624 /* AppState.swift */; };
 		AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8AB5AD2AB38D8E00BE810A /* AuthService.swift */; };
 		AF8AB5B22AB38F0000BE810A /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8AB5B12AB38F0000BE810A /* ContentViewModel.swift */; };
 		AF8D74992AE6FABE00C0729E /* GlobalMoodViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */; };
@@ -116,6 +117,7 @@
 		AF7BB2D02AB3650A0057EE18 /* MoodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7BB2D22AB3650A0057EE18 /* MoodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTests.swift; sourceTree = "<group>"; };
 		AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodsChartsView.swift; sourceTree = "<group>"; };
+		AF88EC362CAC5B5600D02624 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		AF8AB5AD2AB38D8E00BE810A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		AF8AB5B12AB38F0000BE810A /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodViewWrapper.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */,
 				AFAADDF72ADF32D20065E9CE /* DailyDataService.swift */,
 				AF2E2C202CA221FA005F3326 /* SecurityService.swift */,
+				AF88EC362CAC5B5600D02624 /* AppState.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -288,7 +291,6 @@
 			isa = PBXGroup;
 			children = (
 				AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */,
-				AF237E212C8F597A008963AD /* AppLoadingView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -348,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */,
+				AF237E212C8F597A008963AD /* AppLoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				AF5B87712AB521BB000E204F /* AddEmailView.swift in Sources */,
 				AF5B87792AB52C59000E204F /* AddBirthdayView.swift in Sources */,
 				AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */,
+				AF88EC372CAC5B5600D02624 /* AppState.swift in Sources */,
 				AF5B87772AB52904000E204F /* SignUpView.swift in Sources */,
 				AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */,
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
@@ -744,7 +748,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -781,7 +785,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;

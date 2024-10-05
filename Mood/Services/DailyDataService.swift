@@ -39,13 +39,13 @@ class CustomDateFormatter{
 }
 
 /// The DailyDataService is responsable for handling the user's daily logs
-class DailyDataService : ObservableObject{
+class DailyDataService : ObservableObject, Stateable {
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
     @Published var recentMoodPosts: [UnsecureMoodPost]?
     @Published var numberOfEntries: Int = 0
-    @MainActor @Published var appIsReady: Bool = false
+    @Published var state: AppStateCase = .startup
     
     static let shared = DailyDataService()
     
@@ -53,34 +53,32 @@ class DailyDataService : ObservableObject{
     let dateFormatter = CustomDateFormatter()
     
     init(){
-        Task {
-            try await getLoggedToday()
-            try await setRecentMoodPosts(quantity: 7)
-            try await getNumberOfEntries()
-            if recentMoodPosts != nil {
-                await MainActor.run {
-                    withAnimation(.easeInOut(duration: 2)){
-                        appIsReady = true
-                    }
-                }
-            }
-        }
+        AppState.shared.addContributor(adding: self)
+        self.state = .loading
     }
     
-    func refreshAppReady(){
-        Task {
-            print("current recentMoodPosts: \(String(describing: recentMoodPosts))")
-            try await getLoggedToday()
-            try await setRecentMoodPosts(quantity: 7)
-            try await getNumberOfEntries()
-            if recentMoodPosts != nil {
-                await MainActor.run {
-                    withAnimation(.easeInOut(duration: 2)){
-                        appIsReady = true
+    func refreshServiceData(){
+        if let signedIn = AuthService.shared.userIsSignedIn {
+            if signedIn {
+                self.state = .loading
+                print("refreshing DDS data")
+                Task {
+                    try await getLoggedToday()
+                    try await setRecentMoodPosts(quantity: 7)
+                    try await getNumberOfEntries()
+                    if recentMoodPosts != nil {
+                        await MainActor.run {
+                            withAnimation(.easeInOut(duration: 2)){
+                                state = .ready
+                            }
+                        }
                     }
                 }
+            } else {
+                self.state = .ready
             }
         }
+        
     }
     
     /// Loads the number of posts the user has made over all time

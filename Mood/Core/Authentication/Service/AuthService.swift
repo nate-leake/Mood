@@ -10,14 +10,17 @@ import FirebaseAuth
 import FirebaseFirestoreSwift
 import Firebase
 
-class AuthService {
+class AuthService: Stateable {
     
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var userIsSignedIn: Bool?
+    @Published var state: AppStateCase = .startup
     
     static let shared = AuthService()
     
     init(){
+        AppState.shared.addContributor(adding: self)
         Task {try await loadUserData()}
     }
     
@@ -46,11 +49,20 @@ class AuthService {
     /// Loads data about the user's profile only
     @MainActor
     func loadUserData() async throws{
+        self.state = .loading
         self.userSession = Auth.auth().currentUser
-        guard let currentUid = self.userSession?.uid else {return}
+        guard let currentUid = self.userSession?.uid else {
+            self.userIsSignedIn = false
+            self.state = .ready
+            DailyDataService.shared.refreshServiceData()
+            return
+        }
         let snapshot = try await Firestore.firestore().collection("users").document(currentUid).getDocument()
-        print("DEBUG: Snapshot data is \(String(describing: snapshot.data()))")
         self.currentUser = try? snapshot.data(as: User.self)
+        self.userIsSignedIn = true
+        self.state = .ready
+        DailyDataService.shared.refreshServiceData()
+        print("done loading user data")
     }
     
     func signout(){
