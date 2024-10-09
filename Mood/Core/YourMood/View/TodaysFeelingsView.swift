@@ -64,7 +64,7 @@ struct TodaysFeelingsView: View {
                             )
                     }
                 }
-                .frame(height: CGFloat(todaysData?.pairs.count ?? 6) * 60.0)
+                .frame(height: (CGFloat(todaysData?.pairs.count ?? 6) * 60.0)+40)
                 .chartXScale(domain: [0, 3.55])
                 .chartYAxis {
                     AxisMarks(stroke: StrokeStyle(lineWidth: 0))
@@ -118,6 +118,6 @@ struct TodaysFeelingsView: View {
 }
 
 #Preview {
-    TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[1])
+    TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[6])
         .environmentObject(DailyDataService())
 }
