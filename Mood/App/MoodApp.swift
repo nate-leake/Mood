@@ -17,16 +17,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct MoodApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .onAppear {
-//#if DEBUG
-//                    UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-//#endif
+#if DEBUG
+                    UserDefaults.standard.set(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+#endif
                 }
             NotificationService()
         }

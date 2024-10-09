@@ -39,12 +39,13 @@ class CustomDateFormatter{
 }
 
 /// The DailyDataService is responsable for handling the user's daily logs
-class DailyDataService : ObservableObject{
+class DailyDataService : ObservableObject, Stateable {
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
     @Published var recentMoodPosts: [UnsecureMoodPost]?
-    @MainActor @Published var appIsReady: Bool = false
+    @Published var numberOfEntries: Int = 0
+    @Published var state: AppStateCase = .startup
     
     static let shared = DailyDataService()
     
@@ -52,37 +53,38 @@ class DailyDataService : ObservableObject{
     let dateFormatter = CustomDateFormatter()
     
     init(){
-        Task {
-            try await getLoggedToday()
-            try await setRecentMoodPosts(quantity: 7)
-            if recentMoodPosts != nil {
-                await MainActor.run {
-                    withAnimation(.easeInOut(duration: 2)){
-                        appIsReady = true
-                    }
-                }
-            }
-        }
+        AppState.shared.addContributor(adding: self)
+        self.state = .loading
     }
     
-    func refreshAppReady(){
-        Task {
-            print("current recentMoodPosts: \(String(describing: recentMoodPosts))")
-            try await getLoggedToday()
-            try await setRecentMoodPosts(quantity: 7)
-            if recentMoodPosts != nil {
-                await MainActor.run {
-                    withAnimation(.easeInOut(duration: 2)){
-                        appIsReady = true
+    func refreshServiceData(){
+        if let signedIn = AuthService.shared.userIsSignedIn {
+            if signedIn {
+                self.state = .loading
+                print("refreshing DDS data")
+                Task {
+                    try await getLoggedToday()
+                    try await setRecentMoodPosts(quantity: 7)
+                    try await getNumberOfEntries()
+                    if recentMoodPosts != nil {
+                        await MainActor.run {
+                            withAnimation(.easeInOut(duration: 2)){
+                                state = .ready
+                            }
+                        }
                     }
                 }
+            } else {
+                self.state = .ready
             }
         }
+        
     }
     
     /// Loads the number of posts the user has made over all time
     /// - Returns: An Int of the user's post count
-    func getNumberOfEntries() async throws -> Int {
+    @MainActor
+    func getNumberOfEntries() async throws {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
         let userDocument = Firestore.firestore().collection("users").document(uid)
@@ -90,7 +92,7 @@ class DailyDataService : ObservableObject{
         
         let snapshot = try await userPostsCollection.count.getAggregation(source: .server)
         print("user has \(Int(truncating: snapshot.count)) entries")
-        return Int(truncating: snapshot.count)
+        self.numberOfEntries = Int(truncating: snapshot.count)
     }
     
     /// Uploads the user's DailyData wrapped in a MoodPost to the database
@@ -118,8 +120,11 @@ class DailyDataService : ObservableObject{
                 //            try await dailyPostRef.setData(encodedDailyPost)
                 try await privatePostRef.setData(encodedPrivatePost)
                 DailyDataService.shared.todaysDailyData = dailyData
-                DailyDataService.shared.recentMoodPosts?.removeFirst()
+                if DailyDataService.shared.recentMoodPosts?.count ?? 0 > 0 {
+                    DailyDataService.shared.recentMoodPosts?.removeFirst()
+                }
                 DailyDataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                DailyDataService.shared.numberOfEntries += 1
                 uploadSuccess = true
             } catch {
                 print("an error occured while uploading the post: \(error)")
@@ -240,46 +245,49 @@ class DailyDataService : ObservableObject{
     /// Checks if the user has logged today or not and sets the DailyDataService.userHasLoggedToday
     @MainActor
     func getLoggedToday() async throws{
-        let fetchedDate: [String: Any]? = try await fetchLastLoggedDate()
-        let logDate = fetchedDate?["logDate"] as? Date ?? Date()
-        
         let now = Date()
-        
-        // Get the current time and compare
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: now)
         let logWindowStart = calendar.date(byAdding: .hour, value: 19, to: startOfToday)!
+        
+        let queryDate: [String: Any]? = try await fetchLastLoggedDate()
+        // Check if the result for fetchedLastLoggedDate is nil. If if is nil, the user may not have any data in the db
+        // and therefore has not logged today.
+        if let fetchedDate = queryDate {
+            let logDate = fetchedDate["logDate"] as? Date ?? Date()
+            
+            // *******************************************************************************
+            // UNLUESS THERE IS A CONFIRMED BUG WITH THE LINES BELOW THIS STATEMENT, DO NOT ALTER THIS CODE
+            // This took me so long and so many tries to get right.
+            // This code works by getting the start of the last log date
+            // We then compare that start of the day to the start of the current day
+            // If they are the same day, the user already logged
+            // If they are not the same day then the user has not logged (or the user time traveled)
+            // This is a LOT less convoluted than the code I spent hours writing
+            // NOTE: Apple uses UTC for Date objects and I think Calendar dates are formatted to local time
+            
+            // Determine if the user has logged today
+            let startOfAdjustedLogDay = calendar.startOfDay(for: logDate)
+            
+            // If the adjusted last log date falls within today’s date range
+            if startOfAdjustedLogDay == startOfToday {
+                self.userHasLoggedToday = true
+            } else {
+                self.userHasLoggedToday = false
+            }
+            
+            // DO NOT ALTER THE ABOVE LINES OF CODE!
+            // See explination above :)
+        } else {
+            self.userHasLoggedToday = false
+        }
         
         // Check if the log window has oponed
         if now >= logWindowStart{
             self.logWindowOpen = true
         }
         
-        // *******************************************************************************
-        // UNLUESS THERE IS A CONFIRMED BUG WITH THE LINES BELOW THIS STATEMENT, DO NOT ALTER THIS CODE
-        // This took me so long and so many tries to get right.
-        // This code works by getting the start of the last log date
-        // We then compare that start of the day to the start of the current day
-        // If they are the same day, the user already logged
-        // If they are not the same day then the user has not logged (or the user time traveled)
-        // This is a LOT less convoluted than the code I spend hours writing
-        // NOTE: Apple uses UTC for Date objects and I think Calendar dates are formatted to local time
-        
-        // Determine if the user has logged today
-        let startOfAdjustedLogDay = calendar.startOfDay(for: logDate)
-        
-        // If the adjusted last log date falls within today’s date range
-        if startOfAdjustedLogDay == startOfToday {
-            self.userHasLoggedToday = true
-        } else {
-            self.userHasLoggedToday = false
-        }
-        
-        // DO NOT ALTER THE ABOVE LINES OF CODE!
-        // See explination above :)
-        
-        //        print("User has logged today: \(userHasLoggedToday)")
-        //        print("Log window open: \(logWindowOpen)")
+        print("user has logged: \(self.userHasLoggedToday)\nlog window open: \(self.logWindowOpen)")
         
     }
 }

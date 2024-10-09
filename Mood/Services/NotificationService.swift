@@ -8,10 +8,6 @@
 import SwiftUI
 import UserNotifications
 
-class AppState: ObservableObject {
-    @Published var navigateToLogMoodView: Bool = false
-}
-
 struct NotificationService: View {
     var body: some View {
         VStack {
