@@ -189,6 +189,11 @@ struct YourMoodView: View {
                         for mood in recentMoods?.prefix(4) ?? [] {
                             totalMoodScore += mood.intensity
                         }
+                        
+                        if totalMoodScore == 0 {
+                            totalMoodScore = 1
+                        }
+                        
                         withAnimation(.easeInOut){loadingSuccess = true}
                     } else {
                         
