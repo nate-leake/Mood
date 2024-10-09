@@ -69,6 +69,7 @@ class AuthService: Stateable {
         try? Auth.auth().signOut()
         self.userSession = nil
         self.currentUser = nil
+        self.userIsSignedIn = false
     }
     
     @MainActor

@@ -42,7 +42,7 @@ struct LoginView: View {
                         .background(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .padding(.vertical)
+                .padding(.top)
             }
         }
         .toolbar {
