@@ -87,13 +87,17 @@ struct ContextTileView: View {
                         .padding(.bottom)
                     }
                 }
+                if !viewModel.pairs.isEmpty {
+                    Rectangle()
+                        .frame(height: 44)
+                        .background(.clear)
+                        .foregroundStyle(.clear)
+                }
             }
             if !viewModel.pairs.isEmpty{
                 VStack{
                     Spacer()
                     ZStack{
-                        
-                        
                         NavigationLink{
                             MoodLoggedView()
                                 .environmentObject(viewModel)
@@ -117,16 +121,6 @@ struct ContextTileView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                         
-                        .background(
-                            HStack{
-                                Spacer()
-                                Rectangle()
-                                    .fill(.bar)
-                                Spacer()
-                            }
-                                .frame(height: 52)
-                                .frame(maxWidth: .infinity)
-                        )
                     }
                 }
             }
