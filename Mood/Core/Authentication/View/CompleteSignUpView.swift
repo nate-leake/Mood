@@ -11,6 +11,13 @@ struct CompleteSignUpView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
     
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .full
+        formatter.timeZone = TimeZone.current
+        return formatter
+    }()
     
     var body: some View {
         ZStack{
@@ -32,6 +39,27 @@ struct CompleteSignUpView: View {
                 
                 Spacer()
                 
+                VStack(spacing: 45){
+                    Text("here's what we have")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                    Text("name: \(viewModel.name)")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                    Text("email: \(viewModel.email)")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                    Text("birthday: \(dateFormatter.string(from: viewModel.birthday))")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                }
+                
+                Spacer()
+//                
                 Button{
                     Task { try await viewModel.createUser() }
                 } label: {
@@ -62,4 +90,5 @@ struct CompleteSignUpView: View {
 
 #Preview {
     CompleteSignUpView()
+        .environmentObject(RegistrationViewModel())
 }

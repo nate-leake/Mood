@@ -46,7 +46,7 @@ struct AddBirthdayView: View {
                     .frame(width: 200, alignment: .center)
                 
                 NavigationLink{
-                    CompleteSignUpView()
+                    AddPinView()
                         .navigationBarBackButtonHidden()
                 } label: {
                     Text("next")
@@ -76,4 +76,5 @@ struct AddBirthdayView: View {
 
 #Preview {
     AddBirthdayView()
+        .environmentObject(RegistrationViewModel())
 }

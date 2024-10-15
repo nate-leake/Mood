@@ -64,6 +64,7 @@ struct WelcomeView: View {
                             NavigationLink{
                                 SignUpView()
                                     .navigationBarBackButtonHidden()
+                                    .environmentObject(RegistrationViewModel())
                             } label: {
                                 Text("no")
                                     .font(.headline)

@@ -44,6 +44,7 @@ struct AddEmailView: View {
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
                     .keyboardType(.emailAddress)
+                    .autocorrectionDisabled(true)
                     .onChange(of: viewModel.email) {
                         self.isFormValid = isValidEmail()
                     }
@@ -89,4 +90,5 @@ struct AddEmailView: View {
 
 #Preview {
     AddEmailView()
+        .environmentObject(RegistrationViewModel())
 }
