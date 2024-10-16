@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("lockAppOnBackground") var lockAppOnBackground: Bool = true
+    @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = ContentViewModel()
     @StateObject var registrationViewModel = RegistrationViewModel()
     @StateObject var dailyDataService: DailyDataService = DailyDataService.shared
+    @StateObject var authService: AuthService = AuthService.shared
     @State var appStatus: AppStateCase = .startup
     
     var body: some View {
@@ -18,13 +21,26 @@ struct ContentView: View {
             if appStatus != .ready {
                 AppLoadingView(appState: $appStatus)
             } else {
-                if !(AuthService.shared.userIsSignedIn ?? false) {
+                if !(authService.userIsSignedIn ?? false) {
                     WelcomeView()
                         .environmentObject(registrationViewModel)
                 } else if let currentUser = viewModel.currentUser {
-                    MainTabBar(user: currentUser)
-                        .environmentObject(dailyDataService)
+                    if authService.isUnlocked{
+                        MainTabBar(user: currentUser)
+                            .environmentObject(dailyDataService)
+                    } else {
+                        ValidatePinView()
+                            .onChange(of: authService.isUnlocked) { old, new in
+                                print("old: \(old), new: \(new)")
+                            }
+                    }
                 }
+            }
+        }
+        .onChange(of: scenePhase) { new, old in
+//            print(scenePhase)
+            if lockAppOnBackground && new == .background{
+                authService.lock()
             }
         }
     }

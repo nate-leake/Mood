@@ -51,6 +51,11 @@ struct SignUpView: View {
                         .font(.title2)
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
+                    
+                    Text("\u{2022} pin")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
                 }
                 
                 Spacer()
@@ -84,4 +89,5 @@ struct SignUpView: View {
 
 #Preview {
     SignUpView()
+        .environmentObject(RegistrationViewModel())
 }

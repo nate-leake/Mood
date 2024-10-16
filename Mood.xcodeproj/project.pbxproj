@@ -51,6 +51,7 @@
 		AF8D74992AE6FABE00C0729E /* GlobalMoodViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */; };
 		AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */; };
 		AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */; };
+		AF97A2A52CB85BEF00E18440 /* ValidatePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */; };
 		AF9DBB3D2CA1C6C30051C515 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */; };
 		AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */; };
 		AFA7AF5D2C88EABF002E911B /* LineChartWithSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA7AF5C2C88EABF002E911B /* LineChartWithSelection.swift */; };
@@ -66,6 +67,8 @@
 		AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */; };
 		AFEC9B3B2AD4581800F35F8B /* UnsecureMoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */; };
 		AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */; };
+		AFEF11242CB7151200FECDCD /* SettingsAndPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEF11232CB7151200FECDCD /* SettingsAndPrivacyView.swift */; };
+		AFEF11262CB71A9300FECDCD /* AddPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEF11252CB71A9300FECDCD /* AddPinView.swift */; };
 		AFF2F2F42AB146ED002FB6C7 /* moods.json in Resources */ = {isa = PBXBuildFile; fileRef = AFF2F2F32AB146ED002FB6C7 /* moods.json */; };
 		AFF2F2F62AB14CE0002FB6C7 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +126,7 @@
 		AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodViewWrapper.swift; sourceTree = "<group>"; };
 		AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodLockedView.swift; sourceTree = "<group>"; };
 		AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLoggedView.swift; sourceTree = "<group>"; };
+		AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatePinView.swift; sourceTree = "<group>"; };
 		AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AFA7AF5C2C88EABF002E911B /* LineChartWithSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartWithSelection.swift; sourceTree = "<group>"; };
@@ -132,12 +136,15 @@
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFCABA7A2C8E37B900DA562A /* WrappingHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingHStack.swift; sourceTree = "<group>"; };
 		AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysFeelingsView.swift; sourceTree = "<group>"; };
+		AFDC464E2CBDAD8200AD5782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
 		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
 		AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureMoodPost.swift; sourceTree = "<group>"; };
 		AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTagView.swift; sourceTree = "<group>"; };
+		AFEF11232CB7151200FECDCD /* SettingsAndPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAndPrivacyView.swift; sourceTree = "<group>"; };
+		AFEF11252CB71A9300FECDCD /* AddPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPinView.swift; sourceTree = "<group>"; };
 		AFF2F2F32AB146ED002FB6C7 /* moods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moods.json; sourceTree = "<group>"; };
 		AFF2F2F52AB14CE0002FB6C7 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +226,7 @@
 		AF6BFA2B2AAFCD2C005B4DDA /* Mood */ = {
 			isa = PBXGroup;
 			children = (
+				AFDC464E2CBDAD8200AD5782 /* Info.plist */,
 				AFF2F2F22AB14681002FB6C7 /* Resources */,
 				AF6BFA402AAFCDC0005B4DDA /* App */,
 				AF6BFA3F2AAFCDBC005B4DDA /* Core */,
@@ -309,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				AF4B33A32AB0B839004CF248 /* ProfileView.swift */,
+				AFEF11222CB714F300FECDCD /* Settings and Privacy */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -381,7 +390,9 @@
 				AF5B87742AB5277B000E204F /* CreatePasswordView.swift */,
 				AF40154F2AC61FAA003DE7DE /* AddNameView.swift */,
 				AF5B87782AB52C59000E204F /* AddBirthdayView.swift */,
+				AFEF11252CB71A9300FECDCD /* AddPinView.swift */,
 				AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */,
+				AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -426,6 +437,14 @@
 				AFB789622C9CBD28007B375A /* ContextLogView.swift */,
 			);
 			path = LogFlow;
+			sourceTree = "<group>";
+		};
+		AFEF11222CB714F300FECDCD /* Settings and Privacy */ = {
+			isa = PBXGroup;
+			children = (
+				AFEF11232CB7151200FECDCD /* SettingsAndPrivacyView.swift */,
+			);
+			path = "Settings and Privacy";
 			sourceTree = "<group>";
 		};
 		AFF2F2F22AB14681002FB6C7 /* Resources */ = {
@@ -550,6 +569,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFEF11242CB7151200FECDCD /* SettingsAndPrivacyView.swift in Sources */,
 				AFCABA7B2C8E37B900DA562A /* WrappingHStack.swift in Sources */,
 				AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */,
 				AF4392342AD4D42700E4FC15 /* EmotionTagView.swift in Sources */,
@@ -571,6 +591,7 @@
 				AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */,
 				AF5B87732AB525D1000E204F /* TextFieldModifier.swift in Sources */,
 				AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */,
+				AF97A2A52CB85BEF00E18440 /* ValidatePinView.swift in Sources */,
 				AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */,
 				AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */,
 				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
@@ -591,6 +612,7 @@
 				AF5B87712AB521BB000E204F /* AddEmailView.swift in Sources */,
 				AF5B87792AB52C59000E204F /* AddBirthdayView.swift in Sources */,
 				AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */,
+				AFEF11262CB71A9300FECDCD /* AddPinView.swift in Sources */,
 				AF88EC372CAC5B5600D02624 /* AppState.swift in Sources */,
 				AF5B87772AB52904000E204F /* SignUpView.swift in Sources */,
 				AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */,
@@ -748,13 +770,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Mood/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = mood;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "verify your identity to unlock mood";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -785,13 +809,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Mood/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = mood;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "verify your identity to unlock mood";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -34,6 +34,7 @@ struct AddNameView: View {
                 
                 TextField("", text: $viewModel.name, prompt: Text("name").foregroundStyle(.gray))
                     .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
                     .modifier(TextFieldModifier())
                     .padding(.vertical)
                     .onChange(of: viewModel.name) {
@@ -72,4 +73,5 @@ struct AddNameView: View {
 
 #Preview {
     AddNameView()
+        .environmentObject(RegistrationViewModel())
 }

@@ -63,6 +63,15 @@ struct ProfileView: View {
                     }
                     .modifier(ListRowBackgroundModifer())
                     
+                    Section {
+                        NavigationLink{
+                            SettingsAndPrivacyView()
+                        } label: {
+                            Text("settings and privacy")
+                        }
+                    }
+                    .modifier(ListRowBackgroundModifer())
+                    
                     Button {
                         AuthService.shared.signout()
                     } label: {
@@ -88,4 +97,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView(user: User.MOCK_USERS[0])
+        .environmentObject(DailyDataService())
 }

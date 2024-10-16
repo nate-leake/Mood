@@ -110,4 +110,5 @@ struct CreatePasswordView: View {
 
 #Preview {
     CreatePasswordView()
+        .environmentObject(RegistrationViewModel())
 }
