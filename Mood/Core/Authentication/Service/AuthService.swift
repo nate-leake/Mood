@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestoreSwift
 import Firebase
 import SwiftUI
+import LocalAuthentication
 
 class AuthService: Stateable, ObservableObject {
     
@@ -18,6 +19,8 @@ class AuthService: Stateable, ObservableObject {
     @Published var userIsSignedIn: Bool?
     @Published var isUnlocked: Bool = false
     @Published var state: AppStateCase = .startup
+    
+    var animation: Animation = .easeInOut
     
     static let shared = AuthService()
     
@@ -105,28 +108,76 @@ class AuthService: Stateable, ObservableObject {
         return isValidPin
     }
     
+    private func authenticateBiometrics(completion: @escaping (Bool) -> Void) {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "verify your identity to unlock mood"
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                success, authenticationError in
+                if success {
+                    // authenticated succesfully
+                    DispatchQueue.main.async {
+                        completion(true)
+                    }
+                } else {
+                    // there was a problem
+                    print(authenticationError ?? "error could not be read")
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            }
+        } else {
+            // no biometrics
+            print("no biometrics available on this device")
+            completion(false)
+        }
+    }
+    
+    
     func lock(){
-        withAnimation(.easeInOut) {
+        withAnimation(animation) {
             self.isUnlocked = false
         }
     }
     
     func unlock(using pin: String){
-        withAnimation(.easeInOut) {
+        withAnimation(animation) {
             self.isUnlocked = self.validatePin(using: pin)
         }
     }
     
     func unlock(using pin: String) -> Bool {
-        withAnimation(.easeInOut) {
+        withAnimation(animation) {
             self.isUnlocked = self.validatePin(using: pin)
         }
         return self.isUnlocked
     }
     
+    func unlockUsingBiometrics() {
+        authenticateBiometrics() { isAuthenticated in
+            withAnimation(self.animation) {
+                self.isUnlocked = isAuthenticated
+            }
+        }
+    }
+    
+    func unlockUsingBiometrics(completion: @escaping (Bool) -> Void) {
+        authenticateBiometrics() { isAuthenticated in
+            withAnimation(self.animation) {
+                self.isUnlocked = isAuthenticated
+                DispatchQueue.main.async {
+                    completion(isAuthenticated)
+                }
+            }
+        }
+    }
+    
     func signout(){
         try? Auth.auth().signOut()
-        withAnimation(.easeInOut) {
+        withAnimation(animation) {
             self.userSession = nil
             self.currentUser = nil
             self.userIsSignedIn = false

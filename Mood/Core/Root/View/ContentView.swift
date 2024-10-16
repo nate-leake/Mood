@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("lockAppOnBackground") var lockAppOnBackground: Bool = true
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = ContentViewModel()
     @StateObject var registrationViewModel = RegistrationViewModel()
@@ -37,8 +38,8 @@ struct ContentView: View {
             }
         }
         .onChange(of: scenePhase) { new, old in
-            print(scenePhase)
-            if new == .background {
+//            print(scenePhase)
+            if lockAppOnBackground && new == .background{
                 authService.lock()
             }
         }

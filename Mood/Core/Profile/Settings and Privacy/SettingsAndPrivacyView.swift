@@ -8,12 +8,37 @@
 import SwiftUI
 
 struct SettingsAndPrivacyView: View {
+    
+    @AppStorage("lockAppOnBackground") var lockAppOnBackground: Bool = true
+    @AppStorage("useBiometricsToUnlock") var useBiometricsToUnlock: Bool = false
+    
+    
     var body: some View {
+        
         VStack{
-            Text("")
+            List {
+                Section {
+                    Toggle("always require pin", isOn: $lockAppOnBackground)
+                    Toggle("use biometrics to unlock", isOn: $useBiometricsToUnlock)
+                        .onChange(of: useBiometricsToUnlock) { old, new in
+                            if old == false && new == true {
+                                AuthService.shared.unlockUsingBiometrics() { success in                                    
+                                    if !success { useBiometricsToUnlock = false }
+                                }
+                                
+                            }
+                        }
+                    
+                }
+                .tint(.appPurple)
+                .modifier(ListRowBackgroundModifer())
+            }
+            
+            
         }
         .navigationTitle("settings and privacy")
         .navigationBarTitleDisplayMode(.inline)
+        
     }
 }
 
