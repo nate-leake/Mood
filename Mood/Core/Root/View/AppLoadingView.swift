@@ -52,7 +52,7 @@ struct AppLoadingView: View {
                 Image("SplashScreenImage")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 250, height: 130)
+                    .frame(width: 170, height: 170)
                     .scaleEffect(scale)
                 //                    .animation(isAnimating ? asymmetricalAnimation() : .default, value: scale)
                     .onAppear {
