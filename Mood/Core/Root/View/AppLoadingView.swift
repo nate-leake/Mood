@@ -46,7 +46,7 @@ struct AppLoadingView: View {
     
     var body: some View {
         ZStack{
-            Color.splashScreen.ignoresSafeArea()
+            Color.splashScreen
             
             HStack{
                 Image("SplashScreenImage")
@@ -59,7 +59,7 @@ struct AppLoadingView: View {
                         startAnimation()
                     }
             }
-        }
+        }.ignoresSafeArea()
         
     }
 }
