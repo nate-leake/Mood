@@ -7,13 +7,9 @@
 
 import SwiftUI
 
-struct loadableAnimator: ViewModifier {
+struct LoadableAnimator: ViewModifier {
     @Binding var isLoading: Bool
     @State var rotation: CGFloat = 0
-    
-    init(isLoading: Bool) {
-        self.isLoading = isLoading
-    }
     
     func body(content: Content) -> some View {
         content
@@ -48,5 +44,12 @@ struct loadableAnimator: ViewModifier {
                 }
             }
             
+    }
+}
+
+
+extension View {
+    func loadable(isLoading: Binding<Bool>) -> some View {
+        self.modifier(LoadableAnimator(isLoading: isLoading))
     }
 }
