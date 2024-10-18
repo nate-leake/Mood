@@ -18,16 +18,7 @@ struct SignUpView: View {
         
                         
             VStack{
-                Text("no problem")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                Text("we'll need these few things from you")
-                    .foregroundStyle(.white)
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
+                RegistrationHeaderView(header: "no problem", subheading: "we'll need these few things from you")
                 
                 Spacer()
                 

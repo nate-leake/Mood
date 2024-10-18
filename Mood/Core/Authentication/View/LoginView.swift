@@ -11,6 +11,8 @@ struct LoginView: View {
     @Environment(\.dismiss) var dismiss
     
     @StateObject var viewModel = LoginViewModel()
+    @State var isLoading: Bool = false
+    @State var errorMessage: String = ""
     
     var body: some View {
         ZStack{
@@ -23,6 +25,16 @@ struct LoginView: View {
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
                 
+                if errorMessage.count > 0 {
+                    Text(errorMessage)
+                        .foregroundStyle(.white)
+                        .font(.headline)
+                        .padding(7)
+                        .background(.appRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding()
+                }
+                
                 TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
                     .textInputAutocapitalization(.never)
                     .modifier(TextFieldModifier())
@@ -32,18 +44,29 @@ struct LoginView: View {
                     .modifier(TextFieldModifier())
                 
                 Button{
-                    Task { try await viewModel.signin()}
+                    withAnimation(.easeInOut) {
+                        isLoading = true
+                    }
+                    Task {
+                        let msg: String = try await viewModel.signin()
+                        withAnimation(.easeInOut){
+                            errorMessage = msg
+                            isLoading = false
+                        }
+                    }
                 } label: {
-                    Text("log in")
+                    Text(isLoading ? "logging in..." : "log in")
                         .font(.headline)
                         .fontWeight(.bold)
-                        .foregroundStyle(.appPurple)
                         .frame(width: 360, height: 44)
-                        .background(.white)
+                        .foregroundStyle(.appPurple)
+                        .background(isLoading ? .white.opacity(0.5) : .white)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .padding(.top)
+                .disabled(isLoading)
+                .loadable(isLoading: $isLoading)
             }
+            
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading){
