@@ -20,19 +20,11 @@ struct AddNameView: View {
             
                         
             VStack{
-                Text("add a name")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                Text("this is what we'll call you")
-                    .foregroundStyle(.white)
+                RegistrationHeaderView(header: "add a username",
+                                       subheading: "this is what we'll call you\n(it doesn't have to be your real name)"
+                )
                 
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
-                
-                
-                TextField("", text: $viewModel.name, prompt: Text("name").foregroundStyle(.gray))
+                TextField("", text: $viewModel.name, prompt: Text("username").foregroundStyle(.gray))
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .modifier(TextFieldModifier())

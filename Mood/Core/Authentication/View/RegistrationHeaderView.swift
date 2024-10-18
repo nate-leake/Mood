@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct RegistrationHeaderView: View {
+    var header: String
+    var subheading: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(header)
+            .font(.title)
+            .foregroundStyle(.white)
+            .fontWeight(.bold)
+            .multilineTextAlignment(.center)
+            .padding(.bottom, 7)
+        
+        Text(subheading)
+            .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
+            .padding(.bottom, 10)
+        
+        Rectangle()
+            .frame(width: 300, height: 0.5)
+            .foregroundStyle(.white)
     }
 }
 
 #Preview {
-    RegistrationHeaderView()
+    RegistrationHeaderView(header: "setup", subheading: "set up your things!")
 }

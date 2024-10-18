@@ -30,18 +30,7 @@ struct ValidatePinView: View {
                 .ignoresSafeArea()
             
             VStack {
-                Text("enter your pin")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                
-                Text("this helps keep your data secure")
-                    .foregroundStyle(.white)
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
-                    .padding(.bottom, 40)
+                RegistrationHeaderView(header: "quick unlock", subheading: "unlock mood with your pin or biometrics")
                 
                 VStack{
                     Text(error)
@@ -55,7 +44,7 @@ struct ValidatePinView: View {
                 
                 // MARK: - Single PIN Entry Field
                 TextField("", text: $pinEntered,
-                          prompt: Text("enter 4-digit pin")
+                          prompt: Text("pin")
                     .foregroundStyle(.white.opacity(0.7))
                 )
                 .frame(width: 200, height: 50)
