@@ -245,7 +245,7 @@ class DailyDataService : ObservableObject, Stateable {
     /// Checks if the user has logged today or not and sets the DailyDataService.userHasLoggedToday
     @MainActor
     func getLoggedToday() async throws{
-        let now = Date()
+        let now = Date.now
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: now)
         let logWindowStart = calendar.date(byAdding: .hour, value: 19, to: startOfToday)!

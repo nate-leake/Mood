@@ -15,6 +15,7 @@ struct ContentView: View {
     @StateObject var dailyDataService: DailyDataService = DailyDataService.shared
     @StateObject var authService: AuthService = AuthService.shared
     @State var appStatus: AppStateCase = .startup
+    @State var appEnteredBackgroundTime: Date = Date.now
     
     var body: some View {
         Group{
@@ -37,10 +38,15 @@ struct ContentView: View {
                 }
             }
         }
-        .onChange(of: scenePhase) { new, old in
-//            print(scenePhase)
+        .onChange(of: scenePhase) { old, new in
             if lockAppOnBackground && new == .background{
                 authService.lock()
+                appEnteredBackgroundTime = Date.now
+            }
+            if new == .inactive && old == .background {
+                if Date().timeIntervalSince(appEnteredBackgroundTime) > 600 {
+                    dailyDataService.refreshServiceData()
+                }
             }
         }
     }

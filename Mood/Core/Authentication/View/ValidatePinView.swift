@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ValidatePinView: View {
     @AppStorage("useBiometricsToUnlock") var useBiometricsToUnlock: Bool = false
+    @Environment(\.scenePhase) var scenePhase
     @State var pinEntered: String = ""
     @State var isPinIncorrect: Bool = false
     @State var error: String = ""
@@ -117,18 +118,19 @@ struct ValidatePinView: View {
                 Spacer()
             }
         }
-        .onAppear {
-            if useBiometricsToUnlock {
-                AuthService.shared.unlockUsingBiometrics() { isAuthenticated in
-                    if !isAuthenticated {
-                        error = "FaceID failed to authenticate"
-                        isPinIncorrect = true
+        .onChange(of: scenePhase) { old, new in
+            if new == .active {
+                if useBiometricsToUnlock {
+                    AuthService.shared.unlockUsingBiometrics() { isAuthenticated in
+                        if !isAuthenticated {
+                            error = "FaceID failed to authenticate"
+                            isPinIncorrect = true
+                        }
                     }
+                } else {
+                    isTextFieldFocused = true  // Auto-focus the text field when the view appears
                 }
-            } else {
-                isTextFieldFocused = true  // Auto-focus the text field when the view appears
             }
-            
         }
         .onTapGesture {
             isTextFieldFocused = false  // Dismiss keyboard when tapping outside the text field
