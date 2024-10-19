@@ -26,8 +26,8 @@ struct YourMoodView: View {
                     Section {
                         Text("log today's mood")
                             .fontWeight(.bold)
-                            .foregroundStyle(.appBlack.opacity(0.75))
-                            .modifier(ListRowBackgroundModifer(foregroundColor: .appYellow))
+                            .foregroundStyle(.white.opacity(0.75))
+                            .modifier(ListRowBackgroundModifer(foregroundColor: .appBlue))
                         LogDailyMoodSuggestionView()
                             .modifier(ListRowBackgroundModifer())
                             .padding(.vertical, 10)
