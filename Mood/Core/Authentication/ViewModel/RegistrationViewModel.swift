@@ -14,7 +14,7 @@ class RegistrationViewModel: ObservableObject {
     @Published var birthday = Date.now
     @Published var pin: String = ""
     
-    func createUser() async throws {
-        try await AuthService.shared.createUser(email: email, password: passwd, name: name, birthday: birthday, userPin: pin)
+    func createUser() async throws -> String {
+        return try await AuthService.shared.createUser(email: email, password: passwd, name: name, birthday: birthday, userPin: pin)
     }
 }

@@ -24,22 +24,10 @@ struct AddBirthdayView: View {
         ZStack{
             Color.appPurple
                 .ignoresSafeArea()
-            
                         
             VStack{
-                Text("add your birthday")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                Text("you'll need to be at least 13")
-                    .foregroundStyle(.white)
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
-                
-
-                
+                RegistrationHeaderView(header: "add your birthday", subheading: "you'll need to be at least 13")
+     
                 DatePicker(selection: $viewModel.birthday, in: dateClosedRange, displayedComponents: .date){}
                     .datePickerStyle(.wheel)
                     .tint(.accent)

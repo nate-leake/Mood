@@ -7,15 +7,23 @@
 
 import SwiftUI
 
-struct CompleteSignUpView: View {
+struct CompleteSignUpView: View, Hashable {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
+    @State var isLoading: Bool = false
+    @State var errorMessage: String = ""
     
-    let dateFormatter: DateFormatter = {
+    static func == (lhs: CompleteSignUpView, rhs: CompleteSignUpView) -> Bool {
+        return true // Since there are no distinguishing properties
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(0) // Simple hash since there are no stored properties
+    }
+    
+    private let dateFormatter = {
         let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .full
-        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "MMM d, yyyy"
         return formatter
     }()
     
@@ -25,51 +33,73 @@ struct CompleteSignUpView: View {
                 .ignoresSafeArea()
             
             VStack{
-                
-                Text("all set")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                Text("click below to finish signing up")
-                    .foregroundStyle(.white)
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
+                RegistrationHeaderView(header: "all set", subheading: "click below to finish signing up")
                 
                 Spacer()
                 
-                VStack(spacing: 45){
-                    Text("here's what we have")
-                        .font(.title2)
+                if errorMessage.count > 0 {
+                    Text(errorMessage)
                         .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                    Text("name: \(viewModel.name)")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                    Text("email: \(viewModel.email)")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                    Text("birthday: \(dateFormatter.string(from: viewModel.birthday))")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
+                        .font(.headline)
+                        .padding(7)
+                        .background(.appRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding()
                 }
                 
-                Spacer()
-//                
-                Button{
-                    Task { try await viewModel.createUser() }
-                } label: {
-                    Text("complete sign up")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .frame(width: 360, height: 44)
+                VStack(spacing: 45) {
+                    Text("here's what we have")
+                        .font(.title2)
                         .foregroundStyle(.appPurple)
-                        .background(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                    VStack(alignment: .leading, spacing: 45){
+                        Text("username: \(viewModel.name)")
+                            .font(.title2)
+                            .foregroundStyle(.appPurple)
+                        Text("email: \(viewModel.email)")
+                            .font(.title2)
+                            .foregroundStyle(.appPurple)
+                        Text("birthday: \(dateFormatter.string(from: viewModel.birthday))")
+                            .font(.title2)
+                            .foregroundStyle(.appPurple)
+                    }
+                }
+                .padding()
+                .background(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                
+                Spacer()
+                
+                ZStack {
+                    Button{
+                        withAnimation(.easeInOut) {
+                            isLoading = true
+                        }
+                        Task {
+                            do {
+                                let msg: String = try await viewModel.createUser()
+                                withAnimation(.easeInOut){
+                                    errorMessage = msg
+                                    isLoading = false
+                                }
+                            } catch {
+                                withAnimation(.easeInOut){
+                                    isLoading = false
+                                }
+                            }
+                        }
+                    } label: {
+                        Text(isLoading ? "creating account..." : "complete sign up")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .frame(width: 360, height: 44)
+                            .foregroundStyle(.appPurple)
+                            .background(isLoading ? .white.opacity(0.5) : .white)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .disabled(isLoading)
+                    .loadable(isLoading: $isLoading)
                 }
                 
                 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF041A0F2CC1838200A99FF3 /* RegistrationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF041A0E2CC1838200A99FF3 /* RegistrationHeaderView.swift */; };
 		AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */; };
 		AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */; };
 		AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */; };
@@ -44,6 +45,7 @@
 		AF7BB2DF2AB377D90057EE18 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2DE2AB377D90057EE18 /* FirebaseFirestore */; };
 		AF7BB2E12AB377D90057EE18 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2E02AB377D90057EE18 /* FirebaseFirestoreSwift */; };
 		AF7BB2E32AB377D90057EE18 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2E22AB377D90057EE18 /* FirebaseStorage */; };
+		AF8173942CC2D86300CE76BE /* LoadableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */; };
 		AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */; };
 		AF88EC372CAC5B5600D02624 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF88EC362CAC5B5600D02624 /* AppState.swift */; };
 		AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8AB5AD2AB38D8E00BE810A /* AuthService.swift */; };
@@ -84,6 +86,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AF041A0E2CC1838200A99FF3 /* RegistrationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationHeaderView.swift; sourceTree = "<group>"; };
 		AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsGenerator.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 		AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		AF7BB2D02AB3650A0057EE18 /* MoodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7BB2D22AB3650A0057EE18 /* MoodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTests.swift; sourceTree = "<group>"; };
+		AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableAnimator.swift; sourceTree = "<group>"; };
 		AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodsChartsView.swift; sourceTree = "<group>"; };
 		AF88EC362CAC5B5600D02624 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		AF8AB5AD2AB38D8E00BE810A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				AF6315CF2ACB5373005561B9 /* SecureInputView.swift */,
 				AF5542822C8A0B4900CD4DC0 /* DropDownView.swift */,
 				AFCABA7A2C8E37B900DA562A /* WrappingHStack.swift */,
+				AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				AFEF11252CB71A9300FECDCD /* AddPinView.swift */,
 				AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */,
 				AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */,
+				AF041A0E2CC1838200A99FF3 /* RegistrationHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -595,6 +601,8 @@
 				AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */,
 				AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */,
 				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
+				AF8173942CC2D86300CE76BE /* LoadableAnimator.swift in Sources */,
+				AF041A0F2CC1838200A99FF3 /* RegistrationHeaderView.swift in Sources */,
 				AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */,
 				AFA7AF5D2C88EABF002E911B /* LineChartWithSelection.swift in Sources */,
 				AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */,
@@ -770,13 +778,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 46;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Mood/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = mood;
+				INFOPLIST_KEY_CFBundleDisplayName = "(mood)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "verify your identity to unlock mood";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -786,6 +794,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -809,13 +818,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 46;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Mood/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = mood;
+				INFOPLIST_KEY_CFBundleDisplayName = "(mood)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "verify your identity to unlock mood";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -825,6 +834,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

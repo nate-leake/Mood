@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ValidatePinView: View {
     @AppStorage("useBiometricsToUnlock") var useBiometricsToUnlock: Bool = false
+    @Environment(\.scenePhase) var scenePhase
     @State var pinEntered: String = ""
     @State var isPinIncorrect: Bool = false
     @State var error: String = ""
@@ -30,18 +31,7 @@ struct ValidatePinView: View {
                 .ignoresSafeArea()
             
             VStack {
-                Text("enter your pin")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                
-                Text("this helps keep your data secure")
-                    .foregroundStyle(.white)
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
-                    .padding(.bottom, 40)
+                RegistrationHeaderView(header: "quick unlock", subheading: "unlock mood with your pin or biometrics")
                 
                 VStack{
                     Text(error)
@@ -55,7 +45,7 @@ struct ValidatePinView: View {
                 
                 // MARK: - Single PIN Entry Field
                 TextField("", text: $pinEntered,
-                          prompt: Text("enter 4-digit pin")
+                          prompt: Text("pin")
                     .foregroundStyle(.white.opacity(0.7))
                 )
                 .frame(width: 200, height: 50)
@@ -128,18 +118,19 @@ struct ValidatePinView: View {
                 Spacer()
             }
         }
-        .onAppear {
-            if useBiometricsToUnlock {
-                AuthService.shared.unlockUsingBiometrics() { isAuthenticated in
-                    if !isAuthenticated {
-                        error = "FaceID failed to authenticate"
-                        isPinIncorrect = true
+        .onChange(of: scenePhase) { old, new in
+            if new == .active {
+                if useBiometricsToUnlock {
+                    AuthService.shared.unlockUsingBiometrics() { isAuthenticated in
+                        if !isAuthenticated {
+                            error = "FaceID failed to authenticate"
+                            isPinIncorrect = true
+                        }
                     }
+                } else {
+                    isTextFieldFocused = true  // Auto-focus the text field when the view appears
                 }
-            } else {
-                isTextFieldFocused = true  // Auto-focus the text field when the view appears
             }
-            
         }
         .onTapGesture {
             isTextFieldFocused = false  // Dismiss keyboard when tapping outside the text field

@@ -46,20 +46,20 @@ struct AppLoadingView: View {
     
     var body: some View {
         ZStack{
-            Color.splashScreen.ignoresSafeArea()
+            Color.splashScreen
             
             HStack{
                 Image("SplashScreenImage")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 250, height: 130)
+                    .frame(width: 170, height: 170)
                     .scaleEffect(scale)
                 //                    .animation(isAnimating ? asymmetricalAnimation() : .default, value: scale)
                     .onAppear {
                         startAnimation()
                     }
             }
-        }
+        }.ignoresSafeArea()
         
     }
 }

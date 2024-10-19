@@ -35,35 +35,10 @@ struct CreatePasswordView: View {
                 .ignoresSafeArea()
             
             VStack{
-                Text("create a password")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                Text("it should have")
-                    .foregroundStyle(.white)
-                
-                HStack{
-                    Spacer()
-                    Text("\u{2022} at least 8 characters")
-                        .foregroundStyle(.white)
-                    Spacer()
-                    Text("\u{2022} one number")
-                        .foregroundStyle(.white)
-                    Spacer()
-                }
-                HStack{
-                    Spacer()
-                    Text("\u{2022} one special character")
-                        .foregroundStyle(.white)
-                    Spacer()
-                    Text("\u{2022} one upper case letter")
-                        .foregroundStyle(.white)
-                    Spacer()
-                }
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
+                RegistrationHeaderView(header: "create a password",
+                                       subheading: "it should have\n\u{2022} at least 8 characters\n\u{2022} at least one number\n\u{2022} one special character\n\u{2022} one upper case letter"
+                )
+
                 
                 SecureInputView("", text: $viewModel.passwd, 
                                 prompt: Text("password").foregroundStyle(.gray))

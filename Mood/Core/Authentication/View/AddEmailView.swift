@@ -27,17 +27,7 @@ struct AddEmailView: View {
             
                         
             VStack{
-                Text("add your email")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                Text("you'll use this to sign in")
-                    .foregroundStyle(.white)
-                
-                Rectangle()
-                    .frame(width: 300, height: 0.5)
-                    .foregroundStyle(.white)
-                
+                RegistrationHeaderView(header: "add your email", subheading: "you'll use this to sign in")
                 
                 TextField("", text: $viewModel.email, prompt: Text("email").foregroundStyle(.gray))
                     .textInputAutocapitalization(.never)
