@@ -61,7 +61,7 @@ class DataService : ObservableObject, Stateable {
         if let signedIn = AuthService.shared.userIsSignedIn {
             if signedIn {
                 self.state = .loading
-                print("refreshing DDS data")
+                print("refreshing DataService")
                 Task {
                     try await getLoggedToday()
                     try await setRecentMoodPosts(quantity: 7)
