@@ -104,7 +104,7 @@ class AuthService: Stateable, ObservableObject {
                 self.userIsSignedIn = false
                 self.state = .ready
             }
-            DailyDataService.shared.refreshServiceData()
+            DataService.shared.refreshServiceData()
             errorMessage = "no user is signed in"
             return errorMessage
         }
@@ -115,7 +115,7 @@ class AuthService: Stateable, ObservableObject {
                 self.userIsSignedIn = true
                 self.state = .ready
             }
-            DailyDataService.shared.refreshServiceData()
+            DataService.shared.refreshServiceData()
         } catch {
             errorMessage = provideAuthErrorDescription(from: error)
         }

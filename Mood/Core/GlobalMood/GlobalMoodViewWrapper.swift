@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct GlobalMoodViewWrapper: View {
-    @EnvironmentObject var dailyDataService: DailyDataService
+    @EnvironmentObject var dataService: DataService
     
     var body: some View {
-        if dailyDataService.userHasLoggedToday{
+        if dataService.userHasLoggedToday{
             GlobalMoodView()
         } else {
-            GlobalMoodLockedView(logWindowOpen: dailyDataService.logWindowOpen)
+            GlobalMoodLockedView(logWindowOpen: dataService.logWindowOpen)
         }
     }
 }

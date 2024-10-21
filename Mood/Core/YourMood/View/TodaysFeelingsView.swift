@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct TodaysFeelingsView: View {
-    @EnvironmentObject var dailyDataService: DailyDataService
+    @EnvironmentObject var dataService: DataService
     @State var todaysData: DailyData?
     var analytics = AnalyticsGenerator()
     
@@ -95,9 +95,9 @@ struct TodaysFeelingsView: View {
             VStack{
                 Text("Loading data...")
             }
-            .onChange(of: dailyDataService.todaysDailyData) {
+            .onChange(of: dataService.todaysDailyData) {
                 print("daily data changed!")
-                if let data = dailyDataService.todaysDailyData {
+                if let data = dataService.todaysDailyData {
                     self.todaysData = data
                     print(self.todaysData ?? "no data can be printed")
                 } else {
@@ -105,7 +105,7 @@ struct TodaysFeelingsView: View {
                 }
             }
             .onAppear{
-                if let data = dailyDataService.todaysDailyData{
+                if let data = dataService.todaysDailyData{
                     self.todaysData = data
                 } else {
                     print("todays feelings could not be loaded")
@@ -119,5 +119,5 @@ struct TodaysFeelingsView: View {
 
 #Preview {
     TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[6])
-        .environmentObject(DailyDataService())
+        .environmentObject(DataService())
 }

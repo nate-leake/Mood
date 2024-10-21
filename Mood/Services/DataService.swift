@@ -39,7 +39,7 @@ class CustomDateFormatter{
 }
 
 /// The DailyDataService is responsable for handling the user's daily logs
-class DailyDataService : ObservableObject, Stateable {
+class DataService : ObservableObject, Stateable {
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
@@ -47,7 +47,7 @@ class DailyDataService : ObservableObject, Stateable {
     @Published var numberOfEntries: Int = 0
     @Published var state: AppStateCase = .startup
     
-    static let shared = DailyDataService()
+    static let shared = DataService()
     
     let securityService = SecurityService()
     let dateFormatter = CustomDateFormatter()
@@ -119,12 +119,12 @@ class DailyDataService : ObservableObject, Stateable {
             do {
                 //            try await dailyPostRef.setData(encodedDailyPost)
                 try await privatePostRef.setData(encodedPrivatePost)
-                DailyDataService.shared.todaysDailyData = dailyData
-                if DailyDataService.shared.recentMoodPosts?.count ?? 0 > 0 {
-                    DailyDataService.shared.recentMoodPosts?.removeFirst()
+                DataService.shared.todaysDailyData = dailyData
+                if DataService.shared.recentMoodPosts?.count ?? 0 > 0 {
+                    DataService.shared.recentMoodPosts?.removeFirst()
                 }
-                DailyDataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
-                DailyDataService.shared.numberOfEntries += 1
+                DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                DataService.shared.numberOfEntries += 1
                 uploadSuccess = true
             } catch {
                 print("an error occured while uploading the post: \(error)")

@@ -67,5 +67,5 @@ struct AppLoadingView: View {
 #Preview {
     @Previewable @State var appState: AppStateCase = .startup
     AppLoadingView(appState: $appState)
-        .environmentObject(DailyDataService())
+        .environmentObject(DataService())
 }

@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = ContentViewModel()
     @StateObject var registrationViewModel = RegistrationViewModel()
-    @StateObject var dailyDataService: DailyDataService = DailyDataService.shared
+    @StateObject var dataService: DataService = DataService.shared
     @StateObject var authService: AuthService = AuthService.shared
     @State var appStatus: AppStateCase = .startup
     @State var appEnteredBackgroundTime: Date = Date.now
@@ -28,7 +28,7 @@ struct ContentView: View {
                 } else if let currentUser = viewModel.currentUser {
                     if authService.isUnlocked{
                         MainTabBar(user: currentUser)
-                            .environmentObject(dailyDataService)
+                            .environmentObject(dataService)
                     } else {
                         ValidatePinView()
                             .onChange(of: authService.isUnlocked) { old, new in
@@ -45,7 +45,7 @@ struct ContentView: View {
             }
             if new == .inactive && old == .background {
                 if Date().timeIntervalSince(appEnteredBackgroundTime) > 600 {
-                    dailyDataService.refreshServiceData()
+                    dataService.refreshServiceData()
                 }
             }
         }

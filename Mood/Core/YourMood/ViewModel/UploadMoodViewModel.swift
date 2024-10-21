@@ -30,9 +30,9 @@ class UploadMoodViewModel: ObservableObject {
             dailyData.addPair(pair: pair)
         }
         
-        let uploaded = try await DailyDataService.shared.uploadMood(dailyData: self.dailyData)
+        let uploaded = try await DataService.shared.uploadMood(dailyData: self.dailyData)
         if uploaded {
-            DailyDataService.shared.userHasLoggedToday = true
+            DataService.shared.userHasLoggedToday = true
             isUploaded = true
             return true
         } else {

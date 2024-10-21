@@ -11,7 +11,7 @@ import Charts
 
 
 struct YourMoodView: View {
-    @EnvironmentObject var dailyDataService : DailyDataService
+    @EnvironmentObject var dataService : DataService
     @State private var isLoading: Bool = true
     @State private var loadingSuccess:Bool = false
     @State private var recentMoods: [(mood: String, intensity: Int)]?
@@ -22,7 +22,7 @@ struct YourMoodView: View {
             List {
                 // checks if the user has logged alreay
                 // and that if they have not logged yet that the logging window is open
-                if !dailyDataService.userHasLoggedToday && dailyDataService.logWindowOpen {
+                if !dataService.userHasLoggedToday && dataService.logWindowOpen {
                     Section {
                         Text("log today's mood")
                             .fontWeight(.bold)
@@ -161,10 +161,10 @@ struct YourMoodView: View {
                 }
                 .modifier(ListRowBackgroundModifer())
                 
-                if dailyDataService.userHasLoggedToday{
+                if dataService.userHasLoggedToday{
                     Section{
                         TodaysFeelingsView()
-                            .environmentObject(dailyDataService)
+                            .environmentObject(dataService)
                     }
                     .modifier(ListRowBackgroundModifer())
                 }
@@ -174,14 +174,14 @@ struct YourMoodView: View {
         
         .navigationTitle("your moods")
         .navigationBarTitleDisplayMode(.inline)
-        .onChange(of: dailyDataService.recentMoodPosts, initial: true){
+        .onChange(of: dataService.recentMoodPosts, initial: true){
             Task {
                 do {
                     totalMoodScore = 0
                     loadingSuccess = false
                     isLoading = true
                     
-                    if let moodPosts = dailyDataService.recentMoodPosts {
+                    if let moodPosts = dataService.recentMoodPosts {
                         let ag = AnalyticsGenerator()
                         let tmp = ag.aggregateMoodIntensityByDate(moodPosts: moodPosts)
                         recentMoods = ag.aggregateMoodIntensityTotals(moodData: tmp)
@@ -209,5 +209,5 @@ struct YourMoodView: View {
 
 #Preview {
     YourMoodView()
-        .environmentObject(DailyDataService())
+        .environmentObject(DataService())
 }
