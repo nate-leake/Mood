@@ -11,9 +11,7 @@ struct ContextEditorView: View {
     @EnvironmentObject var dataService: DataService
     
     @State var selectedContext: Context?
-    
-    var contexts: [Context] = Context.defaultContexts
-    
+        
     private static let size: CGFloat = 150
     
     let layout = [
@@ -24,7 +22,7 @@ struct ContextEditorView: View {
     var body: some View {
         ScrollView{
             LazyVGrid(columns: layout) {
-                ForEach(contexts, id:\.self) { context in
+                ForEach(dataService.loadedContexts, id:\.self) { context in
                     Button(
                         action: {
                             self.selectedContext = context

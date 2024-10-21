@@ -46,6 +46,7 @@ class DataService : ObservableObject, Stateable {
     @Published var recentMoodPosts: [UnsecureMoodPost]?
     @Published var numberOfEntries: Int = 0
     @Published var state: AppStateCase = .startup
+    @Published var loadedContexts: [Context] = []
     
     static let shared = DataService()
     
@@ -66,6 +67,7 @@ class DataService : ObservableObject, Stateable {
                     try await getLoggedToday()
                     try await setRecentMoodPosts(quantity: 7)
                     try await getNumberOfEntries()
+                    try await fetchContexts()
                     if recentMoodPosts != nil {
                         await MainActor.run {
                             withAnimation(.easeInOut(duration: 2)){
@@ -98,13 +100,47 @@ class DataService : ObservableObject, Stateable {
     
     // MARK: - custom contexts section
     
+    @MainActor
     func uploadContext(context: Context) async throws -> Result<Bool, Error> {
-        var uploadSuccess = false
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
         let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document()
         
-        return await uploadData(document: docRef, uploadData: context)
+        let res = await uploadData(document: docRef, uploadData: context)
+        
+        switch res {
+        case .success(let success):
+            if success {
+                self.loadedContexts.append(context)
+                self.loadedContexts.sort { $0.name < $1.name }
+            }
+        case .failure(let error):
+            print("error uploading context: \(error)")
+        }
+        
+        return res
+    }
+    
+    @MainActor
+    func fetchContexts() async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let contextCollection = userDocument.collection("contexts")
+        let query = contextCollection.order(by: "name", descending: false)
+        
+        let documents = try await query.getDocuments().documents
+        
+        for document in documents {
+            var optionalContext: Context?
+            
+            optionalContext = try document.data(as: Context.self)
+            
+            if let context = optionalContext {
+                self.loadedContexts.append(context)
+            }
+        }
+        
     }
     
     

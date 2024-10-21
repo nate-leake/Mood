@@ -35,7 +35,7 @@ struct ContextTileView: View {
     @StateObject var viewModel: UploadMoodViewModel = UploadMoodViewModel()
     @State var selectedContext: Context?
     
-    var contexts: [Context] = Context.defaultContexts
+    @State var contexts: [Context] = DataService.shared.loadedContexts
     
     private static let size: CGFloat = 150
     
