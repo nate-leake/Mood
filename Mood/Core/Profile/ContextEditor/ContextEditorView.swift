@@ -12,7 +12,7 @@ struct ContextEditorView: View {
     
     @State var selectedContext: Context?
     
-    var contexts: [Context] = Context.allContexts
+    var contexts: [Context] = Context.defaultContexts
     
     private static let size: CGFloat = 150
     
@@ -33,6 +33,18 @@ struct ContextEditorView: View {
                         }
                     )
                     .padding(.bottom)
+                }
+            }
+        }
+        .navigationTitle("edit contexts")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing){
+                NavigationLink {
+                    ContextCreatorView()
+                } label: {
+                    Image(systemName: "plus")
+                        .imageScale(.large)
                 }
             }
         }

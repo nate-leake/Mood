@@ -1,59 +1,69 @@
 [
     {
+        "id": "CA88ABD8-270B-44F9-BEDE-5311B660CB77",
         "name": "behavior",
         "iconName": "figure.walk",
         "colorHex": "#e3c022"
     },
     
     {
+        "id": "68B3089C-0E4A-4D36-A1D3-ED075E1722B7",
         "name": "family",
         "iconName": "figure.and.child.holdinghands",
         "colorHex": "#009c13"
     },
     
     {
+        "id": "045E60F1-103D-4D1D-A15D-1DA7B0FDF8E1",
         "name": "hobbies",
         "iconName": "circle.hexagongrid.fill",
         "colorHex": "#8E44AD"
     },
     
     {
+        "id": "846530A7-0D95-4BA3-83D7-E1ECC2E5F152",
         "name": "health",
         "iconName": "stethoscope",
         "colorHex": "#E87461"
     },
     
     {
+        "id": "26AADCEF-0E06-421B-8D5E-12031B851D4D",
         "name": "identity",
         "iconName": "person.and.background.dotted",
         "colorHex": "#008080"
     },
     
     {
+        "id": "3594A955-4CC1-4F18-9143-6902ACB8187E",
         "name": "finances",
         "iconName": "creditcard.fill",
         "colorHex": "#568203"
     },
     
     {
+        "id": "D9DCDC1D-8E57-4937-8877-DD7BA364BC72",
         "name": "politics",
         "iconName": "building.columns.fill",
         "colorHex": "#bfbfbf"
     },
     
     {
+        "id": "3C1A36C1-1897-4D16-A1BB-8B50E12772EC",
         "name": "social",
         "iconName": "person.line.dotted.person.fill",
         "colorHex": "#ff8552"
     },
     
     {
+        "id": "4854C8B2-B7B8-43B4-8A3C-276B3D334206",
         "name": "weather",
         "iconName": "cloud.sun.rain.fill",
         "colorHex": "#9dd9d2"
     },
     
     {
+        "id": "FE0FF895-DEE0-4226-B4A9-4CA74B663DA7",
         "name": "work",
         "iconName": "briefcase.fill",
         "colorHex": "#003566"

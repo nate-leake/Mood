@@ -94,7 +94,7 @@ struct AnalyticsGenerator {
         
         var totals : [String: Int] = [:]
         
-        for context in Context.allContexts {
+        for context in Context.defaultContexts {
             totals[context.name] = 0
         }
         

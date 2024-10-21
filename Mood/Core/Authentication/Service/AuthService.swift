@@ -85,6 +85,9 @@ class AuthService: Stateable, ObservableObject {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             await self.uploaduserData(uid: result.user.uid, email: email, name: name, birthday: birthday, userPin: userPin)
+            for context in Context.defaultContexts {
+                let res = try await DataService.shared.uploadContext(context: context)
+            }
         } catch {
             // Attempt to cast error to `AuthErrorCode` type to handle specific Firebase errors
             errorMessage = provideAuthErrorDescription(from: error)

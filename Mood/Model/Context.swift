@@ -24,22 +24,24 @@ class Context: Codable, Hashable, Identifiable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case name, iconName, colorHex
+        case id, name, iconName, colorHex
     }
     
     // custom implimentation to Codable
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = UUID().uuidString
+        id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         iconName = try container.decode(String.self, forKey: .iconName)
         colorHex = try container.decode(String.self, forKey: .colorHex)
         color = Color(hex: colorHex)
+        print("name: \(name), \"id:\" \"\(id)\"")
     }
     
     // custom implimentation to Decodable
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(iconName, forKey: .iconName)
         try container.encode(colorHex, forKey: .colorHex)
@@ -55,5 +57,5 @@ class Context: Codable, Hashable, Identifiable {
         return lhs.name == rhs.name && lhs.iconName == rhs.iconName
     }
     
-    static let allContexts: [Context] = Bundle.main.decode(file: "contexts.json")
+    static let defaultContexts: [Context] = Bundle.main.decode(file: "contexts.json")
 }

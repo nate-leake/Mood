@@ -211,6 +211,6 @@ struct ContextLogView: View {
 }
 
 #Preview {
-    ContextLogView(context: Context.allContexts[0])
+    ContextLogView(context: Context.defaultContexts[0])
         .environmentObject(UploadMoodViewModel())
 }

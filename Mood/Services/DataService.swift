@@ -81,6 +81,76 @@ class DataService : ObservableObject, Stateable {
         
     }
     
+    @MainActor
+    private func uploadData(document: DocumentReference, uploadData: Encodable) async -> Result<Bool, Error> {
+        do {
+            let encodedUpload = try Firestore.Encoder().encode(uploadData)
+            
+            try await document.setData(encodedUpload)
+            
+            // Call completion with success
+            return .success(true)
+        } catch {
+            // Call completion with failure and error
+            return .failure(error)
+        }
+    }
+    
+    // MARK: - custom contexts section
+    
+    func uploadContext(context: Context) async throws -> Result<Bool, Error> {
+        var uploadSuccess = false
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document()
+        
+        return await uploadData(document: docRef, uploadData: context)
+    }
+    
+    
+    // MARK: - mood data section
+    
+    /// Uploads the user's DailyData wrapped in a MoodPost to the database
+    /// - Parameter dailyData: The DailyData object to be uploaded
+    /// - Returns: The success or failure of the upload represented as a true or false boolean
+    @MainActor
+    func uploadMood(dailyData: DailyData) async throws -> Bool {
+        print("DEBUG: uploading mood post...")
+        var uploadSuccess = false
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
+        
+        let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
+        
+        if privatePost.data != nil{
+            
+            let result = await uploadData(document: privatePostRef, uploadData: privatePost)
+            
+            switch result {
+            case .success(let success):
+                if success {
+                    DataService.shared.todaysDailyData = dailyData
+                    if DataService.shared.recentMoodPosts?.count ?? 0 > 0 {
+                        DataService.shared.recentMoodPosts?.removeFirst()
+                    }
+                    DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    DataService.shared.numberOfEntries += 1
+                    uploadSuccess = true
+                }
+            case .failure(let error):
+                print("an error occured while uploading the post: \(error)")
+                uploadSuccess = false
+                
+            }
+            
+        } else {
+            uploadSuccess = false
+        }
+        
+        return uploadSuccess
+    }
+    
     /// Loads the number of posts the user has made over all time
     /// - Returns: An Int of the user's post count
     @MainActor
@@ -93,49 +163,6 @@ class DataService : ObservableObject, Stateable {
         let snapshot = try await userPostsCollection.count.getAggregation(source: .server)
         print("user has \(Int(truncating: snapshot.count)) entries")
         self.numberOfEntries = Int(truncating: snapshot.count)
-    }
-    
-    /// Uploads the user's DailyData wrapped in a MoodPost to the database
-    /// - Parameter dailyData: The DailyData object to be uploaded
-    /// - Returns: The success or failure of the upload represented as a true or false boolean
-    @MainActor
-    func uploadMood(dailyData: DailyData) async throws -> Bool {
-        print("DEBUG: uploading mood post...")
-        var uploadSuccess = false
-        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
-        
-        print(dateFormatter.string(from: dailyData.date))
-        //        let dailyPostRef = Firestore.firestore().collection("dailyPosts").document()
-        let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
-        
-        //        let dailyPost = MoodPost(id: dailyPostRef.documentID, data: dailyData)
-        let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
-        
-        if privatePost.data != nil{
-            
-            //        guard let encodedDailyPost = try? Firestore.Encoder().encode(dailyPost) else {throw CustomError.firestoreEncoding}
-            guard let encodedPrivatePost = try? Firestore.Encoder().encode(privatePost) else {throw CustomError.firestoreEncoding}
-            
-            do {
-                //            try await dailyPostRef.setData(encodedDailyPost)
-                try await privatePostRef.setData(encodedPrivatePost)
-                DataService.shared.todaysDailyData = dailyData
-                if DataService.shared.recentMoodPosts?.count ?? 0 > 0 {
-                    DataService.shared.recentMoodPosts?.removeFirst()
-                }
-                DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
-                DataService.shared.numberOfEntries += 1
-                uploadSuccess = true
-            } catch {
-                print("an error occured while uploading the post: \(error)")
-                uploadSuccess = false
-            }
-            
-        } else {
-            uploadSuccess = false
-        }
-        
-        return uploadSuccess
     }
     
     /// Gets a certain number of documents from the users "posts" collection

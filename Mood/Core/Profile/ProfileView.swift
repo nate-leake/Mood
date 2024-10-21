@@ -72,6 +72,15 @@ struct ProfileView: View {
                     }
                     .modifier(ListRowBackgroundModifer())
                     
+                    Section{
+                        NavigationLink {
+                            ContextEditorView()
+                        } label: {
+                            Text("edit contexts")
+                        }
+                    }
+                    .modifier(ListRowBackgroundModifer())
+                    
                     Button {
                         AuthService.shared.signout()
                     } label: {
