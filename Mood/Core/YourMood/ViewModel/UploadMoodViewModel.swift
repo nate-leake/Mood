@@ -14,8 +14,8 @@ class UploadMoodViewModel: ObservableObject {
     @Published var pairs: [ContextEmotionPair] = []
     @Published var isUploaded: Bool = false
     
-    func containsPair(withContext contextName: String) -> Bool {
-        return pairs.contains { $0.contextName == contextName }
+    func containsPair(withContextId contextId: String) -> Bool {
+        return pairs.contains { $0.contextId == contextId }
     }
     
     func addPair(_ pair: ContextEmotionPair) {

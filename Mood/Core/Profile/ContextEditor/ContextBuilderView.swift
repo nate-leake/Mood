@@ -60,6 +60,7 @@ struct ContextBuilderView: View {
             self.name = context.name
             self.color = context.color
             self.icon = context.iconName
+            
             self.isNamed = true
             buildingMode = .editing
         } else {

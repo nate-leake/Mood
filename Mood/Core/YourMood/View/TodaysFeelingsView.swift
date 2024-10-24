@@ -44,7 +44,7 @@ struct TodaysFeelingsView: View {
                 }
                 Spacer()
                 
-                Chart(todaysData!.pairs, id: \.contextName) { pair in
+                Chart(todaysData!.pairs, id:\.contextId) { pair in
                     BarMark(
                         x: .value("impact", pair.weight.rawValue == 0 ? 0.1 : Double(pair.weight.rawValue)),
                         y: .value("context", pair.contextName)

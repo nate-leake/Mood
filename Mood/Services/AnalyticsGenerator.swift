@@ -31,7 +31,7 @@ struct AnalyticsGenerator {
             for pair in post.data {
                 tmpData.append(
                     MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
-                             context: pair.contextName,
+                             contextId: pair.contextId,
                              moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
                              intensity: pair.weight.rawValue)
                 )
@@ -58,7 +58,7 @@ struct AnalyticsGenerator {
         for (dateString, moodTypes) in aggregatedData {
             guard let date = dateFormatter.date(from: dateString) else { continue }
             for (moodType, intensity) in moodTypes {
-                result.append(MoodData(date: date, context: "", moodType: moodType, intensity: intensity))
+                result.append(MoodData(date: date, contextId: "", moodType: moodType, intensity: intensity))
             }
         }
         
@@ -79,7 +79,7 @@ struct AnalyticsGenerator {
             
             // Add missing mood types with intensity 0
             for moodType in missingMoodTypes {
-                finalResult.append(MoodData(date: date, context: "", moodType: moodType, intensity: 0))
+                finalResult.append(MoodData(date: date, contextId: "", moodType: moodType, intensity: 0))
             }
         }
         

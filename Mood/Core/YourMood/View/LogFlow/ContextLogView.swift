@@ -186,7 +186,7 @@ struct ContextLogView: View {
             
             Button{
                 if !selectedEmotions.isEmpty{
-                    let contextPair = ContextEmotionPair(context: context.name, emotions: selectedEmotions, weight: selectedWeight)
+                    let contextPair = ContextEmotionPair(contextId: context.id, emotions: selectedEmotions, weight: selectedWeight)
                     dismissSheet()
                     viewModel.addPair(contextPair)
                 }
