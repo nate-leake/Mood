@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContextTile: View {
-    var context: Context
+    @ObservedObject var context: Context
     var frameSize: CGFloat
     
     var body: some View {
@@ -16,7 +16,7 @@ struct ContextTile: View {
             Spacer()
             Image(systemName: context.iconName)
                 .font(.system(size: 50))
-                .opacity(0.5)
+                .opacity(0.75)
                 .padding(.top)
             Spacer()
             Text(context.name)
@@ -33,9 +33,8 @@ struct ContextTile: View {
 struct ContextTileView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: UploadMoodViewModel = UploadMoodViewModel()
+    @ObservedObject var dataService: DataService = DataService.shared
     @State var selectedContext: Context?
-    
-    @State var contexts: [Context] = DataService.shared.loadedContexts
     
     private static let size: CGFloat = 150
     
@@ -48,14 +47,14 @@ struct ContextTileView: View {
         ZStack {
             ScrollView{
                 LazyVGrid(columns: layout) {
-                    ForEach(contexts, id:\.self) { context in
+                    ForEach(DataService.shared.loadedContexts, id:\.id) { context in
                         Button(
                             action: {
-                                if !(viewModel.containsPair(withContext: context.name) ){
+                                if !(viewModel.containsPair(withContextId: context.id) ){
                                     self.selectedContext = context
                                 }
                             }, label: {
-                                if (viewModel.containsPair(withContext: context.name) ){
+                                if (viewModel.containsPair(withContextId: context.id) ){
                                     ZStack {
                                         ContextTile(context: context, frameSize: ContextTileView.size)
                                             .opacity(0.5)
@@ -137,6 +136,16 @@ struct ContextTileView: View {
         }
         .navigationTitle("select a context to log about")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing){
+                NavigationLink {
+                    ContextBuilderView()
+                } label: {
+                    Image(systemName: "plus")
+                        .imageScale(.large)
+                }
+            }
+        }
         .fullScreenCover(item: self.$selectedContext) { context in
             ContextLogView(context: context)
                 .environmentObject(viewModel)
@@ -147,4 +156,7 @@ struct ContextTileView: View {
 
 #Preview {
     ContextTileView()
+        .onAppear{
+            DataService.shared.loadedContexts = Context.defaultContexts
+        }
 }

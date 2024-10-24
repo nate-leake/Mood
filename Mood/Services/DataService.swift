@@ -64,10 +64,10 @@ class DataService : ObservableObject, Stateable {
                 self.state = .loading
                 print("refreshing DataService")
                 Task {
+                    try await fetchContexts()
                     try await getLoggedToday()
                     try await setRecentMoodPosts(quantity: 7)
                     try await getNumberOfEntries()
-                    try await fetchContexts()
                     if recentMoodPosts != nil {
                         await MainActor.run {
                             withAnimation(.easeInOut(duration: 2)){
@@ -101,27 +101,6 @@ class DataService : ObservableObject, Stateable {
     // MARK: - custom contexts section
     
     @MainActor
-    func uploadContext(context: Context) async throws -> Result<Bool, Error> {
-        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
-        
-        let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document()
-        
-        let res = await uploadData(document: docRef, uploadData: context)
-        
-        switch res {
-        case .success(let success):
-            if success {
-                self.loadedContexts.append(context)
-                self.loadedContexts.sort { $0.name < $1.name }
-            }
-        case .failure(let error):
-            print("error uploading context: \(error)")
-        }
-        
-        return res
-    }
-    
-    @MainActor
     func fetchContexts() async throws {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
@@ -130,6 +109,8 @@ class DataService : ObservableObject, Stateable {
         let query = contextCollection.order(by: "name", descending: false)
         
         let documents = try await query.getDocuments().documents
+        
+        self.loadedContexts = []
         
         for document in documents {
             var optionalContext: Context?
@@ -141,6 +122,58 @@ class DataService : ObservableObject, Stateable {
             }
         }
         
+        self.loadedContexts.sort { $0.name.lowercased() < $1.name.lowercased() }
+    }
+    
+    @MainActor
+    func uploadContext(context: Context) async throws -> Result<Bool, Error> {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
+        
+        let res = await uploadData(document: docRef, uploadData: context)
+        
+        switch res {
+        case .success(let success):
+            if success {
+                self.loadedContexts.append(context)
+                self.loadedContexts.sort { $0.name.lowercased() < $1.name.lowercased() }
+            }
+        case .failure(let error):
+            print("error uploading context: \(error)")
+        }
+        
+        return res
+    }
+    
+    @MainActor
+    func updateContext(to context: Context) async throws {
+        
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
+        
+        var update: [String: Any] = [:]
+        
+        let foundContext = Context.getContext(from: context.id)
+        
+        if context.name != foundContext?.name {
+            update["name"] = context.name
+            foundContext?.name = context.name
+        }
+        if context.colorHex != foundContext?.colorHex {
+            update["colorHex"] = context.colorHex
+            foundContext?.colorHex = context.colorHex
+            foundContext?.color = context.color
+        }
+        if context.iconName != foundContext?.iconName {
+            update["iconName"] = context.iconName
+            foundContext?.iconName = context.iconName
+        }
+        
+        try await docRef.setData(update, merge: true)
+
+        self.loadedContexts.sort { $0.name.lowercased() < $1.name.lowercased() }
     }
     
     

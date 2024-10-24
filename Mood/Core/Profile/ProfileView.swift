@@ -74,7 +74,7 @@ struct ProfileView: View {
                     
                     Section{
                         NavigationLink {
-                            ContextEditorView()
+                            ContextSelectorView()
                         } label: {
                             Text("edit contexts")
                         }
