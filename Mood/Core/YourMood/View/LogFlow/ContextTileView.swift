@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContextTile: View {
-    @ObservedObject var context: Context
+    @ObservedObject var context: UnsecureContext
     var frameSize: CGFloat
     
     var body: some View {
@@ -34,7 +34,7 @@ struct ContextTileView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: UploadMoodViewModel = UploadMoodViewModel()
     @ObservedObject var dataService: DataService = DataService.shared
-    @State var selectedContext: Context?
+    @State var selectedContext: UnsecureContext?
     
     private static let size: CGFloat = 150
     
@@ -48,42 +48,44 @@ struct ContextTileView: View {
             ScrollView{
                 LazyVGrid(columns: layout) {
                     ForEach(DataService.shared.loadedContexts, id:\.id) { context in
-                        Button(
-                            action: {
-                                if !(viewModel.containsPair(withContextId: context.id) ){
-                                    self.selectedContext = context
-                                }
-                            }, label: {
-                                if (viewModel.containsPair(withContextId: context.id) ){
-                                    ZStack {
-                                        ContextTile(context: context, frameSize: ContextTileView.size)
-                                            .opacity(0.5)
-                                        VStack{
-                                            ZStack{
-                                                HStack{
-                                                    Image(systemName: "checkmark.circle.fill")
-                                                        .foregroundStyle(.appBlack)
-                                                    Text("logged")
-                                                        .foregroundStyle(.appBlack)
-                                                }
-                                                .padding(.vertical, 2)
-                                                .frame(maxWidth: .infinity)
-                                                .background(.white.opacity(0.5))
-                                            }
-                                            Spacer()
-                                        }
+                        if !context.isHidden {
+                            Button(
+                                action: {
+                                    if !(viewModel.containsPair(withContextId: context.id) ){
+                                        self.selectedContext = context
                                     }
-                                    .frame(width: ContextTileView.size, height: ContextTileView.size)
-                                    .background(.appWhite.opacity(0.7))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    
-                                    
-                                } else {
-                                    ContextTile(context: context, frameSize: ContextTileView.size)
+                                }, label: {
+                                    if (viewModel.containsPair(withContextId: context.id) ){
+                                        ZStack {
+                                            ContextTile(context: context, frameSize: ContextTileView.size)
+                                                .opacity(0.5)
+                                            VStack{
+                                                ZStack{
+                                                    HStack{
+                                                        Image(systemName: "checkmark.circle.fill")
+                                                            .foregroundStyle(.appBlack)
+                                                        Text("logged")
+                                                            .foregroundStyle(.appBlack)
+                                                    }
+                                                    .padding(.vertical, 2)
+                                                    .frame(maxWidth: .infinity)
+                                                    .background(.white.opacity(0.5))
+                                                }
+                                                Spacer()
+                                            }
+                                        }
+                                        .frame(width: ContextTileView.size, height: ContextTileView.size)
+                                        .background(.appWhite.opacity(0.7))
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        
+                                        
+                                    } else {
+                                        ContextTile(context: context, frameSize: ContextTileView.size)
+                                    }
                                 }
-                            }
-                        )
-                        .padding(.bottom)
+                            )
+                            .padding(.bottom)
+                        }
                     }
                 }
                 if !viewModel.pairs.isEmpty {
@@ -157,6 +159,6 @@ struct ContextTileView: View {
 #Preview {
     ContextTileView()
         .onAppear{
-            DataService.shared.loadedContexts = Context.defaultContexts
+            DataService.shared.loadedContexts = UnsecureContext.defaultContexts
         }
 }

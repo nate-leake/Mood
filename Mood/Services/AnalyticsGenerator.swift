@@ -8,8 +8,22 @@
 import Foundation
 
 /// On device calculations for analytics of the recent data
-struct AnalyticsGenerator {
+class AnalyticsGenerator : ObservableObject {
     private var moods: [Mood] = Mood.allMoods
+    @Published var todaysBiggestImpacts: [String] = []
+    
+    static public var shared = AnalyticsGenerator()
+    
+    private func cp(_ text: String, state: PrintableStates = .none) {
+        let finalString = "📈\(state.rawValue) ANALYTICS GENERATOR: " + text
+        print(finalString)
+    }
+    
+    func calculateTBI(dataService: DataService){
+        if let data = dataService.todaysDailyData {
+            todaysBiggestImpacts = biggestImpact(data: [data])
+        }
+    }
     
     func aggregateMoodIntensityTotals(moodData: [MoodData]) -> [(mood: String, intensity: Int)] {
         var groupedItems = [String: Int]()
@@ -90,18 +104,23 @@ struct AnalyticsGenerator {
     /// - Parameter data: A list of DailyData that should be analyzed
     /// - Returns: A list of type String which is the context. This is sorted greatest to least by weight
     func biggestImpact(data: [DailyData]) -> [String] {
+        cp("calculating biggest impact...")
         var impacts: [String] = []
         
         var totals : [String: Int] = [:]
         
         for context in DataService.shared.loadedContexts {
+//            print(context.name)
             totals[context.name] = 0
         }
         
         
         for day in data {
             for pair in day.pairs {
-                totals[pair.contextName] = totals[pair.contextName]! + pair.weight.rawValue
+                cp("\(pair.contextId) \(pair.contextName)")
+                if let currentWeight = totals[pair.contextName] {
+                    totals[pair.contextName] = currentWeight + pair.weight.rawValue
+                }
             }
         }
         

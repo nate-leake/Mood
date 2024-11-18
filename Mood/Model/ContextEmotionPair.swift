@@ -46,10 +46,10 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
         contextId = id
         emotions = try values.decode([String].self, forKey: .emotions)
         weight = try values.decode(Weight.self, forKey: .weight)
-        if let context = Context.getContext(from: id) {
+        if let context = UnsecureContext.getContext(from: id) {
             contextName = context.name
         } else {
-            print("could not find a context for context id: \(id). The name property will be left empty.")
+            print("a context with the id \(id) has not been loaded in the DS. The name property for this pair will be left empty.")
             contextName = ""
         }
     }
@@ -71,7 +71,7 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
         self.contextId = contextId
         self.emotions = emotions
         self.weight = weight
-        self.contextName = Context.getContext(from: contextId)!.name
+        self.contextName = UnsecureContext.getContext(from: contextId)!.name
     }
     
     /// Create a ContectEmotionPair using [Emotion] for the emotions rather than [String]
@@ -83,7 +83,7 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
         self.contextId = contextId
         self.emotions = []
         self.weight = weight
-        self.contextName = Context.getContext(from: contextId)!.name
+        self.contextName = UnsecureContext.getContext(from: contextId)!.name
         
         for emotion in emotions {
             self.emotions.append(emotion.name)

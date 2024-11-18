@@ -10,7 +10,7 @@ import SwiftUI
 struct ContextLogView: View {
     @Environment(\.dismiss) var dismissSheet
     @EnvironmentObject var viewModel: UploadMoodViewModel
-    var context: Context
+    var context: UnsecureContext
     
     @State var selectedMood: Mood? /*= Mood.allMoods[0]*/
     @State var selectedEmotions: [Emotion] = [] /*= Mood.allMoods[0].emotions*/
@@ -18,7 +18,7 @@ struct ContextLogView: View {
     
     private var animation: Animation = .easeInOut(duration: 0.25)
     
-    init(context: Context) {
+    init(context: UnsecureContext) {
         self.context = context
     }
     
@@ -211,6 +211,6 @@ struct ContextLogView: View {
 }
 
 #Preview {
-    ContextLogView(context: Context.defaultContexts[0])
+    ContextLogView(context: UnsecureContext.defaultContexts[0])
         .environmentObject(UploadMoodViewModel())
 }

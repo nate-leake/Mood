@@ -17,6 +17,26 @@ struct ContentView: View {
     @State var appStatus: AppStateCase = .startup
     @State var appEnteredBackgroundTime: Date = Date.now
     
+    private func testMassUpload(){
+        Task {
+            DataService.shared.isPerformingManagedAGUpdate = true
+            let context1 = "7C848264-472C-478B-8340-28AA271CE15C"
+            let context2 = "572A89FC-74B0-4492-9218-624D85F69CD8"
+            for number in 1...100 {
+                let p1 = ContextEmotionPair(contextId: context1, emotions: ["happy"], weight: .extreme)
+                let p2 = ContextEmotionPair(contextId: context2, emotions: ["sad"], weight: .moderate)
+                let pairs: [ContextEmotionPair] = [p1, p2]
+                let date = Date.now.addingTimeInterval(TimeInterval(-86400 * number))
+                let data: DailyData = DailyData(date: date, timeZoneOffset: DailyData.TZO, pairs: pairs)
+                let res = try await DataService.shared.uploadMoodPost(dailyData: data)
+                
+                print("CONTENT VIEW: uploaded pair \(number) with success: \(res)")
+            }
+            DataService.shared.isPerformingManagedAGUpdate = false
+            AnalyticsGenerator.shared.calculateTBI(dataService: DataService.shared)
+        }
+    }
+    
     var body: some View {
         Group{
             if appStatus != .ready {
@@ -29,6 +49,9 @@ struct ContentView: View {
                     if authService.isUnlocked{
                         MainTabBar(user: currentUser)
                             .environmentObject(dataService)
+                            .onAppear{
+//                                testMassUpload()
+                            }
                     } else {
                         ValidatePinView()
                             .onChange(of: authService.isUnlocked) { old, new in

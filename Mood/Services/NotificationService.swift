@@ -18,6 +18,11 @@ struct NotificationService: View {
         }
     }
     
+    private func cp(_ text: String, state: PrintableStates = .none) {
+        let finalString = "🔔\(state.rawValue) NOTIFICATION SERVICE: " + text
+        print(finalString)
+    }
+    
     func checkNotificationSettings() {
         let center = UNUserNotificationCenter.current()
         center.getNotificationSettings { settings in
@@ -29,11 +34,11 @@ struct NotificationService: View {
             case .notDetermined:
                 center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
                     if let error = error {
-                        print("Error requesting authorization: \(error)")
+                        cp("Error requesting authorization: \(error)")
                     } else if granted {
                         self.dispatchLocalNotification()
                     } else {
-                        print("Notification permission denied")
+                        cp("Notification permission denied")
                     }
                 }
             default: return
@@ -69,9 +74,9 @@ struct NotificationService: View {
         // Schedule the notification
         center.add(request) { error in
             if let error = error {
-                print("Error scheduling notification: \(error)")
+                cp("Error scheduling notification: \(error)", state: .error)
             } else {
-                print("Notification scheduled successfully")
+                cp("Notification scheduled successfully")
             }
         }
     }

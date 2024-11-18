@@ -22,7 +22,7 @@ struct YourMoodView: View {
             List {
                 // checks if the user has logged alreay
                 // and that if they have not logged yet that the logging window is open
-                if !dataService.userHasLoggedToday && dataService.logWindowOpen {
+                if !dataService.userHasLoggedToday && dataService.logWindowOpen /*|| true*/ {
                     Section {
                         Text("log today's mood")
                             .fontWeight(.bold)

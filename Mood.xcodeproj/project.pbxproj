@@ -15,7 +15,7 @@
 		AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */; };
 		AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */; };
 		AF1ECA3A2C9C8745005A225A /* ContextTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA392C9C8745005A225A /* ContextTileView.swift */; };
-		AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* Context.swift */; };
+		AF1ECA3C2C9C87F0005A225A /* UnsecureContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */; };
 		AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1ECA3D2C9C8A9B005A225A /* contexts.json */; };
 		AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF237E212C8F597A008963AD /* AppLoadingView.swift */; };
 		AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */; };
@@ -96,7 +96,7 @@
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsGenerator.swift; sourceTree = "<group>"; };
 		AF1ECA392C9C8745005A225A /* ContextTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTileView.swift; sourceTree = "<group>"; };
-		AF1ECA3B2C9C87F0005A225A /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureContext.swift; sourceTree = "<group>"; };
 		AF1ECA3D2C9C8A9B005A225A /* contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contexts.json; sourceTree = "<group>"; };
 		AF237E212C8F597A008963AD /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEmotionPair.swift; sourceTree = "<group>"; };
@@ -288,7 +288,7 @@
 				AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */,
 				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */,
-				AF1ECA3B2C9C87F0005A225A /* Context.swift */,
+				AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -647,7 +647,7 @@
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
 				AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */,
 				AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */,
-				AF1ECA3C2C9C87F0005A225A /* Context.swift in Sources */,
+				AF1ECA3C2C9C87F0005A225A /* UnsecureContext.swift in Sources */,
 				AFEC9B3B2AD4581800F35F8B /* UnsecureMoodPost.swift in Sources */,
 				AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */,
 			);

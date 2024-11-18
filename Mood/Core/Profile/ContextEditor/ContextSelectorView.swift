@@ -10,9 +10,9 @@ import SwiftUI
 struct ContextSelectorView: View {
     @EnvironmentObject var dataService: DataService
     
-    @State var selectedContext: Context?
+    @State var selectedContext: UnsecureContext?
     @State var isShowingContextBuilder = false
-        
+    
     private static let size: CGFloat = 150
     
     let layout = [
@@ -24,24 +24,43 @@ struct ContextSelectorView: View {
         ScrollView{
             LazyVGrid(columns: layout) {
                 ForEach(dataService.loadedContexts, id:\.id) { context in
-                    Button{
-                        selectedContext = context // Set the selected context
-                        isShowingContextBuilder = true // Trigger navigation
-                    } label: {
-                        ContextTile(context: context, frameSize: ContextSelectorView.size)
+                    if !context.isHidden{
+                        Button{
+                            selectedContext = context // Set the selected context
+                            isShowingContextBuilder = true // Trigger navigation
+                        } label: {
+                            ContextTile(context: context, frameSize: ContextSelectorView.size)
+                        }
+                        .padding(.bottom)
                     }
-                    .padding(.bottom)
                 }
-            }.navigationDestination(for: Context?.self) { context in
+            }.navigationDestination(for: UnsecureContext?.self) { context in
                 ContextBuilderView(editingContext: context)
             }
             
+            Divider()
+            
+            LazyVGrid(columns: layout) {
+                ForEach(dataService.loadedContexts, id:\.id) { context in
+                    if context.isHidden {
+                        Button{
+                            selectedContext = context // Set the selected context
+                            isShowingContextBuilder = true // Trigger navigation
+                        } label: {
+                            ContextTile(context: context, frameSize: ContextSelectorView.size)
+                        }
+                        .padding(.bottom)
+                    }
+                }
+            }.navigationDestination(for: UnsecureContext?.self) { context in
+                ContextBuilderView(editingContext: context)
+            }
             
         }
         .onChange(of: isShowingContextBuilder){ old, new in
             if old == true && new == false {
                 if let context = selectedContext {
-                    selectedContext = Context.getContext(from: context.id)
+                    selectedContext = UnsecureContext.getContext(from: context.id)
                 }
             }
         }

@@ -19,7 +19,7 @@ struct MoodData: Hashable, Codable, Identifiable {
     init(date: Date, contextId: String, moodType: String, intensity: Int) {
         self.id = NSUUID().uuidString
         self.date = date
-        self.context = Context.getContext(from: contextId)?.name ?? "no context"
+        self.context = UnsecureContext.getContext(from: contextId)?.name ?? "no context"
         self.moodType = moodType
         self.intensity = intensity
     }
