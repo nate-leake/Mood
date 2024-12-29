@@ -92,7 +92,7 @@ class AuthService: Stateable, ObservableObject {
             self.userSession = result.user
             await self.uploaduserData(uid: result.user.uid, email: email, name: name, birthday: birthday, userPin: userPin)
             for context in UnsecureContext.defaultContexts {
-                let res = try await DataService.shared.uploadContext(context: context)
+                _ = try await DataService.shared.uploadContext(context: context)
             }
         } catch {
             // Attempt to cast error to `AuthErrorCode` type to handle specific Firebase errors
