@@ -20,12 +20,11 @@ struct ContentView: View {
     private func testMassUpload(){
         Task {
             DataService.shared.isPerformingManagedAGUpdate = true
-            let context1 = "7C848264-472C-478B-8340-28AA271CE15C"
-            let context2 = "572A89FC-74B0-4492-9218-624D85F69CD8"
-            for number in 1...100 {
-                let p1 = ContextEmotionPair(contextId: context1, emotions: ["happy"], weight: .extreme)
-                let p2 = ContextEmotionPair(contextId: context2, emotions: ["sad"], weight: .moderate)
-                let pairs: [ContextEmotionPair] = [p1, p2]
+            let context1 = "FB6EA42A-AC26-4D1A-9DCB-1E8FF1E1BDA3"
+            for number in 1...200 {
+                let emotion = "happy"
+                let p1 = ContextEmotionPair(contextId: context1, emotions: [emotion], weight: .extreme)
+                let pairs: [ContextEmotionPair] = [p1]
                 let date = Date.now.addingTimeInterval(TimeInterval(-86400 * number))
                 let data: DailyData = DailyData(date: date, timeZoneOffset: DailyData.TZO, pairs: pairs)
                 let res = try await DataService.shared.uploadMoodPost(dailyData: data)

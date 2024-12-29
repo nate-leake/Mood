@@ -37,6 +37,8 @@ class UnsecureContext: Codable, Hashable, Identifiable, ObservableObject {
     @Published var color: Color
     @Published var isHidden: Bool
     @Published var associatedPostIDs: [String]
+    @Published var isDeleting: Bool = false
+    @Published var percentDeleted = 0
     
     init(from secureContext: SecureContext){
         self.id = secureContext.id

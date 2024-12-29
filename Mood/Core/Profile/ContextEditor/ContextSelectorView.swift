@@ -12,6 +12,7 @@ struct ContextSelectorView: View {
     
     @State var selectedContext: UnsecureContext?
     @State var isShowingContextBuilder = false
+    @State var isShowingHidden = false
     
     private static let size: CGFloat = 150
     
@@ -29,7 +30,11 @@ struct ContextSelectorView: View {
                             selectedContext = context // Set the selected context
                             isShowingContextBuilder = true // Trigger navigation
                         } label: {
-                            ContextTile(context: context, frameSize: ContextSelectorView.size)
+                            if context.isDeleting {
+                                DeletingContextTile(context: context)
+                            } else {
+                                ContextTile(context: context, frameSize: ContextSelectorView.size)
+                            }
                         }
                         .padding(.bottom)
                     }
@@ -39,21 +44,46 @@ struct ContextSelectorView: View {
             }
             
             Divider()
-            
-            LazyVGrid(columns: layout) {
-                ForEach(dataService.loadedContexts, id:\.id) { context in
-                    if context.isHidden {
-                        Button{
-                            selectedContext = context // Set the selected context
-                            isShowingContextBuilder = true // Trigger navigation
-                        } label: {
-                            ContextTile(context: context, frameSize: ContextSelectorView.size)
-                        }
-                        .padding(.bottom)
-                    }
+        
+            Button{
+                withAnimation(.easeInOut){
+                    isShowingHidden.toggle()
                 }
-            }.navigationDestination(for: UnsecureContext?.self) { context in
-                ContextBuilderView(editingContext: context)
+            } label: {
+                HStack{
+                    Spacer()
+                    Image(systemName: isShowingHidden ? "eye.slash" : "eye")
+                    Spacer()
+                    Text(isShowingHidden ? "hide items" : "show items")
+                        .frame(width: 100)
+                    Spacer()
+                }
+                .frame(width: 150, height: 34)
+                .background(.appPurple)
+                .foregroundStyle(.appWhite)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+            
+            if isShowingHidden {
+                LazyVGrid(columns: layout) {
+                    ForEach(dataService.loadedContexts, id:\.id) { context in
+                        if context.isHidden {
+                            Button{
+                                selectedContext = context // Set the selected context
+                                isShowingContextBuilder = true // Trigger navigation
+                            } label: {
+                                if context.isDeleting {
+                                    DeletingContextTile(context: context)
+                                } else {
+                                    ContextTile(context: context, frameSize: ContextSelectorView.size)
+                                }
+                            }
+                            .padding(.bottom)
+                        }
+                    }
+                }.navigationDestination(for: UnsecureContext?.self) { context in
+                    ContextBuilderView(editingContext: context)
+                }
             }
             
         }

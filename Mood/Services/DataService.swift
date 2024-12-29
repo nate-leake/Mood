@@ -203,12 +203,16 @@ class DataService : ObservableObject, Stateable {
         return result
     }
     
+    @MainActor
     func deleteContext(context: UnsecureContext) async throws {
         cp("beginning delete for context \(context.id)")
+        context.isDeleting = true
+        cp("context delete state set to \(context.isDeleting)", state: .debug)
         self.isPerformingManagedAGUpdate = true
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         let contextDocRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
         var completedDeletes = 0
+        let initialPostCount = context.associatedPostIDs.count
         
         cp("attempting to fetch \(context.associatedPostIDs.count) posts related to this context")
         for postID in context.associatedPostIDs {
@@ -235,18 +239,24 @@ class DataService : ObservableObject, Stateable {
 //                cp("post now has \(post.data.count) pairs", state: post.data.count==0 ? .warning : .none)
                 if post.data.count == 0 {
                     cp("post should be auto deleted when it has 0 pairs.", state: .warning)
+                    _ = try await self.deleteMoodPost(postID: post.id)
+                } else {
+                    try await updatePost(with: post)
                 }
-                
-                try await updatePost(with: post)
                 
             } else {
                 cp("no post with that ID was found", state: .error)
             }
             completedDeletes += 1
-            print("\(completedDeletes*100 / context.associatedPostIDs.count)% complete...")
+            context.percentDeleted = completedDeletes*100 / initialPostCount
+            print("\(context.percentDeleted)% complete...")
         }
         
         do {
+            context.percentDeleted = 100
+            context.isDeleting = false
+            cp("context delete state set to \(context.isDeleting)", state: .debug)
+            
             try await contextDocRef.delete()
             cp("deleted firebase context doc", state: .debug)
         } catch {
@@ -254,7 +264,7 @@ class DataService : ObservableObject, Stateable {
         }
         
         self.isPerformingManagedAGUpdate = false
-        await self.refreshServiceData()
+        self.refreshServiceData()
         cp("finished delete for context \(context.id)")
     }
     
