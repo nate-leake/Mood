@@ -18,6 +18,7 @@
 		AF1ECA3C2C9C87F0005A225A /* UnsecureContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */; };
 		AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1ECA3D2C9C8A9B005A225A /* contexts.json */; };
 		AF237E222C8F597A008963AD /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF237E212C8F597A008963AD /* AppLoadingView.swift */; };
+		AF2864742D276D8900E3CAA6 /* OverflowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864732D276D8700E3CAA6 /* OverflowLayout.swift */; };
 		AF2A89822AB0CB5600D05234 /* ContextEmotionPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */; };
 		AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */; };
 		AF2E2C212CA221FA005F3326 /* SecurityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2C202CA221FA005F3326 /* SecurityService.swift */; };
@@ -49,6 +50,7 @@
 		AF7BB2E12AB377D90057EE18 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2E02AB377D90057EE18 /* FirebaseFirestoreSwift */; };
 		AF7BB2E32AB377D90057EE18 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = AF7BB2E22AB377D90057EE18 /* FirebaseStorage */; };
 		AF8173942CC2D86300CE76BE /* LoadableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */; };
+		AF841F9B2D220D050009709D /* CollapsableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF841F9A2D220D050009709D /* CollapsableView.swift */; };
 		AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */; };
 		AF88EC372CAC5B5600D02624 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF88EC362CAC5B5600D02624 /* AppState.swift */; };
 		AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8AB5AD2AB38D8E00BE810A /* AuthService.swift */; };
@@ -99,6 +101,7 @@
 		AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureContext.swift; sourceTree = "<group>"; };
 		AF1ECA3D2C9C8A9B005A225A /* contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contexts.json; sourceTree = "<group>"; };
 		AF237E212C8F597A008963AD /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
+		AF2864732D276D8700E3CAA6 /* OverflowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverflowLayout.swift; sourceTree = "<group>"; };
 		AF2A89812AB0CB5600D05234 /* ContextEmotionPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEmotionPair.swift; sourceTree = "<group>"; };
 		AF2AB8832AB3C6E6006B81AB /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = Mood/Core/Authentication/View/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
 		AF2E2C202CA221FA005F3326 /* SecurityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityService.swift; sourceTree = "<group>"; };
@@ -128,6 +131,7 @@
 		AF7BB2D02AB3650A0057EE18 /* MoodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7BB2D22AB3650A0057EE18 /* MoodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTests.swift; sourceTree = "<group>"; };
 		AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableAnimator.swift; sourceTree = "<group>"; };
+		AF841F9A2D220D050009709D /* CollapsableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsableView.swift; sourceTree = "<group>"; };
 		AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodsChartsView.swift; sourceTree = "<group>"; };
 		AF88EC362CAC5B5600D02624 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		AF8AB5AD2AB38D8E00BE810A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -190,9 +194,17 @@
 			path = ContextEditor;
 			sourceTree = "<group>";
 		};
+		AF2864752D27759800E3CAA6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		AF2A89802AB0CAFF00D05234 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AF2864732D276D8700E3CAA6 /* OverflowLayout.swift */,
 				AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */,
 				AF5B87722AB525D1000E204F /* TextFieldModifier.swift */,
 				AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */,
@@ -201,6 +213,7 @@
 				AF5542822C8A0B4900CD4DC0 /* DropDownView.swift */,
 				AFCABA7A2C8E37B900DA562A /* WrappingHStack.swift */,
 				AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */,
+				AF841F9A2D220D050009709D /* CollapsableView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -452,6 +465,7 @@
 		AFEC9B3C2AD45F9C00F35F8B /* LogFlow */ = {
 			isa = PBXGroup;
 			children = (
+				AF2864752D27759800E3CAA6 /* ViewModel */,
 				AF1ECA392C9C8745005A225A /* ContextTileView.swift */,
 				AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */,
 				AF4392332AD4D42700E4FC15 /* EmotionTagView.swift */,
@@ -623,6 +637,7 @@
 				AF041A0F2CC1838200A99FF3 /* RegistrationHeaderView.swift in Sources */,
 				AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */,
 				AFA7AF5D2C88EABF002E911B /* LineChartWithSelection.swift in Sources */,
+				AF2864742D276D8900E3CAA6 /* OverflowLayout.swift in Sources */,
 				AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */,
 				AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */,
 				AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */,
@@ -630,6 +645,7 @@
 				AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */,
 				AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */,
 				AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */,
+				AF841F9B2D220D050009709D /* CollapsableView.swift in Sources */,
 				AF16D7652CC5FAE6002BF1DC /* ContextBuilderView.swift in Sources */,
 				AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */,
 				AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */,
@@ -798,7 +814,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -838,7 +854,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
