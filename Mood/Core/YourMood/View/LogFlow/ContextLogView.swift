@@ -15,6 +15,9 @@ struct MoodFormView: View {
     
     var body: some View {
         MoodTagView(selectedMood: $formViewModel.selectedMood, assignedMoods: $formManager.takenMoods)
+            .onChange(of: formViewModel.selectedMood){
+                formViewModel.selectedEmotions = []
+            }
         
         VStack{
             
@@ -147,9 +150,6 @@ struct ContextLogView: View {
     var context: UnsecureContext
     
     @State var contextEmotionPairs: [ContextEmotionPair] = []
-    var isSubmittable: Bool {
-        true
-    }
     
     var views: [MoodFormView] = []
     
@@ -181,31 +181,32 @@ struct ContextLogView: View {
             
             
             VStack {
-                Button{
-                    withAnimation(.easeInOut(duration: 0.25)){
-                        if formManager.formViewModels.count < Mood.allMoods.count {
-                            for form in formManager.formViewModels {
-                                form.isDisclosed = false
+                if formManager.formViewModels.count < Mood.allMoods.count{
+                    Button{
+                        withAnimation(.easeInOut(duration: 0.25)){
+                            if formManager.formViewModels.count < Mood.allMoods.count {
+                                for form in formManager.formViewModels {
+                                    form.isDisclosed = false
+                                }
+                                formManager.addFormViewModel()
                             }
-                            formManager.addFormViewModel()
                         }
+                    } label: {
+                        HStack{
+                            Image(systemName: "plus")
+                                .foregroundStyle(.appGreen)
+                            Text("add another mood")
+                        }
+                        .font(.headline)
+                        .frame(minWidth: 200, maxWidth: .infinity)
+                        .frame(height: 44)
+                        .foregroundStyle(.appBlack)
+                        .opacity(formManager.allSubmittable ? 1 : 0.5)
+                        .background(formManager.allSubmittable ? .appGreen.opacity(0.2) : .gray.opacity(0.15))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                } label: {
-                    
-                    HStack{
-                        Image(systemName: "plus")
-                            .foregroundStyle(.appGreen)
-                        Text("add another mood")
-                    }
-                    .font(.headline)
-                    .frame(minWidth: 200, maxWidth: .infinity)
-                    .frame(height: 44)
-                    .foregroundStyle(.appBlack)
-                    .opacity(formManager.formViewModels.count < Mood.allMoods.count ? 1 : 0.5)
-                    .background(formManager.formViewModels.count < Mood.allMoods.count ? .appGreen.opacity(0.2) : .gray.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .disabled(!formManager.allSubmittable)
                 }
-                .disabled(formManager.formViewModels.count >= Mood.allMoods.count)
                 
                 Spacer()
                 
@@ -231,8 +232,8 @@ struct ContextLogView: View {
                     
                     Button{
                         //                    print("isSubmittable: \(isSubmittable.description), arry isEmpty: \(!viewModel.formViewModels.isEmpty), weight is selected: \( (viewModel.formViewModels.first?.selectedEmotions.isEmpty) )")
-                        if isSubmittable {
-                            //                            viewModel.createPairsFromFormViewModels(contextID: context.id)
+                        if formManager.allSubmittable {
+                            viewModel.createPairsFromFormViewModels(contextID: context.id, moodFormManager: formManager)
                             dismissSheet()
                         }
                         
@@ -245,11 +246,11 @@ struct ContextLogView: View {
                         .font(.headline)
                         .foregroundStyle(.appBlack)
                         .frame(width: 150, height: 44)
-                        .opacity(isSubmittable ? 1 : 0.5)
-                        .background(isSubmittable ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
+                        .opacity(formManager.allSubmittable ? 1 : 0.5)
+                        .background(formManager.allSubmittable ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                    .disabled(!isSubmittable)
+                    .disabled(!formManager.allSubmittable)
                 }
             }
             .padding(.horizontal, 35)

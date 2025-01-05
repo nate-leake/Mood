@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Firebase
+import Combine
 
 class MoodFormViewModel: ObservableObject, Identifiable {
     let id: String = UUID().uuidString
@@ -15,12 +16,43 @@ class MoodFormViewModel: ObservableObject, Identifiable {
     @Published var selectedEmotions: [Emotion] = []
     @Published var weight: Weight = .none
     @Published var isDisclosed: Bool = true
-
+    
 }
 
 class MoodFormManager: ObservableObject {
     @Published var takenMoods: [Mood] = []
     @Published var formViewModels : [MoodFormViewModel] = [MoodFormViewModel()]
+    @Published private(set) var allSubmittable: Bool = false
+    private var cancellables: Set<AnyCancellable> = []
+    
+    init(){
+        self.observeObjects()
+    }
+    
+    private func observeObjects() {
+        cancellables.removeAll() // Reset existing subscriptions
+        formViewModels.forEach { observeObject($0) }
+        updateAllSubmittable()
+    }
+    
+    private func observeObject(_ object: MoodFormViewModel) {
+        object.$selectedEmotions
+            .receive(on: RunLoop.main) // Ensure updates happen on the main thread
+            .sink { [weak self] _ in
+                self?.updateAllSubmittable()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateAllSubmittable() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            withAnimation(.easeInOut(duration: 0.25)){
+                self.allSubmittable = self.formViewModels.allSatisfy { !$0.selectedEmotions.isEmpty }
+            }
+        }
+        
+    }
     
     func resetFormViewModels() {
         self.takenMoods = []
@@ -28,7 +60,10 @@ class MoodFormManager: ObservableObject {
     }
     
     func addFormViewModel(){
-        self.formViewModels.append(MoodFormViewModel())
+        let newFVM = MoodFormViewModel()
+        self.formViewModels.append(newFVM)
+        observeObject(newFVM)
+        updateAllSubmittable()
     }
 }
 
@@ -48,15 +83,13 @@ class UploadMoodViewModel: ObservableObject {
         // Since pairs is @Published, SwiftUI will now reactively update
     }
     
-//    func createPairsFromFormViewModels(contextID: String) {
-//        for form in formViewModels {
-//            let cEP = ContextEmotionPair(contextId: contextID, emotions: form.selectedEmotions, weight: form.weight)
-//            self.addPair(cEP)
-//            self.formViewModels = [MoodFormViewModel(assignedMoods: assignedMoods)]
-//        }
-//    }
-    
-
+    func createPairsFromFormViewModels(contextID: String, moodFormManager: MoodFormManager) {
+        for form in moodFormManager.formViewModels {
+            let cEP = ContextEmotionPair(contextId: contextID, emotions: form.selectedEmotions, weight: form.weight)
+            self.addPair(cEP)
+            moodFormManager.resetFormViewModels()
+        }
+    }
     
     @MainActor
     func uploadMoodPost() async throws -> Bool {
