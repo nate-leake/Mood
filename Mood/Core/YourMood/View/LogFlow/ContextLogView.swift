@@ -7,42 +7,18 @@
 
 import SwiftUI
 
-struct ContextLogView: View {
-    @Environment(\.dismiss) var dismissSheet
-    @EnvironmentObject var viewModel: UploadMoodViewModel
-    var context: UnsecureContext
+struct MoodFormView: View {
+    @ObservedObject var formManager: MoodFormManager
+    @ObservedObject var formViewModel: MoodFormViewModel
     
-    @State var selectedMood: Mood? /*= Mood.allMoods[0]*/
-    @State var selectedEmotions: [Emotion] = [] /*= Mood.allMoods[0].emotions*/
-    @State var selectedWeight: Weight = .none
-    
-    private var animation: Animation = .easeInOut(duration: 0.25)
-    
-    init(context: UnsecureContext) {
-        self.context = context
-    }
+    var animation: Animation = .easeInOut(duration: 0.25)
     
     var body: some View {
-        VStack{
-            Text("how do you feel about **\(context.name)**?")
-        }
-        Divider()
-            .padding(.top, 20)
-            .padding(.bottom, 10)
-        
-        HStack{
-            Text("mood")
-                .padding(.leading, 10)
-                .opacity(0.7)
-                .fontWeight(.bold)
-            Spacer()
-        }
-        
-        MoodTagView(selectedMoods: $selectedMood)
+        MoodTagView(selectedMood: $formViewModel.selectedMood, assignedMoods: $formManager.takenMoods)
         
         VStack{
             
-            if selectedMood != nil {
+            if formViewModel.selectedMood != nil {
                 VStack{
                     Divider()
                         .padding(.top, 20)
@@ -56,14 +32,14 @@ struct ContextLogView: View {
                         Spacer()
                     }
                     EmotionTagView(
-                        selectedEmotions: $selectedEmotions,
-                        mood: selectedMood ?? Mood.allMoods[0]
+                        selectedEmotions: $formViewModel.selectedEmotions,
+                        mood: formViewModel.selectedMood ?? Mood.allMoods[0]
                     )
                 }
             }
             
             
-            if !selectedEmotions.isEmpty {
+            if !formViewModel.selectedEmotions.isEmpty {
                 VStack{
                     Divider()
                         .padding(.top, 20)
@@ -81,79 +57,79 @@ struct ContextLogView: View {
                             Text("none")
                                 .padding(.all, 7)
                                 .background(
-                                    selectedWeight == .none ? selectedMood?
+                                    formViewModel.weight == .none ? formViewModel.selectedMood?
                                         .getColor() : .gray
                                         .opacity(0.3)
                                 )
                                 .foregroundStyle(
-                                    selectedWeight == .none ?
-                                    ((selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    formViewModel.weight == .none ?
+                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
                                         (.appBlack)
                                 )
-                                .animation(animation, value: selectedWeight)
+                                .animation(animation, value: formViewModel.weight)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 4)
                                 .onTapGesture {
-                                    selectedWeight = .none
+                                    formViewModel.weight = .none
                                 }
                             
                             Text("slight")
                                 .padding(.all, 7)
                                 .background(
-                                    selectedWeight == .slight ? selectedMood?
+                                    formViewModel.weight == .slight ? formViewModel.selectedMood?
                                         .getColor() : .gray
                                         .opacity(0.3)
                                 )
                                 .foregroundStyle(
-                                    selectedWeight == .slight ?
-                                    ((selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    formViewModel.weight == .slight ?
+                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
                                         (.appBlack)
                                 )
-                                .animation(animation, value: selectedWeight)
+                                .animation(animation, value: formViewModel.weight)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 4)
                                 .onTapGesture {
-                                    selectedWeight = .slight
+                                    formViewModel.weight = .slight
                                 }
                             
                             Text("moderate")
                                 .padding(.all, 7)
                                 .background(
-                                    selectedWeight == .moderate ? selectedMood?
+                                    formViewModel.weight == .moderate ? formViewModel.selectedMood?
                                         .getColor() : .gray
                                         .opacity(0.3)
                                 )
                                 .foregroundStyle(
-                                    selectedWeight == .moderate ?
-                                    ((selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    formViewModel.weight == .moderate ?
+                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
                                         (.appBlack)
                                 )
-                                .animation(animation, value: selectedWeight)
+                                .animation(animation, value: formViewModel.weight)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 4)
                                 .onTapGesture {
-                                    selectedWeight = .moderate
+                                    formViewModel.weight = .moderate
                                 }
                             
                             Text("extreme")
                                 .padding(.all, 7)
                                 .background(
-                                    selectedWeight == .extreme ? selectedMood?.getColor() : .gray.opacity(0.3)
+                                    formViewModel.weight == .extreme ? formViewModel.selectedMood?.getColor() : .gray.opacity(0.3)
                                 )
                                 .foregroundStyle(
-                                    selectedWeight == .extreme ?
-                                    ((selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    formViewModel.weight == .extreme ?
+                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
                                         (.appBlack)
                                 )
-                                .animation(animation, value: selectedWeight)
+                                .animation(animation, value: formViewModel.weight)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 4)
                                 .onTapGesture {
-                                    selectedWeight = .extreme
+                                    formViewModel.weight = .extreme
                                 }
                         }
                         Spacer()
@@ -161,51 +137,123 @@ struct ContextLogView: View {
                 }
             }
         }
-        
-        Spacer()
-        
-        HStack {
-            Spacer()
-            Button{
-                dismissSheet()
+    }
+}
+
+struct ContextLogView: View {
+    @Environment(\.dismiss) var dismissSheet
+    @EnvironmentObject var viewModel: UploadMoodViewModel
+    @StateObject var formManager: MoodFormManager = MoodFormManager()
+    var context: UnsecureContext
+    
+    @State var contextEmotionPairs: [ContextEmotionPair] = []
+    var isSubmittable: Bool {
+        true
+    }
+    
+    var views: [MoodFormView] = []
+    
+    private var animation: Animation = .easeInOut(duration: 0.25)
+    
+    init(context: UnsecureContext) {
+        self.context = context
+    }
+    
+    var body: some View {
+        VStack {
+            VStack{
+                Text("how do you feel about **\(context.name)**?")
+            }
+            
+            Divider()
+                .padding(.top, 20)
+                .padding(.bottom, 10)
+            
+            ScrollView{
+                ForEach($formManager.formViewModels, id: \.id) { $view in
+                    CollapsableView(openTitle: "mood", closedTitle: view.selectedMood?.name ?? "nothing", isDisclosed: $view.isDisclosed){
+                        MoodFormView(formManager: formManager, formViewModel: view)
+                    }
+                }
                 
-            } label: {
-                HStack{
-                    Image(systemName: "xmark")
-                        .foregroundStyle(.appRed)
-                    Text("cancel")
-                }
-                .font(.headline)
-                .foregroundStyle(.appBlack)
-                .frame(width: 150, height: 44)
-                .background(.appRed.opacity(0.15))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
+            .frame(minHeight: 200, maxHeight: .infinity)
             
-            Spacer()
             
-            Button{
-                if !selectedEmotions.isEmpty{
-                    let contextPair = ContextEmotionPair(contextId: context.id, emotions: selectedEmotions, weight: selectedWeight)
-                    dismissSheet()
-                    viewModel.addPair(contextPair)
+            VStack {
+                Button{
+                    withAnimation(.easeInOut(duration: 0.25)){
+                        if formManager.formViewModels.count < Mood.allMoods.count {
+                            for form in formManager.formViewModels {
+                                form.isDisclosed = false
+                            }
+                            formManager.addFormViewModel()
+                        }
+                    }
+                } label: {
+                    
+                    HStack{
+                        Image(systemName: "plus")
+                            .foregroundStyle(.appGreen)
+                        Text("add another mood")
+                    }
+                    .font(.headline)
+                    .frame(minWidth: 200, maxWidth: .infinity)
+                    .frame(height: 44)
+                    .foregroundStyle(.appBlack)
+                    .opacity(formManager.formViewModels.count < Mood.allMoods.count ? 1 : 0.5)
+                    .background(formManager.formViewModels.count < Mood.allMoods.count ? .appGreen.opacity(0.2) : .gray.opacity(0.15))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-            } label: {
-                HStack{
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(.appPurple)
-                    Text("save")
+                .disabled(formManager.formViewModels.count >= Mood.allMoods.count)
+                
+                Spacer()
+                
+                HStack {
+                    Button{
+                        formManager.resetFormViewModels()
+                        dismissSheet()
+                        
+                    } label: {
+                        HStack{
+                            Image(systemName: "xmark")
+                                .foregroundStyle(.appRed)
+                            Text("cancel")
+                        }
+                        .font(.headline)
+                        .foregroundStyle(.appBlack)
+                        .frame(width: 150, height: 44)
+                        .background(.appRed.opacity(0.15))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    
+                    Spacer()
+                    
+                    Button{
+                        //                    print("isSubmittable: \(isSubmittable.description), arry isEmpty: \(!viewModel.formViewModels.isEmpty), weight is selected: \( (viewModel.formViewModels.first?.selectedEmotions.isEmpty) )")
+                        if isSubmittable {
+                            //                            viewModel.createPairsFromFormViewModels(contextID: context.id)
+                            dismissSheet()
+                        }
+                        
+                    } label: {
+                        HStack{
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.appPurple)
+                            Text("save")
+                        }
+                        .font(.headline)
+                        .foregroundStyle(.appBlack)
+                        .frame(width: 150, height: 44)
+                        .opacity(isSubmittable ? 1 : 0.5)
+                        .background(isSubmittable ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .disabled(!isSubmittable)
                 }
-                .font(.headline)
-                .foregroundStyle(.appBlack)
-                .frame(width: 150, height: 44)
-                .opacity(!selectedEmotions.isEmpty ? 1 : 0.5)
-                .background(!selectedEmotions.isEmpty ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            
-            Spacer()
-            
+            .padding(.horizontal, 35)
+            .frame(height: 110)
         }
     }
 }
