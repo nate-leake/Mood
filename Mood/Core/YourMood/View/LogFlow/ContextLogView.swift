@@ -14,12 +14,16 @@ struct MoodFormView: View {
     var animation: Animation = .easeInOut(duration: 0.25)
     
     var body: some View {
-        MoodTagView(selectedMood: $formViewModel.selectedMood, assignedMoods: $formManager.takenMoods)
-            .onChange(of: formViewModel.selectedMood){
-                formViewModel.selectedEmotions = []
-            }
-        
         VStack{
+            MoodTagView(selectedMood: $formViewModel.selectedMood, assignedMoods: $formManager.takenMoods)
+                .onChange(of: formViewModel.selectedMood){
+                    withAnimation(.spring(response: 0.8)){
+                        formViewModel.selectedEmotions = []
+                        formViewModel.weight = .none
+                    }
+                }
+            
+            
             
             if formViewModel.selectedMood != nil {
                 VStack{
@@ -29,7 +33,6 @@ struct MoodFormView: View {
                     
                     HStack{
                         Text("emotion")
-                            .padding(.leading, 10)
                             .opacity(0.7)
                             .fontWeight(.bold)
                         Spacer()
@@ -50,7 +53,6 @@ struct MoodFormView: View {
                     
                     HStack{
                         Text("intensity")
-                            .padding(.leading, 10)
                             .opacity(0.7)
                             .fontWeight(.bold)
                         Spacer()
@@ -143,6 +145,124 @@ struct MoodFormView: View {
     }
 }
 
+
+struct TitleWindowView: View {
+    @Namespace private var namespace
+    @ObservedObject var formViewModel: MoodFormViewModel
+    
+    var body: some View {
+        HStack {
+            if formViewModel.isDisclosed {
+                Text("mood")
+                    .matchedGeometryEffect(id: "mood", in: namespace)
+                    .padding(.top, 5)
+                    .foregroundStyle(.appBlack)
+                    .opacity(0.7)
+                    .fontWeight(.bold)
+                
+            } else {
+                if let mood = formViewModel.selectedMood {
+                    HStack {
+                        Text(mood.name)
+                            .padding(5)
+                            .foregroundStyle(.appBlack)
+                            .background(mood.getColor().opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                        if formViewModel.selectedEmotions.isEmpty {
+                            Text("select an emotion")
+                                .foregroundStyle(.appRed)
+                                .bold()
+                        }
+                    }
+                    .matchedGeometryEffect(id: "selected", in: namespace)
+                    
+                } else {
+                    Text("select a mood")
+                        .matchedGeometryEffect(id: "error", in: namespace)
+                        .padding(.top, 5)
+                        .foregroundStyle(.appBlack)
+                    
+                }
+            }
+        }
+    }
+}
+
+
+struct SlidableView<Content: View>: View {
+    var isDeleteable: Bool
+    @Binding var isDisclosed: Bool
+    var content: Content
+    var delete: () -> Void
+    @State private var offset = 0.0
+    @State private var didCall: Bool = false
+    
+    var body: some View {
+        ZStack {
+            HStack{
+                Spacer()
+                
+                Image(systemName: "trash")
+                    .frame(maxHeight: .infinity)
+                    .frame(width: abs(offset))
+                    .background(.appRed)
+                    .foregroundStyle(.appWhite)
+                    .onTapGesture {
+                        if offset == -75 {
+                            withAnimation(.easeInOut(duration: 0.2)){
+                                offset = -1000
+                            }
+                            delete()
+                            didCall = true
+                        }
+                    }
+                    .offset(x: abs(offset))
+            }
+            content
+        }
+        .offset(x: offset)
+        .gesture(
+            
+            DragGesture()
+                .onChanged{ gesture in
+                    if isDeleteable {
+                        if isDisclosed {
+                            withAnimation (.spring(response: 0.8)){
+                                isDisclosed = false
+                            }
+                        }
+                        if gesture.translation.width < 0 {
+                            offset = gesture.translation.width
+                        } else if gesture.translation.width > 0 && offset >= -75 && offset < 0 {
+                            offset += 2
+                        }
+                    }
+                }
+                .onEnded { _ in
+                    if isDeleteable {
+                        if offset < -300 && !didCall {
+                            withAnimation(.easeInOut(duration: 0.2)){
+                                offset = -1000
+                            }
+                            delete()
+                            didCall = true
+                        } else if offset < -55 {
+                            withAnimation(.easeInOut(duration: 0.5)){
+                                offset = -75
+                            }
+                        } else {
+                            withAnimation(.easeInOut(duration: 0.5)){
+                                offset = .zero
+                            }
+                        }
+                    }
+                }
+            
+        )
+    }
+}
+
+
 struct ContextLogView: View {
     @Environment(\.dismiss) var dismissSheet
     @EnvironmentObject var viewModel: UploadMoodViewModel
@@ -150,8 +270,6 @@ struct ContextLogView: View {
     var context: UnsecureContext
     
     @State var contextEmotionPairs: [ContextEmotionPair] = []
-    
-    var views: [MoodFormView] = []
     
     private var animation: Animation = .easeInOut(duration: 0.25)
     
@@ -170,12 +288,25 @@ struct ContextLogView: View {
                 .padding(.bottom, 10)
             
             ScrollView{
-                ForEach($formManager.formViewModels, id: \.id) { $view in
-                    CollapsableView(openTitle: "mood", closedTitle: view.selectedMood?.name ?? "nothing", isDisclosed: $view.isDisclosed){
-                        MoodFormView(formManager: formManager, formViewModel: view)
-                    }
-                }
                 
+                ForEach($formManager.formViewModels) { $form in
+                    SlidableView( isDeleteable: formManager.formViewModels.count > 1,
+                                  isDisclosed: $form.isDisclosed,
+                                  content:
+                                    CollapsableView(
+                                        isDisclosed: $form.isDisclosed,
+                                        thumbnail: ThumbnailView{ TitleWindowView(formViewModel: form) },
+                                        expanded: ExpandedView{ MoodFormView(formManager: formManager, formViewModel: form) }
+                                    )
+                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 5)
+                    ) {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            formManager.deleteFormViewModel(removing: form)
+                        }
+                    }
+                    
+                }
             }
             .frame(minHeight: 200, maxHeight: .infinity)
             
@@ -183,7 +314,7 @@ struct ContextLogView: View {
             VStack {
                 if formManager.formViewModels.count < Mood.allMoods.count{
                     Button{
-                        withAnimation(.easeInOut(duration: 0.25)){
+                        withAnimation (.spring(response: 0.8)){
                             if formManager.formViewModels.count < Mood.allMoods.count {
                                 for form in formManager.formViewModels {
                                     form.isDisclosed = false

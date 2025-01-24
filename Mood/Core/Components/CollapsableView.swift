@@ -7,59 +7,77 @@
 
 import SwiftUI
 
-struct SampleView: View {
+struct ThumbnailView: View, Identifiable {
+    var id = UUID()
+    @ViewBuilder var content: any View
+    
     var body: some View {
-        Text("hello!!")
+        ZStack {
+            AnyView(content)
+        }
     }
 }
 
-struct CollapsableView<Content: View>: View {
-    var openTitle: String
-    var closedTitle: String
+
+struct ExpandedView: View {
+    var id = UUID()
+    @ViewBuilder var content: any View
+    
+    var body: some View {
+        ZStack {
+            AnyView(content)
+        }
+    }
+}
+
+
+struct CollapsableView: View {
+    @Namespace private var namespace
     @Binding var isDisclosed: Bool
-    @ViewBuilder let content: Content
+    var thumbnail: ThumbnailView
+    var expanded: ExpandedView
     
     var body: some View {
         VStack {
-            HStack{
-                Text(isDisclosed ? openTitle : closedTitle)
-                    .padding(.leading, 10)
-                    .opacity(0.7)
-                    .fontWeight(isDisclosed ? .bold : .regular)
-                Spacer()
-                Button{
-                    withAnimation {
-                        isDisclosed.toggle()
-                    }
-                } label: {
-                    HStack{
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .rotationEffect(Angle(degrees: isDisclosed ? 90 : 0))
-                    }
-                }
+            thumbnailView()
+            if isDisclosed {
+                expandedView()
+            }
+        }
+        .clipped()
+        .onTapGesture {
+            
+            withAnimation (.spring(response: 0.8)){
+                isDisclosed.toggle()
+                print("clicked on view. idDisclosed: \(isDisclosed)")
             }
             
-            content
-                .frame(height: isDisclosed ? nil : 0, alignment: .top)
-                .clipped()
-            
         }
-        .frame(maxWidth: .infinity)
-        .padding()
+    }
+    
+    @ViewBuilder
+    private func thumbnailView() -> some View {
+        HStack {
+            thumbnail
+            Spacer()
+            Image(systemName: "chevron.down")
+                .foregroundStyle(.appPurple)
+                .rotationEffect(Angle(degrees: isDisclosed ? 90 : 0))
+        }
+        .matchedGeometryEffect(id: "thumbnail", in: namespace)
+    }
+    
+    @ViewBuilder
+    private func expandedView() -> some View {
+        expanded
+            .matchedGeometryEffect(id: "expanded", in: namespace)
     }
 }
 
 #Preview {
-    @Previewable @State var isOpen = false
-    
-    VStack {
-        Button {
-            isOpen.toggle()
-        } label: {
-            Text("open / close")
-        }
-        
-        CollapsableView(openTitle: "mood", closedTitle: "happiness", isDisclosed: $isOpen){SampleView()}
-    }
+    @Previewable @State var isShowing = false
+    CollapsableView(isDisclosed: $isShowing,
+                    thumbnail: ThumbnailView{ Text("thumblain") },
+                    expanded: ExpandedView { Text("Its expanded!") }
+    )
 }

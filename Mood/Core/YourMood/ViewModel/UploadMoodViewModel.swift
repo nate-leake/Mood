@@ -48,7 +48,11 @@ class MoodFormManager: ObservableObject {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             withAnimation(.easeInOut(duration: 0.25)){
-                self.allSubmittable = self.formViewModels.allSatisfy { !$0.selectedEmotions.isEmpty }
+                if self.formViewModels.isEmpty {
+                    self.allSubmittable = false
+                } else {
+                    self.allSubmittable = self.formViewModels.allSatisfy { !$0.selectedEmotions.isEmpty }
+                }
             }
         }
         
@@ -64,6 +68,14 @@ class MoodFormManager: ObservableObject {
         self.formViewModels.append(newFVM)
         observeObject(newFVM)
         updateAllSubmittable()
+    }
+    
+    func deleteFormViewModel(removing form: MoodFormViewModel) {
+        self.formViewModels.removeAll(where: { $0.id == form.id } )
+        updateAllSubmittable()
+        if let mood = form.selectedMood?.name {
+            self.takenMoods.removeAll(where: { $0.name == mood } )
+        }
     }
 }
 
