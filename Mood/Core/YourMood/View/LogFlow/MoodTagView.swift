@@ -34,7 +34,9 @@ struct MoodTagView: View {
                                             assignedMoods.remove(at: index)
                                         }
                                     }
-                                    selectedMood = tag
+                                    withAnimation (.spring(response: 0.8)){
+                                        selectedMood = tag
+                                    }
                                     assignedMoods.append(tag)
                                 }
                             }

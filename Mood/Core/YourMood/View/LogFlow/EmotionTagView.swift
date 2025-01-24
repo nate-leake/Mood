@@ -31,14 +31,14 @@ struct EmotionTagView: View {
                         .background(getIsSelected(tag: tag) ? mood.getColor() : .appBlack.opacity(0.15))
                         .foregroundColor(getIsSelected(tag: tag) ? (mood.getColor().isLight() ? .black : .white) : foregroundColorNotSelected)
                         .cornerRadius(50)
-                        .animation(.easeInOut(duration: 0.25), value: getIsSelected(tag: tag))
+                        .animation(.spring(duration: 0.8), value: getIsSelected(tag: tag))
                         .onTapGesture {
                             if getIsSelected(tag: tag) {
-                                withAnimation(.easeInOut(duration: 0.25)){
+                                withAnimation(.spring(response: 0.8)){
                                     selectedEmotions.removeAll(where: {$0.name == tag.name})
                                 }
                             } else {
-                                withAnimation(.easeInOut(duration: 0.25)){
+                                withAnimation(.spring(response: 0.8)){
                                     selectedEmotions.append(tag)
                                 }
                             }
