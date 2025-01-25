@@ -107,7 +107,7 @@ struct LineChartWithSelection: View {
                             for pair in post.data {
                                 operationalData.append(
                                     MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
-                                             context: pair.contextName,
+                                             contextId: pair.contextId,
                                              moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
                                              intensity: pair.weight.rawValue)
                                 )

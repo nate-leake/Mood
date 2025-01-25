@@ -24,6 +24,12 @@ class AuthService: Stateable, ObservableObject {
     
     static let shared = AuthService()
     
+    private func cp(_ text: String, state: PrintableStates = .none) {
+        let finalString = "🔐\(state.rawValue) AUTH SERVICE: " + text
+        print(finalString)
+    }
+
+    
     init(){
         AppState.shared.addContributor(adding: self)
         Task {try await loadUserData()}
@@ -72,7 +78,7 @@ class AuthService: Stateable, ObservableObject {
             self.userSession = result.user
             errorMessage = try await loadUserData()
         } catch {
-            print("DEBUG: Failed to log in with error: \(error.localizedDescription)\nDetails: \(error)")
+            cp("Failed to log in with error: \(error.localizedDescription)\nDetails: \(error)")
             errorMessage = provideAuthErrorDescription(from: error)
         }
         return errorMessage
@@ -85,6 +91,9 @@ class AuthService: Stateable, ObservableObject {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             await self.uploaduserData(uid: result.user.uid, email: email, name: name, birthday: birthday, userPin: userPin)
+            for context in UnsecureContext.defaultContexts {
+                _ = try await DataService.shared.uploadContext(context: context)
+            }
         } catch {
             // Attempt to cast error to `AuthErrorCode` type to handle specific Firebase errors
             errorMessage = provideAuthErrorDescription(from: error)
@@ -104,7 +113,7 @@ class AuthService: Stateable, ObservableObject {
                 self.userIsSignedIn = false
                 self.state = .ready
             }
-            DailyDataService.shared.refreshServiceData()
+            DataService.shared.refreshServiceData()
             errorMessage = "no user is signed in"
             return errorMessage
         }
@@ -115,12 +124,12 @@ class AuthService: Stateable, ObservableObject {
                 self.userIsSignedIn = true
                 self.state = .ready
             }
-            DailyDataService.shared.refreshServiceData()
+            DataService.shared.refreshServiceData()
         } catch {
             errorMessage = provideAuthErrorDescription(from: error)
         }
         
-        print("done loading user data")
+        cp("done loading user data")
         
         return errorMessage
     }
@@ -140,7 +149,7 @@ class AuthService: Stateable, ObservableObject {
                 self.state = .ready
             }
         } catch {
-            print("error uploading user data: \(error)")
+            cp("error uploading user data: \(error)")
         }
     }
     
@@ -160,7 +169,7 @@ class AuthService: Stateable, ObservableObject {
                         isValidPin = true
                     }
                 } catch {
-                    print("error validating pin: \(error)")
+                    cp("error validating pin: \(error)")
                 }
             }
         }
@@ -191,7 +200,7 @@ class AuthService: Stateable, ObservableObject {
             }
         } else {
             // no biometrics
-            print("no biometrics available on this device")
+            cp("no biometrics available on this device")
             completion(false)
         }
     }

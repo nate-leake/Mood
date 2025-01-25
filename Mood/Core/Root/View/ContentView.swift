@@ -12,10 +12,29 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = ContentViewModel()
     @StateObject var registrationViewModel = RegistrationViewModel()
-    @StateObject var dailyDataService: DailyDataService = DailyDataService.shared
+    @StateObject var dataService: DataService = DataService.shared
     @StateObject var authService: AuthService = AuthService.shared
     @State var appStatus: AppStateCase = .startup
     @State var appEnteredBackgroundTime: Date = Date.now
+    
+    private func testMassUpload(){
+        Task {
+            DataService.shared.isPerformingManagedAGUpdate = true
+            let context1 = "FB6EA42A-AC26-4D1A-9DCB-1E8FF1E1BDA3"
+            for number in 1...200 {
+                let emotion = "happy"
+                let p1 = ContextEmotionPair(contextId: context1, emotions: [emotion], weight: .extreme)
+                let pairs: [ContextEmotionPair] = [p1]
+                let date = Date.now.addingTimeInterval(TimeInterval(-86400 * number))
+                let data: DailyData = DailyData(date: date, timeZoneOffset: DailyData.TZO, pairs: pairs)
+                let res = try await DataService.shared.uploadMoodPost(dailyData: data)
+                
+                print("CONTENT VIEW: uploaded pair \(number) with success: \(res)")
+            }
+            DataService.shared.isPerformingManagedAGUpdate = false
+            AnalyticsGenerator.shared.calculateTBI(dataService: DataService.shared)
+        }
+    }
     
     var body: some View {
         Group{
@@ -28,7 +47,10 @@ struct ContentView: View {
                 } else if let currentUser = viewModel.currentUser {
                     if authService.isUnlocked{
                         MainTabBar(user: currentUser)
-                            .environmentObject(dailyDataService)
+                            .environmentObject(dataService)
+                            .onAppear{
+//                                testMassUpload()
+                            }
                     } else {
                         ValidatePinView()
                             .onChange(of: authService.isUnlocked) { old, new in
@@ -45,7 +67,7 @@ struct ContentView: View {
             }
             if new == .inactive && old == .background {
                 if Date().timeIntervalSince(appEnteredBackgroundTime) > 600 {
-                    dailyDataService.refreshServiceData()
+                    dataService.refreshServiceData()
                 }
             }
         }

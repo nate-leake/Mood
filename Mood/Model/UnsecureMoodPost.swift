@@ -16,23 +16,23 @@ struct MoodData: Hashable, Codable, Identifiable {
     var moodType: String
     var intensity: Int
     
-    init(date: Date, context: String, moodType: String, intensity: Int) {
+    init(date: Date, contextId: String, moodType: String, intensity: Int) {
         self.id = NSUUID().uuidString
         self.date = date
-        self.context = context
+        self.context = UnsecureContext.getContext(from: contextId)?.name ?? "no context"
         self.moodType = moodType
         self.intensity = intensity
     }
 }
 extension MoodData {
     static var MOCK_DATA : [MoodData] = [
-        .init(date: Date.now, context: "family", moodType: "happiness", intensity: 2),
-        .init(date: Date.now, context: "health", moodType: "sadness", intensity: 1),
-        .init(date: Date.now, context: "identity", moodType: "fearful", intensity: 1),
-        .init(date: Date.now, context: "money", moodType: "anger", intensity: 3),
-        .init(date: Date.now, context: "politics", moodType: "neutrality", intensity: 0),
-        .init(date: Date.now, context: "weather", moodType: "sadness", intensity: 1),
-        .init(date: Date.now, context: "work", moodType: "happy", intensity: 1)
+        .init(date: Date.now, contextId: "68B3089C-0E4A-4D36-A1D3-ED075E1722B7", moodType: "happiness", intensity: 2),
+        .init(date: Date.now, contextId: "846530A7-0D95-4BA3-83D7-E1ECC2E5F152", moodType: "sadness", intensity: 1),
+        .init(date: Date.now, contextId: "26AADCEF-0E06-421B-8D5E-12031B851D4D", moodType: "fearful", intensity: 1),
+        .init(date: Date.now, contextId: "3594A955-4CC1-4F18-9143-6902ACB8187E", moodType: "anger", intensity: 3),
+        .init(date: Date.now, contextId: "D9DCDC1D-8E57-4937-8877-DD7BA364BC72", moodType: "neutrality", intensity: 0),
+        .init(date: Date.now, contextId: "4854C8B2-B7B8-43B4-8A3C-276B3D334206", moodType: "sadness", intensity: 1),
+        .init(date: Date.now, contextId: "FE0FF895-DEE0-4226-B4A9-4CA74B663DA7", moodType: "happy", intensity: 1)
     ]
 }
 

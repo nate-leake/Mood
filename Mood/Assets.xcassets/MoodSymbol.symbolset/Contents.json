@@ -1,0 +1,25 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "symbol-rendering-intent" : "multicolor"
+  },
+  "symbols" : [
+    {
+      "filename" : "MoodSymbolLight.svg",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "MoodSymbolDark.svg",
+      "idiom" : "universal"
+    }
+  ]
+}

@@ -11,6 +11,16 @@ protocol Stateable {
     var state: AppStateCase { get }
 }
 
+enum PrintableStates: String {
+    case none = ""
+    case ok = "🟢"
+    case warning = "⚠️"
+    case error = "❌"
+    case fatal = "‼️💀‼️"
+    case cold = "🔵"
+    case debug = "🪲"
+}
+
 enum AppStateCase: String {
     case ready = "ready"
     case loading = "loading"
@@ -20,6 +30,11 @@ enum AppStateCase: String {
 class AppState {
     static var shared: AppState = AppState()
     var stateContributors: [Stateable] = []
+    
+    private func cp(_ text: String, state: PrintableStates = .none) {
+        let finalString = "🔄\(state.rawValue) APP STATE: " + text
+        print(finalString)
+    }
     
     func addContributor(adding: Stateable){
         stateContributors.append(adding)
@@ -32,18 +47,18 @@ class AppState {
         for object in stateContributors {
             switch object.state {
             case .startup:
-                print("Contributor is starting: \(object)")
+                cp("Contributor is starting: \(object)", state: .cold)
                 return .startup
             case .loading:
                 finalState = .loading
-                print("Contributor is still loading: \(object)")
+                cp("Contributor is still loading: \(object)", state: .cold)
             case .ready:
                 continue
             }
         }
         
         if finalState == .ready {
-            print("All contributors are ready.")
+            cp("All contributors are ready.", state: .ok)
         }
         
         return finalState

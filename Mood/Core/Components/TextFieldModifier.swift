@@ -10,16 +10,18 @@ import SwiftUI
 
 struct TextFieldModifier: ViewModifier {
     private var foregroundColor: Color
+    private var backgroundColor: Color
     
-    init(foregroundColor: Color = Color.black) {
+    init(foregroundColor: Color = .appBlack, backgroundColor: Color = .appWhite) {
         self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
     }
     
     func body(content: Content) -> some View {
         content
             .font(.subheadline)
             .padding(12)
-            .background(Color(.white))
+            .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 24)
             .foregroundStyle(foregroundColor)

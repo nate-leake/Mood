@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct ProfileView: View {
-    @EnvironmentObject var dailyDataService: DailyDataService
+    @EnvironmentObject var dataService: DataService
     var user : User
     
     private let dateFormatter = {
@@ -23,7 +23,7 @@ struct ProfileView: View {
         NavigationStack {
             VStack{
                 VStack{
-                    Text("\(dailyDataService.numberOfEntries)")
+                    Text("\(dataService.numberOfEntries)")
                         .font(.title)
                     Text("entries")
                 }
@@ -72,6 +72,15 @@ struct ProfileView: View {
                     }
                     .modifier(ListRowBackgroundModifer())
                     
+                    Section{
+                        NavigationLink {
+                            ContextSelectorView()
+                        } label: {
+                            Text("edit contexts")
+                        }
+                    }
+                    .modifier(ListRowBackgroundModifer())
+                    
                     Button {
                         AuthService.shared.signout()
                     } label: {
@@ -97,5 +106,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView(user: User.MOCK_USERS[0])
-        .environmentObject(DailyDataService())
+        .environmentObject(DataService())
 }

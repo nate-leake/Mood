@@ -9,9 +9,14 @@ import SwiftUI
 import Charts
 
 struct TodaysFeelingsView: View {
-    @EnvironmentObject var dailyDataService: DailyDataService
-    @State var todaysData: DailyData?
-    var analytics = AnalyticsGenerator()
+    @EnvironmentObject var dataService: DataService
+    @ObservedObject var analytics = AnalyticsGenerator.shared
+    @State var impactStatement: String = ""
+    
+    private func cp(_ text: String, state: PrintableStates = .none) {
+        let finalString = "🖼️\(state.rawValue) TODAYS FEELINGS VIEW: " + text
+        print(finalString)
+    }
     
     func createImpactStatement(from items: [String]) -> String {
         switch items.count {
@@ -29,7 +34,7 @@ struct TodaysFeelingsView: View {
     }
     
     var body: some View {
-        if todaysData != nil {
+        if dataService.todaysDailyData != nil {
             VStack{
                 HStack{
                     Text("today's feelings")
@@ -39,12 +44,11 @@ struct TodaysFeelingsView: View {
                     Spacer()
                 }
                 HStack{
-                    Text("**\( createImpactStatement(from: analytics.biggestImpact(data: [todaysData!])) )** had the biggest impact on you")
+                    Text("**\(impactStatement)** had the biggest impact on you")
                     Spacer()
                 }
                 Spacer()
-                
-                Chart(todaysData!.pairs, id: \.contextName) { pair in
+                Chart(dataService.todaysDailyData!.pairs, id:\.contextId) { pair in
                     BarMark(
                         x: .value("impact", pair.weight.rawValue == 0 ? 0.1 : Double(pair.weight.rawValue)),
                         y: .value("context", pair.contextName)
@@ -60,11 +64,11 @@ struct TodaysFeelingsView: View {
                             .font(.caption)
                             .foregroundStyle(
                                 pair.weight.rawValue == 0 ? .appBlack :
-                                Emotion(name: pair.emotions[0]).getParentMood()?.getColor().isLight() ?? true ? .black : .white
+                                    Emotion(name: pair.emotions[0]).getParentMood()?.getColor().isLight() ?? true ? .black : .white
                             )
                     }
                 }
-                .frame(height: (CGFloat(todaysData?.pairs.count ?? 6) * 60.0)+40)
+                .frame(height: (CGFloat(dataService.todaysDailyData?.pairs.count ?? 6) * 60.0)+40)
                 .chartXScale(domain: [0, 3.55])
                 .chartYAxis {
                     AxisMarks(stroke: StrokeStyle(lineWidth: 0))
@@ -90,34 +94,20 @@ struct TodaysFeelingsView: View {
                     }
                 }
             }
+            .onChange(of: analytics.todaysBiggestImpacts, initial: true) {
+                cp("todays biggest impacts changed")
+                impactStatement = createImpactStatement(from: analytics.todaysBiggestImpacts)
+            }
         }
         else {
             VStack{
                 Text("Loading data...")
             }
-            .onChange(of: dailyDataService.todaysDailyData) {
-                print("daily data changed!")
-                if let data = dailyDataService.todaysDailyData {
-                    self.todaysData = data
-                    print(self.todaysData ?? "no data can be printed")
-                } else {
-                    print("todays feelings could not be loaded")
-                }
-            }
-            .onAppear{
-                if let data = dailyDataService.todaysDailyData{
-                    self.todaysData = data
-                } else {
-                    print("todays feelings could not be loaded")
-                }
-            }
         }
-        
-        
     }
 }
 
 #Preview {
-    TodaysFeelingsView(todaysData: DailyData.MOCK_DATA[6])
-        .environmentObject(DailyDataService())
+    TodaysFeelingsView()
+        .environmentObject(DataService())
 }

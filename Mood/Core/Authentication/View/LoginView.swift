@@ -64,7 +64,10 @@ struct LoginView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 .disabled(isLoading)
-                .loadable(isLoading: $isLoading)
+                .loadable(isLoading: $isLoading, shape: RoundedRectangle(cornerRadius: 8), frameSize: CGSize(width: 360, height: 44))
+//                .onAppear{
+//                    isLoading = true
+//                }
             }
             
         }
