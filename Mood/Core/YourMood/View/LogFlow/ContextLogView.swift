@@ -269,7 +269,7 @@ struct ContextLogView: View {
     @StateObject var formManager: MoodFormManager = MoodFormManager()
     var context: UnsecureContext
     
-    @State var contextEmotionPairs: [ContextEmotionPair] = []
+    @State var contextEmotionPairs: [ContextLogContainer] = []
     
     private var animation: Animation = .easeInOut(duration: 0.25)
     
@@ -364,7 +364,7 @@ struct ContextLogView: View {
                     Button{
                         //                    print("isSubmittable: \(isSubmittable.description), arry isEmpty: \(!viewModel.formViewModels.isEmpty), weight is selected: \( (viewModel.formViewModels.first?.selectedEmotions.isEmpty) )")
                         if formManager.allSubmittable {
-                            viewModel.createPairsFromFormViewModels(contextID: context.id, moodFormManager: formManager)
+                            viewModel.createContextLogContainersFromFormViewModels(contextID: context.id, moodFormManager: formManager)
                             dismissSheet()
                         }
                         

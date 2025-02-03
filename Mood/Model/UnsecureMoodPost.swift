@@ -53,8 +53,8 @@ struct SecureMoodPost: Identifiable, Hashable, Codable {
         self.timestamp = data.date
         self.timeZoneOffset = data.timeZoneOffset
         
-        var tmpData: [ContextEmotionPair] = []
-        for pair in data.pairs {
+        var tmpData: [ContextLogContainer] = []
+        for pair in data.contextLogContainers {
             tmpData.append(pair)
         }
         
@@ -84,7 +84,7 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
     let id: String
     var timestamp: Date
     var timeZoneOffset: Int
-    var data: [ContextEmotionPair]
+    var data: [ContextLogContainer]
     
     
     /// Reformats the DailyData object and wraps it with other information to be uploaded to the database
@@ -96,8 +96,8 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
         self.timestamp = data.date
         self.timeZoneOffset = data.timeZoneOffset
         
-        var tmpData: [ContextEmotionPair] = []
-        for pair in data.pairs {
+        var tmpData: [ContextLogContainer] = []
+        for pair in data.contextLogContainers {
             tmpData.append(pair)
         }
         self.data = tmpData
@@ -111,7 +111,7 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
         
         if let postData = secureMoodPost.data{
             do {
-                if let decryptedData: [ContextEmotionPair] = try SecurityService().decryptData(postData){
+                if let decryptedData: [ContextLogContainer] = try SecurityService().decryptData(postData){
                     self.data = decryptedData
                 }
             } catch {

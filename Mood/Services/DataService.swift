@@ -283,6 +283,7 @@ class DataService : ObservableObject, Stateable {
         let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
         
         let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
+//        let unsecure = UnsecureMoodPost(from: privatePost)
         
         if privatePost.data != nil{
             
@@ -295,10 +296,15 @@ class DataService : ObservableObject, Stateable {
                     if DataService.shared.recentMoodPosts?.count ?? 0 > 0 {
                         DataService.shared.recentMoodPosts?.removeFirst()
                     }
-                    DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    if let _ = DataService.shared.recentMoodPosts {
+                        DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    } else {
+                        DataService.shared.recentMoodPosts = []
+                        DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    }
                     DataService.shared.numberOfEntries += 1
-                    for pair in dailyData.pairs {
-                        if let c = UnsecureContext.getContext(from: pair.contextId) {
+                    for contextContainer in dailyData.contextLogContainers {
+                        if let c = UnsecureContext.getContext(from: contextContainer.contextId) {
                             let updatedContext = UnsecureContext(id: c.id, name: c.name, iconName: c.iconName, color: c.color, isHidden: c.isHidden, associatedPostIDs: c.associatedPostIDs)
                             updatedContext.associatedPostIDs.append(privatePost.id)
                             let result = try await updateContext(to: updatedContext)

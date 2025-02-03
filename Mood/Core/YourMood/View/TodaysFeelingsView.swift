@@ -8,6 +8,59 @@
 import SwiftUI
 import Charts
 
+struct TodaysFeelingsChart: View {
+    @EnvironmentObject var dataService: DataService
+    
+    var body: some View {
+        Text("chart is not working since ContextLogContainer revamp")
+//        Chart(dataService.todaysDailyData!.contextLogContainers, id:\.contextId) { logContainer in
+//            BarMark(
+//                x: .value("impact", pair.weight.rawValue == 0 ? 0.1 : Double(pair.weight.rawValue)),
+//                y: .value("context", logContainer.contextName)
+//            )
+//            .foregroundStyle(Emotion(name: pair.emotions[0]).getParentMood()?.getColor() ?? .appPurple)
+//            .cornerRadius(5)
+//            .annotation(
+//                position: pair.weight.rawValue == 0 ? .trailing : .overlay,
+//                alignment: .trailing,
+//                spacing: 5
+//            ) {
+//                Text(pair.emotions[0])
+//                    .font(.caption)
+//                    .foregroundStyle(
+//                        pair.weight.rawValue == 0 ? .appBlack :
+//                            Emotion(name: pair.emotions[0]).getParentMood()?.getColor().isLight() ?? true ? .black : .white
+//                    )
+//            }
+//        }
+//        .frame(height: (CGFloat(dataService.todaysDailyData?.pairs.count ?? 6) * 60.0)+40)
+//        .chartXScale(domain: [0, 3.55])
+//        .chartYAxis {
+//            AxisMarks(stroke: StrokeStyle(lineWidth: 0))
+//        }
+//        .chartXAxisLabel(position: .bottom, alignment: .center) {
+//            Text("impact")
+//        }
+//        .chartXAxis {
+//            AxisMarks() { value in
+//                AxisGridLine()
+//                AxisTick()
+//                AxisValueLabel {
+//                    if let intValue = value.as(Int.self) {
+//                        switch intValue {
+//                        case 0: Text("none")
+//                        case 1: Text("slight")
+//                        case 2: Text("moderate")
+//                        case 3: Text("extreme")
+//                        default: EmptyView()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+}
+
 struct TodaysFeelingsView: View {
     @EnvironmentObject var dataService: DataService
     @ObservedObject var analytics = AnalyticsGenerator.shared
@@ -48,51 +101,7 @@ struct TodaysFeelingsView: View {
                     Spacer()
                 }
                 Spacer()
-                Chart(dataService.todaysDailyData!.pairs, id:\.contextId) { pair in
-                    BarMark(
-                        x: .value("impact", pair.weight.rawValue == 0 ? 0.1 : Double(pair.weight.rawValue)),
-                        y: .value("context", pair.contextName)
-                    )
-                    .foregroundStyle(Emotion(name: pair.emotions[0]).getParentMood()?.getColor() ?? .appPurple)
-                    .cornerRadius(5)
-                    .annotation(
-                        position: pair.weight.rawValue == 0 ? .trailing : .overlay,
-                        alignment: .trailing,
-                        spacing: 5
-                    ) {
-                        Text(pair.emotions[0])
-                            .font(.caption)
-                            .foregroundStyle(
-                                pair.weight.rawValue == 0 ? .appBlack :
-                                    Emotion(name: pair.emotions[0]).getParentMood()?.getColor().isLight() ?? true ? .black : .white
-                            )
-                    }
-                }
-                .frame(height: (CGFloat(dataService.todaysDailyData?.pairs.count ?? 6) * 60.0)+40)
-                .chartXScale(domain: [0, 3.55])
-                .chartYAxis {
-                    AxisMarks(stroke: StrokeStyle(lineWidth: 0))
-                }
-                .chartXAxisLabel(position: .bottom, alignment: .center) {
-                    Text("impact")
-                }
-                .chartXAxis {
-                    AxisMarks() { value in
-                        AxisGridLine()
-                        AxisTick()
-                        AxisValueLabel {
-                            if let intValue = value.as(Int.self) {
-                                switch intValue {
-                                case 0: Text("none")
-                                case 1: Text("slight")
-                                case 2: Text("moderate")
-                                case 3: Text("extreme")
-                                default: EmptyView()
-                                }
-                            }
-                        }
-                    }
-                }
+                TodaysFeelingsChart()
             }
             .onChange(of: analytics.todaysBiggestImpacts, initial: true) {
                 cp("todays biggest impacts changed")

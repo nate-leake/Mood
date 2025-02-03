@@ -23,8 +23,8 @@ struct ContentView: View {
             let context1 = "FB6EA42A-AC26-4D1A-9DCB-1E8FF1E1BDA3"
             for number in 1...200 {
                 let emotion = "happy"
-                let p1 = ContextEmotionPair(contextId: context1, emotions: [emotion], weight: .extreme)
-                let pairs: [ContextEmotionPair] = [p1]
+                let p1 = ContextLogContainer(contextId: context1, emotions: [emotion], weight: .extreme)
+                let pairs: [ContextLogContainer] = [p1]
                 let date = Date.now.addingTimeInterval(TimeInterval(-86400 * number))
                 let data: DailyData = DailyData(date: date, timeZoneOffset: DailyData.TZO, pairs: pairs)
                 let res = try await DataService.shared.uploadMoodPost(dailyData: data)

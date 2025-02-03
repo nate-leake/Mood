@@ -82,32 +82,45 @@ class MoodFormManager: ObservableObject {
 
 class UploadMoodViewModel: ObservableObject {
     private var dailyData: DailyData = DailyData(date: Date(), timeZoneOffset: TimeZone.current.secondsFromGMT(for: Date()), pairs: [])
-    @Published var pairs: [ContextEmotionPair] = []
+    @Published var contextLogContainers: [ContextLogContainer] = []
     @Published var isUploaded: Bool = false
     
     
-    func containsPair(withContextId contextId: String) -> Bool {
-        return pairs.contains { $0.contextId == contextId }
+    func containsContextLogContainer(withContextId contextId: String) -> Bool {
+        return contextLogContainers.contains { $0.contextId == contextId }
     }
     
-    private func addPair(_ pair: ContextEmotionPair) {
-        pairs.append(pair)
+    private func addContextLogContainer(_ contextLogContainer: ContextLogContainer) {
+        contextLogContainers.append(contextLogContainer)
         // Since pairs is @Published, SwiftUI will now reactively update
     }
     
-    func createPairsFromFormViewModels(contextID: String, moodFormManager: MoodFormManager) {
+    func createContextLogContainersFromFormViewModels(contextID: String, moodFormManager: MoodFormManager) {
+        print("creating pairs...")
         for form in moodFormManager.formViewModels {
-            let cEP = ContextEmotionPair(contextId: contextID, emotions: form.selectedEmotions, weight: form.weight)
-            self.addPair(cEP)
-            moodFormManager.resetFormViewModels()
+            if let container = contextLogContainers.first(where: {$0.contextId == contextID}) {
+                print("adding to container")
+                container.addContextContainer(emotions: form.selectedEmotions, weight: form.weight)
+            } else {
+                let CLC = ContextLogContainer(contextId: contextID, emotions: form.selectedEmotions, weight: form.weight)
+                self.addContextLogContainer(CLC)
+                print("CEP added for CID \(contextID) with emotions \(form.selectedEmotions)")
+                moodFormManager.resetFormViewModels()
+            }
+            
         }
     }
     
     @MainActor
     func uploadMoodPost() async throws -> Bool {
         
-        for pair in pairs{
-            dailyData.addPair(pair: pair)
+        for logContainer in contextLogContainers{
+            print("adding pair \(logContainer) to daily data")
+            dailyData.addContextLogContainer(contextLogContainer: logContainer)
+        }
+        
+        for logContainer in dailyData.contextLogContainers {
+            print("daily data recorded: \(logContainer.contextId) with \(dailyData.contextLogContainers.count)")
         }
         
         let uploaded = try await DataService.shared.uploadMoodPost(dailyData: self.dailyData)
