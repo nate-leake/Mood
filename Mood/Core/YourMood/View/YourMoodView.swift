@@ -52,12 +52,26 @@ struct YourMoodView: View {
                                     }
                                     if recentMoods?.count ?? 0 > 0 {
                                         Spacer()
-                                        HStack {
-                                            if let recentMoodData = recentMoods{
-                                                WrappingMoodKey(items: recentMoodData, maxDisplayed: 4)
+                                        Spacer()
+                                        if let recentMoodData = recentMoods{
+                                            HStack{
+                                                OverflowLayout {
+                                                    ForEach(0...3, id:\.self) { index in
+                                                        HStack{
+                                                            Circle()
+                                                                .fill(Mood(name: recentMoodData[index].mood, emotions: []).getColor())
+                                                                .frame(width: 5)
+                                                            Text(recentMoodData[index].mood)
+                                                                .font(.caption)
+                                                        }
+                                                    }
+                                                }
+                                                Spacer()
                                             }
-                                            Spacer()
                                         }
+                                        
+                                        Spacer()
+                                        
                                     } else {
                                         Text("charts will be availble after you log your mood at least once")
                                             .padding(.vertical)
@@ -168,6 +182,58 @@ struct YourMoodView: View {
                     }
                     .modifier(ListRowBackgroundModifer())
                 }
+                
+                Section {
+                    NavigationLink{
+                        LogHistoryView()
+                    } label: {
+                        HStack {
+                            VStack{
+                                Text("log history")
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.appBlack.opacity(0.5))
+                                Spacer()
+                            }
+                            Spacer()
+                            ZStack {
+                                VStack(spacing: 10){
+                                    HStack(spacing: 10){
+                                        Image(systemName: "calendar")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 25, height: 25)
+                                            .foregroundStyle(.appBlue)
+                                        Image(systemName: "heart.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 25, height: 25)
+                                            .foregroundStyle(.appRed)
+                                    }
+                                    HStack(spacing: 10){
+                                        Image(systemName: "chart.line.uptrend.xyaxis")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 25, height: 25)
+                                            .foregroundStyle(.appGreen)
+                                        Image(systemName: "square.text.square.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 25, height: 25)
+                                            .foregroundStyle(.appYellow)
+                                    }
+                                }
+                                
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 60, height: 60)
+                                    .fontWeight(.ultraLight)
+                                    .opacity(0.5)
+                            }
+                        }
+                    }
+                }
+                .modifier(ListRowBackgroundModifer())
             }
         }
         .scrollContentBackground(.hidden)
