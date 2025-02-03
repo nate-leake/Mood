@@ -15,10 +15,13 @@ enum Weight : Int, Codable, Hashable {
     case extreme = 3
 }
 
+class
+
 /// Groups the context to the user's emotions and the emotions to an intensity
-class ContextEmotionPair : ObservableObject, Codable, Hashable {
+class ContextLogContainer : ObservableObject, Codable, Hashable {
     @Published var contextId : String
     @Published var contextName: String
+    @Published var moodName: String
     @Published var emotions : [String]
     @Published var weight: Weight
     
@@ -28,13 +31,14 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
     }
     
     // conform to Equatable
-    static func ==(lhs: ContextEmotionPair, rhs: ContextEmotionPair) -> Bool {
+    static func ==(lhs: ContextLogContainer, rhs: ContextLogContainer) -> Bool {
         return lhs.contextId == rhs.contextId
     }
     
     // Coding keys to conform to Codable
     private enum CodingKeys: String, CodingKey {
         case context
+        case mood
         case emotions
         case weight
     }
@@ -52,12 +56,23 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
             print("a context with the id \(id) has not been loaded in the DS. The name property for this pair will be left empty.")
             contextName = ""
         }
+        do {
+            moodName = try values.decode(String.self, forKey: .mood)
+        } catch {
+            moodName = ""
+            if let name = Emotion(name: emotions[0]).getParentMood()?.name{
+                moodName = name
+            } else {
+                print("no mood name could be determined for CEP. The moodName property for this pair will be left empty.")
+            }
+        }
     }
     
     // Conform to Encodable
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(contextId, forKey: .context)
+        try container.encode(moodName, forKey: .mood)
         try container.encode(emotions, forKey: .emotions)
         try container.encode(weight, forKey: .weight)
     }
@@ -71,7 +86,13 @@ class ContextEmotionPair : ObservableObject, Codable, Hashable {
         self.contextId = contextId
         self.emotions = emotions
         self.weight = weight
-        self.contextName = UnsecureContext.getContext(from: contextId)!.name
+        self.contextName = UnsecureContext.getContext(from: contextId)?.name ?? "unknown name"
+        
+        if let moodName = Emotion(name: emotions[0]).getParentMood()?.name {
+            self.moodName = moodName
+        } else {
+            self.moodName = ""
+        }
     }
     
     /// Create a ContectEmotionPair using [Emotion] for the emotions rather than [String]
