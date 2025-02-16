@@ -26,7 +26,7 @@ struct ContentView: View {
                 let p1 = ContextLogContainer(contextId: context1, emotions: [emotion], weight: .extreme)
                 let pairs: [ContextLogContainer] = [p1]
                 let date = Date.now.addingTimeInterval(TimeInterval(-86400 * number))
-                let data: DailyData = DailyData(date: date, timeZoneOffset: DailyData.TZO, pairs: pairs)
+                let data: DailyData = DailyData(date: date, timeZoneOffset: DailyData.TZO, contextLogContainers: pairs)
                 let res = try await DataService.shared.uploadMoodPost(dailyData: data)
                 
                 print("CONTENT VIEW: uploaded pair \(number) with success: \(res)")

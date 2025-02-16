@@ -137,6 +137,12 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
         self.moodContainers.append(MoodLogContainer(emotions: emotionNames, weight: weight))
     }
     
+    init(contextId: String, moodLogContainers: [MoodLogContainer]) {
+        self.contextId = contextId
+        self.contextName = UnsecureContext.getContext(from: contextId)?.name ?? "unknown name"
+        self.moodContainers = moodLogContainers
+    }
+    
     /// Adds a MoodLogContainer to ContextLogContainer using [String] for the emotions rather than [Emotion]
     /// - Parameters:
     ///   - emotions: A list of emotions that the user feels as a String

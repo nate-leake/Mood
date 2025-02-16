@@ -81,7 +81,7 @@ class MoodFormManager: ObservableObject {
 
 
 class UploadMoodViewModel: ObservableObject {
-    private var dailyData: DailyData = DailyData(date: Date(), timeZoneOffset: TimeZone.current.secondsFromGMT(for: Date()), pairs: [])
+    private var dailyData: DailyData = DailyData(date: Date(), timeZoneOffset: TimeZone.current.secondsFromGMT(for: Date()), contextLogContainers: [])
     @Published var contextLogContainers: [ContextLogContainer] = []
     @Published var isUploaded: Bool = false
     
