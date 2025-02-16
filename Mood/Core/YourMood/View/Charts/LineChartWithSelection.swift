@@ -104,7 +104,7 @@ struct LineChartWithSelection: View {
                     if viewingDataType == .context {
                         options = ["family", "finances", "health", "identity", "politics", "weather", "work"]
                         for post in moodPosts {
-                            for contextLogContainer in post.data {
+                            for contextLogContainer in post.contextLogContainers {
                                 let contextId = contextLogContainer.contextId
                                 for moodContainer in contextLogContainer.moodContainers {
                                     operationalData.append(

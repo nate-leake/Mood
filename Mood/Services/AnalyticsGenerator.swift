@@ -47,7 +47,7 @@ class AnalyticsGenerator : ObservableObject {
     func aggregateMoodIntensityByDate(moodPosts: [UnsecureMoodPost]) -> [MoodData]{
         var tmpData: [MoodData] = []
         for post in moodPosts {
-            for contextLogContainer in post.data {
+            for contextLogContainer in post.contextLogContainers {
                 let contextId = contextLogContainer.contextId
                 for moodLogContainer in contextLogContainer.moodContainers {
                     tmpData.append(

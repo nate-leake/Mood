@@ -220,9 +220,9 @@ class DataService : ObservableObject, Stateable {
             if var post = try await fetchMoodPost(withID: postID) {
 //                cp("getting deletable pairs...")
                 var deletablePairs: [Int] = []
-                for pair in post.data {
+                for pair in post.contextLogContainers {
                     if pair.contextId == context.id {
-                        if let index = post.data.firstIndex(of: pair){
+                        if let index = post.contextLogContainers.firstIndex(of: pair){
                             deletablePairs.append(index)
 //                            cp("added deletable pair")
                         }
@@ -234,10 +234,10 @@ class DataService : ObservableObject, Stateable {
 //                cp("post has \(post.data.count) pairs")
                 for index in deletablePairs {
 //                    cp("deleting pair at index \(index): \(post.data[index].contextName)")
-                    post.data.remove(at: index)
+                    post.contextLogContainers.remove(at: index)
                 }
 //                cp("post now has \(post.data.count) pairs", state: post.data.count==0 ? .warning : .none)
-                if post.data.count == 0 {
+                if post.contextLogContainers.count == 0 {
                     cp("post should be auto deleted when it has 0 pairs.", state: .warning)
                     _ = try await self.deleteMoodPost(postID: post.id)
                 } else {
@@ -302,6 +302,7 @@ class DataService : ObservableObject, Stateable {
                         DataService.shared.recentMoodPosts = []
                         DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
                     }
+                    DataService.shared.recentMoodPosts = DataService.shared.recentMoodPosts?.sorted(by: { $0.timestamp > $1.timestamp})
                     DataService.shared.numberOfEntries += 1
                     for contextContainer in dailyData.contextLogContainers {
                         if let c = UnsecureContext.getContext(from: contextContainer.contextId) {
@@ -315,14 +316,14 @@ class DataService : ObservableObject, Stateable {
                                     uploadSuccess = true
                                 }
                             case .failure(let error):
-                                cp("an error occured while updating the post's context associatedPostIDs: \(error)")
+                                cp("an error occured while updating the post's context associatedPostIDs: \(error)", state: .error)
                                 uploadSuccess = false
                             }
                         }
                     }
                 }
             case .failure(let error):
-                cp("an error occured while uploading the post: \(error)")
+                cp("an error occured while uploading the post: \(error)", state: .error)
                 uploadSuccess = false
                 
             }
@@ -363,7 +364,7 @@ class DataService : ObservableObject, Stateable {
         let docRef = userPostsCollection.document(postID)
         
         if let moodPost = try await fetchMoodPost(withID: postID) {
-            for pair in moodPost.data {
+            for pair in moodPost.contextLogContainers {
                 if let context = UnsecureContext.getContext(from: pair.contextId){
                     
                     var associatedPostIDs = context.associatedPostIDs
@@ -458,13 +459,13 @@ class DataService : ObservableObject, Stateable {
                 if let post = securePost{
                     unsecurePost = UnsecureMoodPost(from: post)
                     if let up = unsecurePost{
-                        self.todaysDailyData = DailyData(date: up.timestamp, timeZoneOffset: up.timeZoneOffset, pairs: up.data)
+                        self.todaysDailyData = DailyData(date: up.timestamp, timeZoneOffset: up.timeZoneOffset, contextLogContainers: up.contextLogContainers)
                     }
                 }
             } catch {
                 unsecurePost = try snapshot.documents[0].data(as: UnsecureMoodPost.self)
                 if let post = unsecurePost{
-                    self.todaysDailyData = DailyData(date: post.timestamp, timeZoneOffset: post.timeZoneOffset, pairs: post.data)
+                    self.todaysDailyData = DailyData(date: post.timestamp, timeZoneOffset: post.timeZoneOffset, contextLogContainers: post.contextLogContainers)
                 }
             }
         }

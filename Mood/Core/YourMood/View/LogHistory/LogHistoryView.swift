@@ -49,7 +49,7 @@ struct LogDayView: View {
         } label: {
             HStack{
                 OverflowLayout {
-                    ForEach(post.data, id:\.contextId) { data in
+                    ForEach(post.contextLogContainers, id:\.contextId) { data in
                         if let context = UnsecureContext.getContext(from: data.contextId) {
                             ContextTile(context: context, frameSize: CGFloat(50))
                         } else {
