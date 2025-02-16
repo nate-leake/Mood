@@ -71,7 +71,7 @@ struct SecureMoodPost: Identifiable, Hashable, Codable {
         self.timeZoneOffset = unsecureMoodPost.timeZoneOffset
         
         do {
-            self.data = try SecurityService().encryptData(from: unsecureMoodPost.data)
+            self.data = try SecurityService().encryptData(from: unsecureMoodPost.contextLogContainers)
         } catch {
             print("could not encrypt data on init of SecureMoodPost: \(error)")
         }
@@ -84,7 +84,7 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
     let id: String
     var timestamp: Date
     var timeZoneOffset: Int
-    var data: [ContextLogContainer]
+    var contextLogContainers: [ContextLogContainer]
     
     
     /// Reformats the DailyData object and wraps it with other information to be uploaded to the database
@@ -100,19 +100,19 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
         for pair in data.contextLogContainers {
             tmpData.append(pair)
         }
-        self.data = tmpData
+        self.contextLogContainers = tmpData
     }
     
     init(from secureMoodPost: SecureMoodPost){
         self.id = secureMoodPost.id
         self.timestamp = secureMoodPost.timestamp
         self.timeZoneOffset = secureMoodPost.timeZoneOffset
-        self.data = []
+        self.contextLogContainers = []
         
         if let postData = secureMoodPost.data{
             do {
                 if let decryptedData: [ContextLogContainer] = try SecurityService().decryptData(postData){
-                    self.data = decryptedData
+                    self.contextLogContainers = decryptedData
                 }
             } catch {
                 print("error initilizing UnsecureMoodPost from SecureMoodPost: \(error)")
