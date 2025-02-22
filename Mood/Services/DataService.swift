@@ -220,9 +220,9 @@ class DataService : ObservableObject, Stateable {
             if var post = try await fetchMoodPost(withID: postID) {
 //                cp("getting deletable pairs...")
                 var deletablePairs: [Int] = []
-                for pair in post.data {
+                for pair in post.contextLogContainers {
                     if pair.contextId == context.id {
-                        if let index = post.data.firstIndex(of: pair){
+                        if let index = post.contextLogContainers.firstIndex(of: pair){
                             deletablePairs.append(index)
 //                            cp("added deletable pair")
                         }
@@ -234,10 +234,10 @@ class DataService : ObservableObject, Stateable {
 //                cp("post has \(post.data.count) pairs")
                 for index in deletablePairs {
 //                    cp("deleting pair at index \(index): \(post.data[index].contextName)")
-                    post.data.remove(at: index)
+                    post.contextLogContainers.remove(at: index)
                 }
 //                cp("post now has \(post.data.count) pairs", state: post.data.count==0 ? .warning : .none)
-                if post.data.count == 0 {
+                if post.contextLogContainers.count == 0 {
                     cp("post should be auto deleted when it has 0 pairs.", state: .warning)
                     _ = try await self.deleteMoodPost(postID: post.id)
                 } else {
@@ -283,6 +283,7 @@ class DataService : ObservableObject, Stateable {
         let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
         
         let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
+//        let unsecure = UnsecureMoodPost(from: privatePost)
         
         if privatePost.data != nil{
             
@@ -295,10 +296,16 @@ class DataService : ObservableObject, Stateable {
                     if DataService.shared.recentMoodPosts?.count ?? 0 > 0 {
                         DataService.shared.recentMoodPosts?.removeFirst()
                     }
-                    DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    if let _ = DataService.shared.recentMoodPosts {
+                        DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    } else {
+                        DataService.shared.recentMoodPosts = []
+                        DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                    }
+                    DataService.shared.recentMoodPosts = DataService.shared.recentMoodPosts?.sorted(by: { $0.timestamp > $1.timestamp})
                     DataService.shared.numberOfEntries += 1
-                    for pair in dailyData.pairs {
-                        if let c = UnsecureContext.getContext(from: pair.contextId) {
+                    for contextContainer in dailyData.contextLogContainers {
+                        if let c = UnsecureContext.getContext(from: contextContainer.contextId) {
                             let updatedContext = UnsecureContext(id: c.id, name: c.name, iconName: c.iconName, color: c.color, isHidden: c.isHidden, associatedPostIDs: c.associatedPostIDs)
                             updatedContext.associatedPostIDs.append(privatePost.id)
                             let result = try await updateContext(to: updatedContext)
@@ -309,14 +316,14 @@ class DataService : ObservableObject, Stateable {
                                     uploadSuccess = true
                                 }
                             case .failure(let error):
-                                cp("an error occured while updating the post's context associatedPostIDs: \(error)")
+                                cp("an error occured while updating the post's context associatedPostIDs: \(error)", state: .error)
                                 uploadSuccess = false
                             }
                         }
                     }
                 }
             case .failure(let error):
-                cp("an error occured while uploading the post: \(error)")
+                cp("an error occured while uploading the post: \(error)", state: .error)
                 uploadSuccess = false
                 
             }
@@ -350,6 +357,7 @@ class DataService : ObservableObject, Stateable {
         
     }
     
+    @MainActor
     func deleteMoodPost(postID: String) async throws -> Result<Bool, Error> {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         let userDocument = Firestore.firestore().collection("users").document(uid)
@@ -357,7 +365,7 @@ class DataService : ObservableObject, Stateable {
         let docRef = userPostsCollection.document(postID)
         
         if let moodPost = try await fetchMoodPost(withID: postID) {
-            for pair in moodPost.data {
+            for pair in moodPost.contextLogContainers {
                 if let context = UnsecureContext.getContext(from: pair.contextId){
                     
                     var associatedPostIDs = context.associatedPostIDs
@@ -369,7 +377,8 @@ class DataService : ObservableObject, Stateable {
                         
                         switch result {
                         case .success(_):
-                            continue
+                            self.recentMoodPosts?.removeAll(where: { $0.id == postID })
+                            try await getLoggedToday()
                         case .failure(let error):
                             cp("error updating context: \(error.localizedDescription)")
                         }
@@ -452,13 +461,13 @@ class DataService : ObservableObject, Stateable {
                 if let post = securePost{
                     unsecurePost = UnsecureMoodPost(from: post)
                     if let up = unsecurePost{
-                        self.todaysDailyData = DailyData(date: up.timestamp, timeZoneOffset: up.timeZoneOffset, pairs: up.data)
+                        self.todaysDailyData = DailyData(date: up.timestamp, timeZoneOffset: up.timeZoneOffset, contextLogContainers: up.contextLogContainers)
                     }
                 }
             } catch {
                 unsecurePost = try snapshot.documents[0].data(as: UnsecureMoodPost.self)
                 if let post = unsecurePost{
-                    self.todaysDailyData = DailyData(date: post.timestamp, timeZoneOffset: post.timeZoneOffset, pairs: post.data)
+                    self.todaysDailyData = DailyData(date: post.timestamp, timeZoneOffset: post.timeZoneOffset, contextLogContainers: post.contextLogContainers)
                 }
             }
         }

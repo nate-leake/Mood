@@ -104,13 +104,16 @@ struct LineChartWithSelection: View {
                     if viewingDataType == .context {
                         options = ["family", "finances", "health", "identity", "politics", "weather", "work"]
                         for post in moodPosts {
-                            for pair in post.data {
-                                operationalData.append(
-                                    MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
-                                             contextId: pair.contextId,
-                                             moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
-                                             intensity: pair.weight.rawValue)
-                                )
+                            for contextLogContainer in post.contextLogContainers {
+                                let contextId = contextLogContainer.contextId
+                                for moodContainer in contextLogContainer.moodContainers {
+                                    operationalData.append(
+                                        MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
+                                                 contextId: contextId,
+                                                 moodType: moodContainer.moodName,
+                                                 intensity: moodContainer.weight.rawValue)
+                                    )
+                                }
                             }
                         }
                     } else if viewingDataType == .mood {

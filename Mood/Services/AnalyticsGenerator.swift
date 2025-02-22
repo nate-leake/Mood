@@ -25,7 +25,10 @@ class AnalyticsGenerator : ObservableObject {
         }
     }
     
-    func aggregateMoodIntensityTotals(moodData: [MoodData]) -> [(mood: String, intensity: Int)] {
+    func aggregateMoodIntensityTotals(moodData: [MoodData]) -> [(
+        mood: String,
+        intensity: Int
+    )] {
         var groupedItems = [String: Int]()
         
         for mood in moodData {
@@ -33,7 +36,9 @@ class AnalyticsGenerator : ObservableObject {
         }
         
         // Step 2: Convert the dictionary to an array and sort by quantity in descending order
-        let sortedItems = groupedItems.map { (mood: $0.key, intensity: $0.value) }
+        let sortedItems = groupedItems.map {
+            (mood: $0.key, intensity: $0.value)
+        }
             .sorted { $0.intensity > $1.intensity }
         
         return sortedItems
@@ -42,13 +47,20 @@ class AnalyticsGenerator : ObservableObject {
     func aggregateMoodIntensityByDate(moodPosts: [UnsecureMoodPost]) -> [MoodData]{
         var tmpData: [MoodData] = []
         for post in moodPosts {
-            for pair in post.data {
-                tmpData.append(
-                    MoodData(date: Calendar.current.startOfDay(for: post.timestamp),
-                             contextId: pair.contextId,
-                             moodType: Emotion(name: pair.emotions[0]).getParentMood()?.name ?? "none",
-                             intensity: pair.weight.rawValue)
-                )
+            for contextLogContainer in post.contextLogContainers {
+                let contextId = contextLogContainer.contextId
+                for moodLogContainer in contextLogContainer.moodContainers {
+                    tmpData.append(
+                        MoodData(
+                            date: Calendar.current.startOfDay(
+                                for: post.timestamp
+                            ),
+                            contextId: contextId,
+                            moodType: moodLogContainer.moodName,
+                            intensity: moodLogContainer.weight.rawValue
+                        )
+                    )
+                }
             }
         }
         
@@ -63,37 +75,67 @@ class AnalyticsGenerator : ObservableObject {
             if aggregatedData[dateKey] == nil {
                 aggregatedData[dateKey] = [:]
             }
-            aggregatedData[dateKey]![data.moodType, default: 0] += data.intensity
+            aggregatedData[dateKey]![
+                data.moodType,
+                default: 0
+            ] += data.intensity
         }
         
         // Convert aggregated data back to MoodData
         var result: [MoodData] = []
         
         for (dateString, moodTypes) in aggregatedData {
-            guard let date = dateFormatter.date(from: dateString) else { continue }
+            guard let date = dateFormatter.date(from: dateString) else {
+                continue
+            }
             for (moodType, intensity) in moodTypes {
-                result.append(MoodData(date: date, contextId: "", moodType: moodType, intensity: intensity))
+                result
+                    .append(
+                        MoodData(
+                            date: date,
+                            contextId: "",
+                            moodType: moodType,
+                            intensity: intensity
+                        )
+                    )
             }
         }
         
         // Ensure each day has exactly 5 mood types
-        let expectedMoodTypes: Set<String> = Set(Mood.allMoodNames) // Update with your specific mood types
+        let expectedMoodTypes: Set<String> = Set(
+            Mood.allMoodNames
+        ) // Update with your specific mood types
         
         var finalResult: [MoodData] = []
         
         // Iterate through dates to check for missing mood types
-        let groupedByDate = Dictionary(grouping: result, by: { dateFormatter.string(from: $0.date) })
+        let groupedByDate = Dictionary(
+            grouping: result,
+            by: { dateFormatter.string(from: $0.date)
+            })
         
         for (dateString, moods) in groupedByDate {
-            guard let date = dateFormatter.date(from: dateString) else { continue }
+            guard let date = dateFormatter.date(from: dateString) else {
+                continue
+            }
             let existingMoodTypes = Set(moods.map { $0.moodType })
-            let missingMoodTypes = expectedMoodTypes.subtracting(existingMoodTypes)
+            let missingMoodTypes = expectedMoodTypes.subtracting(
+                existingMoodTypes
+            )
             
             finalResult.append(contentsOf: moods)
             
             // Add missing mood types with intensity 0
             for moodType in missingMoodTypes {
-                finalResult.append(MoodData(date: date, contextId: "", moodType: moodType, intensity: 0))
+                finalResult
+                    .append(
+                        MoodData(
+                            date: date,
+                            contextId: "",
+                            moodType: moodType,
+                            intensity: 0
+                        )
+                    )
             }
         }
         
@@ -110,32 +152,34 @@ class AnalyticsGenerator : ObservableObject {
         var totals : [String: Int] = [:]
         
         for context in DataService.shared.loadedContexts {
-//            print(context.name)
+            //            print(context.name)
             totals[context.name] = 0
         }
         
         
         for day in data {
-            for pair in day.pairs {
-                cp("\(pair.contextId) \(pair.contextName)")
-                if let currentWeight = totals[pair.contextName] {
-                    totals[pair.contextName] = currentWeight + pair.weight.rawValue
+            for contextLogContainer in day.contextLogContainers {
+                cp(
+                    "\(contextLogContainer.contextId) \(contextLogContainer.contextName)"
+                )
+                for moodContainer in contextLogContainer.moodContainers {
+                    if let currentWeight = totals[contextLogContainer.contextName] {
+                        totals[contextLogContainer.contextName] = currentWeight + moodContainer.weight.rawValue
+                    }
+                }
+            }
+            
+            let sortedTotals = totals.sorted{$0.1 > $1.1}
+            let highest = sortedTotals[0].value
+            
+            for kv in sortedTotals {
+                if kv.value == highest {
+                    impacts.append(kv.key)
+                } else {
+                    break
                 }
             }
         }
-        
-        let sortedTotals = totals.sorted{$0.1 > $1.1}
-        let highest = sortedTotals[0].value
-        
-        for kv in sortedTotals {
-            if kv.value == highest {
-                impacts.append(kv.key)
-            } else {
-                break
-            }
-        }
-        
-        
         return impacts
     }
     
@@ -154,11 +198,12 @@ class AnalyticsGenerator : ObservableObject {
         }
         
         for day in DailyData.MOCK_DATA {
-            for pair in day.pairs {
-                for mood in pair.emotions{
-                    totals[mood] = totals[mood]! + 1
+            for contextLogContainer in day.contextLogContainers {
+                for moodContainer in contextLogContainer.moodContainers {
+                    for mood in moodContainer.emotions{
+                        totals[mood] = totals[mood]! + 1
+                    }
                 }
-                
             }
         }
         

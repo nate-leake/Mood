@@ -33,8 +33,10 @@
         "emotions": [
             {"name": "afraid"},
             {"name": "anxious"},
+            {"name": "embarrassed"},
             {"name": "nervous"},
-            {"name": "stressed"}, 
+            {"name": "panicked"},
+            {"name": "stressed"},
             {"name": "worried"}
         ]
         
@@ -55,8 +57,10 @@
         "name": "neutrality",
         "emotions": [
             {"name": "calm"},
-            {"name": "indifferent"},
-            {"name": "content"}
+            {"name": "content"},
+            {"name": "drained"},
+            {"name": "grounded"},
+            {"name": "indifferent"}
         ]
         
     }

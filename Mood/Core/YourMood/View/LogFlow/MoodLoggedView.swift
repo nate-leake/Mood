@@ -25,12 +25,12 @@ struct MoodLoggedView: View {
     func setGlobeColors(){
         var emotionWeights: [String: Int] = [:]
         
-        for pair in viewModel.pairs {
-            if let mood = Emotion(name: pair.emotions[0]).getParentMood(){
-                if emotionWeights[mood.name] == nil{
-                    emotionWeights[mood.name] = pair.weight.rawValue
+        for contextContainer in viewModel.contextLogContainers {
+            for moodContainer in contextContainer.moodContainers {
+                if emotionWeights[moodContainer.moodName] == nil{
+                    emotionWeights[moodContainer.moodName] = moodContainer.weight.rawValue
                 } else {
-                    emotionWeights[mood.name]! += pair.weight.rawValue
+                    emotionWeights[moodContainer.moodName]! += moodContainer.weight.rawValue
                 }
             }
         }

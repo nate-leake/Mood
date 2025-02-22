@@ -94,7 +94,11 @@ class UnsecureContext: Codable, Hashable, Identifiable, ObservableObject {
     }
     
     static func getContext(from id: String) -> UnsecureContext? {
-        return DataService.shared.loadedContexts.first(where: {$0.id == id})
+        if !DataService.shared.loadedContexts.isEmpty{
+            return DataService.shared.loadedContexts.first(where: {$0.id == id})
+        } else {
+            return self.defaultContexts.first(where: {$0.id == id})
+        }
     }
     
     private enum CodingKeys: String, CodingKey {

@@ -13,14 +13,22 @@ struct ContextTile: View {
     
     var body: some View {
         VStack {
+            if frameSize >= 75 {
             Spacer()
             Image(systemName: context.iconName)
-                .font(.system(size: 50))
+                .font(.system(size: frameSize/3))
                 .opacity(0.75)
                 .padding(.top)
             Spacer()
-            Text(context.name)
-                .padding(.bottom)
+                Text(context.name)
+                    .padding(.bottom)
+            } else {
+                Spacer()
+                Image(systemName: context.iconName)
+                    .font(.system(size: frameSize/2))
+                    .opacity(0.75)
+                Spacer()
+            }
         }
         .foregroundStyle(context.color.isLight() ? .black : .white)
         .frame(width: frameSize, height: frameSize)
@@ -29,6 +37,51 @@ struct ContextTile: View {
     }
 }
 
+
+struct ContextButton: View {
+    var viewModel: UploadMoodViewModel
+    @Binding var selectedContext: UnsecureContext?
+    var context: UnsecureContext
+    var frameSize: CGFloat
+    
+    var body: some View {
+        Button(
+            action: {
+                if !(viewModel.containsContextLogContainer(withContextId: context.id) ){
+                    self.selectedContext = context
+                }
+            }, label: {
+                if (viewModel.containsContextLogContainer(withContextId: context.id) ){
+                    ZStack {
+                        ContextTile(context: context, frameSize: frameSize)
+                            .opacity(0.5)
+                        VStack{
+                            ZStack{
+                                HStack{
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundStyle(.appBlack)
+                                    Text("logged")
+                                        .foregroundStyle(.appBlack)
+                                }
+                                .padding(.vertical, 2)
+                                .frame(maxWidth: .infinity)
+                                .background(.white.opacity(0.5))
+                            }
+                            Spacer()
+                        }
+                    }
+                    .frame(width: frameSize, height: frameSize)
+                    .background(.appWhite.opacity(0.7))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    
+                    
+                } else {
+                    ContextTile(context: context, frameSize: frameSize)
+                }
+            }
+        )
+    }
+}
 
 struct ContextTileView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -49,53 +102,22 @@ struct ContextTileView: View {
                 LazyVGrid(columns: layout) {
                     ForEach(DataService.shared.loadedContexts, id:\.id) { context in
                         if !context.isHidden {
-                            Button(
-                                action: {
-                                    if !(viewModel.containsPair(withContextId: context.id) ){
-                                        self.selectedContext = context
-                                    }
-                                }, label: {
-                                    if (viewModel.containsPair(withContextId: context.id) ){
-                                        ZStack {
-                                            ContextTile(context: context, frameSize: ContextTileView.size)
-                                                .opacity(0.5)
-                                            VStack{
-                                                ZStack{
-                                                    HStack{
-                                                        Image(systemName: "checkmark.circle.fill")
-                                                            .foregroundStyle(.appBlack)
-                                                        Text("logged")
-                                                            .foregroundStyle(.appBlack)
-                                                    }
-                                                    .padding(.vertical, 2)
-                                                    .frame(maxWidth: .infinity)
-                                                    .background(.white.opacity(0.5))
-                                                }
-                                                Spacer()
-                                            }
-                                        }
-                                        .frame(width: ContextTileView.size, height: ContextTileView.size)
-                                        .background(.appWhite.opacity(0.7))
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        
-                                        
-                                    } else {
-                                        ContextTile(context: context, frameSize: ContextTileView.size)
-                                    }
-                                }
-                            )
+                            ContextButton(viewModel: viewModel,
+                                          selectedContext: $selectedContext,
+                                          context: context,
+                                          frameSize: ContextTileView.size)
                             .padding(.bottom)
                         }
                     }
                 }
-                if !viewModel.pairs.isEmpty {
+                if !viewModel.contextLogContainers.isEmpty {
                     Rectangle()
                         .frame(height: 44)
                         .background(.clear)
                         .foregroundStyle(.clear)
                 }
             }
-            if !viewModel.pairs.isEmpty{
+            if !viewModel.contextLogContainers.isEmpty{
                 VStack{
                     Spacer()
                     ZStack{
