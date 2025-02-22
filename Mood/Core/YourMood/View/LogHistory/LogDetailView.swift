@@ -62,6 +62,7 @@ struct LogItemView: View {
 }
 
 struct LogDetailView: View {
+    @Environment(\.dismiss) var dismiss
     var post: UnsecureMoodPost
     @State var isShowingConfirmation: Bool = false
     
@@ -95,6 +96,14 @@ struct LogDetailView: View {
                 Button("delete", role: .destructive) {
                     Task {
                         print("delete day")
+                        let result = try await DataService.shared.deleteMoodPost(postID: post.id)
+                        
+                        switch result {
+                        case .success(_):
+                            dismiss()
+                        case .failure(let error):
+                            print("error deleting mood post: \(error)")
+                        }
                     }
                 }
 

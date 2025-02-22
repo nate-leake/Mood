@@ -357,6 +357,7 @@ class DataService : ObservableObject, Stateable {
         
     }
     
+    @MainActor
     func deleteMoodPost(postID: String) async throws -> Result<Bool, Error> {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         let userDocument = Firestore.firestore().collection("users").document(uid)
@@ -376,7 +377,8 @@ class DataService : ObservableObject, Stateable {
                         
                         switch result {
                         case .success(_):
-                            continue
+                            self.recentMoodPosts?.removeAll(where: { $0.id == postID })
+                            try await getLoggedToday()
                         case .failure(let error):
                             cp("error updating context: \(error.localizedDescription)")
                         }
