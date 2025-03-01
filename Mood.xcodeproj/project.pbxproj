@@ -58,6 +58,7 @@
 		AF8C07F02D46B44800046CE5 /* LogDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C07EF2D46B44800046CE5 /* LogDetailView.swift */; };
 		AF8D74992AE6FABE00C0729E /* GlobalMoodViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */; };
 		AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */; };
+		AF901FD42D6C268C0057AD11 /* LavaLampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF901FD32D6C26850057AD11 /* LavaLampView.swift */; };
 		AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */; };
 		AF97A2A52CB85BEF00E18440 /* ValidatePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */; };
 		AF9DBB3D2CA1C6C30051C515 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */; };
@@ -140,6 +141,7 @@
 		AF8C07EF2D46B44800046CE5 /* LogDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailView.swift; sourceTree = "<group>"; };
 		AF8D74982AE6FABE00C0729E /* GlobalMoodViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodViewWrapper.swift; sourceTree = "<group>"; };
 		AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodLockedView.swift; sourceTree = "<group>"; };
+		AF901FD32D6C26850057AD11 /* LavaLampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LavaLampView.swift; sourceTree = "<group>"; };
 		AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLoggedView.swift; sourceTree = "<group>"; };
 		AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatePinView.swift; sourceTree = "<group>"; };
 		AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		AF2A89802AB0CAFF00D05234 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AF901FD32D6C26850057AD11 /* LavaLampView.swift */,
 				AF2864732D276D8700E3CAA6 /* OverflowLayout.swift */,
 				AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */,
 				AF5B87722AB525D1000E204F /* TextFieldModifier.swift */,
@@ -658,6 +661,7 @@
 				AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */,
 				AF841F9B2D220D050009709D /* CollapsableView.swift in Sources */,
 				AF16D7652CC5FAE6002BF1DC /* ContextBuilderView.swift in Sources */,
+				AF901FD42D6C268C0057AD11 /* LavaLampView.swift in Sources */,
 				AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */,
 				AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */,
 				AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */,
@@ -826,7 +830,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -866,7 +870,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
