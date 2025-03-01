@@ -92,7 +92,6 @@ class UploadMoodViewModel: ObservableObject {
     
     private func addContextLogContainer(_ contextLogContainer: ContextLogContainer) {
         contextLogContainers.append(contextLogContainer)
-        // Since pairs is @Published, SwiftUI will now reactively update
     }
     
     func createContextLogContainersFromFormViewModels(contextID: String, moodFormManager: MoodFormManager) {

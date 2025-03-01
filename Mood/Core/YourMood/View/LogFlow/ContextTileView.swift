@@ -39,19 +39,20 @@ struct ContextTile: View {
 
 
 struct ContextButton: View {
-    var viewModel: UploadMoodViewModel
+    @EnvironmentObject var viewModel: UploadMoodViewModel
     @Binding var selectedContext: UnsecureContext?
+    @State var wasLoggedAbout: Bool = false
     var context: UnsecureContext
     var frameSize: CGFloat
     
     var body: some View {
         Button(
             action: {
-                if !(viewModel.containsContextLogContainer(withContextId: context.id) ){
+                if !wasLoggedAbout {
                     self.selectedContext = context
                 }
             }, label: {
-                if (viewModel.containsContextLogContainer(withContextId: context.id) ){
+                if wasLoggedAbout {
                     ZStack {
                         ContextTile(context: context, frameSize: frameSize)
                             .opacity(0.5)
@@ -80,6 +81,12 @@ struct ContextButton: View {
                 }
             }
         )
+        .onChange(of: viewModel.contextLogContainers){
+            withAnimation(.easeInOut) {
+                wasLoggedAbout = viewModel.containsContextLogContainer(withContextId: context.id)
+            }
+            print("context \(context.id) logged: \(wasLoggedAbout))")
+        }
     }
 }
 
@@ -102,10 +109,10 @@ struct ContextTileView: View {
                 LazyVGrid(columns: layout) {
                     ForEach(DataService.shared.loadedContexts, id:\.id) { context in
                         if !context.isHidden {
-                            ContextButton(viewModel: viewModel,
-                                          selectedContext: $selectedContext,
+                            ContextButton(selectedContext: $selectedContext,
                                           context: context,
                                           frameSize: ContextTileView.size)
+                            .environmentObject(viewModel)
                             .padding(.bottom)
                         }
                     }
@@ -153,7 +160,7 @@ struct ContextTileView: View {
             if !old && new {
                 
                 // This delay is dependant on the MoodLoggedView timer array
-                _ = Timer.scheduledTimer(withTimeInterval: 4.7, repeats: false) { (closeTimer) in
+                _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (closeTimer) in
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }

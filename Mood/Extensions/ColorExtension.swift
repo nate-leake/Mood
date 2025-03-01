@@ -8,7 +8,24 @@
 import Foundation
 import SwiftUI
 
+extension UIColor {
+    func toSwiftUIColor() -> Color {
+        Color(self)
+    }
+}
+
 extension Color {
+    
+    /// Gets the dark mode varient of the color
+    func darkModeVariant() -> Color {
+        UIColor(self).resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)).toSwiftUIColor()
+    }
+    
+    /// Gets the light mode varient of the color
+    func lightModeVariant() -> Color {
+        UIColor(self).resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)).toSwiftUIColor()
+    }
+    
     /// Initialize the Color with a hex value
     /// - Parameter hex: The hex value as a string of the desired color
     init(hex: String) {
