@@ -12,52 +12,49 @@ struct TodaysFeelingsChart: View {
     @EnvironmentObject var dataService: DataService
     
     var body: some View {
-        Text("chart is not working since ContextLogContainer revamp")
-//        Chart(dataService.todaysDailyData!.contextLogContainers, id:\.contextId) { logContainer in
-//            BarMark(
-//                x: .value("impact", pair.weight.rawValue == 0 ? 0.1 : Double(pair.weight.rawValue)),
-//                y: .value("context", logContainer.contextName)
-//            )
-//            .foregroundStyle(Emotion(name: pair.emotions[0]).getParentMood()?.getColor() ?? .appPurple)
-//            .cornerRadius(5)
-//            .annotation(
-//                position: pair.weight.rawValue == 0 ? .trailing : .overlay,
-//                alignment: .trailing,
-//                spacing: 5
-//            ) {
-//                Text(pair.emotions[0])
-//                    .font(.caption)
-//                    .foregroundStyle(
-//                        pair.weight.rawValue == 0 ? .appBlack :
-//                            Emotion(name: pair.emotions[0]).getParentMood()?.getColor().isLight() ?? true ? .black : .white
-//                    )
-//            }
-//        }
-//        .frame(height: (CGFloat(dataService.todaysDailyData?.pairs.count ?? 6) * 60.0)+40)
-//        .chartXScale(domain: [0, 3.55])
-//        .chartYAxis {
-//            AxisMarks(stroke: StrokeStyle(lineWidth: 0))
-//        }
-//        .chartXAxisLabel(position: .bottom, alignment: .center) {
-//            Text("impact")
-//        }
-//        .chartXAxis {
-//            AxisMarks() { value in
-//                AxisGridLine()
-//                AxisTick()
-//                AxisValueLabel {
-//                    if let intValue = value.as(Int.self) {
-//                        switch intValue {
-//                        case 0: Text("none")
-//                        case 1: Text("slight")
-//                        case 2: Text("moderate")
-//                        case 3: Text("extreme")
-//                        default: EmptyView()
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
+        Chart(dataService.todaysDailyData!.contextLogContainers, id:\.contextId) { logContainer in
+            ForEach(logContainer.moodContainers, id: \.emotions) { moodContainer in
+                BarMark(
+                    x: .value("weight", moodContainer.weight.rawValue == 0 ? 0.05 : Double(moodContainer.weight.rawValue)),
+                    y: .value("context", logContainer.contextName)
+                )
+                .foregroundStyle(Mood.getMood(from: moodContainer.moodName)?.getColor() ?? .appPurple)
+                .cornerRadius(5)
+                .annotation(
+                    position: moodContainer.weight.rawValue == 0 ? .trailing : .overlay,
+                    alignment: .trailing,
+                    spacing: 5
+                ) {
+                    Text(moodContainer.emotions[0])
+                        .font(.caption)
+                        .foregroundStyle(
+                            moodContainer.weight.rawValue == 0 ? .appBlack :
+                                Mood.getMood(from: moodContainer.moodName)?.getColor().isLight() ?? true ? .black : .white
+                        )
+                }
+            }
+        }
+        .frame(height: (CGFloat(dataService.todaysDailyData?.contextLogContainers.count ?? 6) * 60.0)+40)
+        .chartXScale(domain: [
+            0,
+            (dataService.todaysDailyData?.contextLogContainers.map{ Double($0.totalWeight) }.max() ?? 4.0)+0.5
+        ])
+        .chartYAxis {
+            AxisMarks(stroke: StrokeStyle(lineWidth: 0))
+        }
+        .chartXAxisLabel(position: .bottom, alignment: .center) {
+            Text("impact")
+        }
+        .chartXAxis {
+            AxisMarks() { value in
+                AxisGridLine()
+                AxisTick()
+                AxisValueLabel {
+                    EmptyView()
+                }
+            }
+        }
     }
 }
 
@@ -105,12 +102,19 @@ struct TodaysFeelingsView: View {
             }
             .onChange(of: analytics.todaysBiggestImpacts, initial: true) {
                 cp("todays biggest impacts changed")
+                print("\(analytics.todaysBiggestImpacts)")
                 impactStatement = createImpactStatement(from: analytics.todaysBiggestImpacts)
             }
         }
         else {
             VStack{
                 Text("Loading data...")
+                    .onAppear{
+                        DataService.shared.todaysDailyData = DailyData.MOCK_DATA[1]
+//                        print(DataService.shared.todaysDailyData?.contextLogContainers.count ?? "no daily data")
+                        
+//                        AnalyticsGenerator.shared.calculateTBI()
+                    }
             }
         }
     }
@@ -118,5 +122,5 @@ struct TodaysFeelingsView: View {
 
 #Preview {
     TodaysFeelingsView()
-        .environmentObject(DataService())
+        .environmentObject(DataService.shared)
 }

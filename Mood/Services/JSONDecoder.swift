@@ -22,6 +22,18 @@ class Mood: Codable, Equatable {
         return Color(self.name)
     }
     
+    static func getMood(from: String) -> Mood? {
+        var matchedMood: Mood?
+        
+        for mood in self.allMoods {
+            if mood.name == from {
+                matchedMood = mood
+            }
+        }
+        
+        return matchedMood
+    }
+    
     static func ==(lhs: Mood, rhs: Mood) -> Bool {
         return lhs.name == rhs.name
     }

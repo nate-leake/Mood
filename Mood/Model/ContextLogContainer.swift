@@ -68,6 +68,7 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
     @Published var contextId : String
     @Published var contextName: String
     @Published var moodContainers: [MoodLogContainer]
+    @Published var totalWeight: Int = 0
     
     // conform to Hashable
     func hash(into hasher: inout Hasher) {
@@ -98,6 +99,10 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
         }
         
         moodContainers = try values.decode([MoodLogContainer].self, forKey: .moodContainers)
+        
+        for container in moodContainers {
+            self.totalWeight += container.weight.rawValue
+        }
     }
     
     // Conform to Encodable
@@ -117,6 +122,7 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
         self.contextName = UnsecureContext.getContext(from: contextId)?.name ?? "unknown name"
         self.moodContainers = []
         self.moodContainers.append(MoodLogContainer(emotions: emotions, weight: weight))
+        self.totalWeight += weight.rawValue
     }
     
     /// Create a ContextLogContainer using [Emotion] for the emotions rather than [String]
@@ -135,12 +141,16 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
         }
         self.moodContainers = []
         self.moodContainers.append(MoodLogContainer(emotions: emotionNames, weight: weight))
+        self.totalWeight += weight.rawValue
     }
     
     init(contextId: String, moodLogContainers: [MoodLogContainer]) {
         self.contextId = contextId
         self.contextName = UnsecureContext.getContext(from: contextId)?.name ?? "unknown name"
         self.moodContainers = moodLogContainers
+        for container in moodLogContainers {
+            self.totalWeight += container.weight.rawValue
+        }
     }
     
     /// Adds a MoodLogContainer to ContextLogContainer using [String] for the emotions rather than [Emotion]
