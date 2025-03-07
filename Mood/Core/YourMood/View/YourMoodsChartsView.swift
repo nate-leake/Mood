@@ -17,7 +17,7 @@ struct YourMoodsChartsView: View {
             VStack(alignment: .leading){
                 
                 if loadingSuccess{
-                    LineChartWithSelection(moodPosts: moodPosts ?? [], viewingDataType: .mood, height: 250)
+                    MoodLineChartBreakdownView(moodPosts: moodPosts ?? [], height: 250)
                         .padding(.horizontal)
                         .padding(.top, 15)
                 } else if isLoading {
