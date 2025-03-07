@@ -19,7 +19,7 @@ class AnalyticsGenerator : ObservableObject {
         print(finalString)
     }
     
-    func calculateTBI(dataService: DataService){
+    func calculateTBI(dataService: DataService = DataService.shared){
         if let data = dataService.todaysDailyData {
             todaysBiggestImpacts = biggestImpact(data: [data])
         }
@@ -152,34 +152,30 @@ class AnalyticsGenerator : ObservableObject {
         var totals : [String: Int] = [:]
         
         for context in DataService.shared.loadedContexts {
-            //            print(context.name)
             totals[context.name] = 0
         }
-        
         
         for day in data {
             for contextLogContainer in day.contextLogContainers {
                 cp(
                     "\(contextLogContainer.contextId) \(contextLogContainer.contextName)"
                 )
-                for moodContainer in contextLogContainer.moodContainers {
-                    if let currentWeight = totals[contextLogContainer.contextName] {
-                        totals[contextLogContainer.contextName] = currentWeight + moodContainer.weight.rawValue
-                    }
-                }
-            }
-            
-            let sortedTotals = totals.sorted{$0.1 > $1.1}
-            let highest = sortedTotals[0].value
-            
-            for kv in sortedTotals {
-                if kv.value == highest {
-                    impacts.append(kv.key)
-                } else {
-                    break
-                }
+                
+                totals[contextLogContainer.contextName] = contextLogContainer.totalWeight
             }
         }
+        
+        let sortedTotals = totals.sorted{$0.1 > $1.1}
+        let highest = sortedTotals[0].value
+        
+        for kv in sortedTotals {
+            if kv.value == highest {
+                impacts.append(kv.key)
+            } else {
+                break
+            }
+        }
+        
         return impacts
     }
     

@@ -118,8 +118,8 @@ class UnsecureContext: Codable, Hashable, Identifiable, ObservableObject {
         do {
             associatedPostIDs = try container.decode([String].self, forKey: .postIDs)
         } catch {
-            print("error decoding associatePostIDs: \(error.localizedDescription)")
             associatedPostIDs = []
+            print("error decoding associatePostIDs for context \(name): \(error.localizedDescription)")
         }
     }
     

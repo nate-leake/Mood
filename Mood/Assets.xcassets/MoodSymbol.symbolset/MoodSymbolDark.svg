@@ -13,11 +13,11 @@ PUBLIC "-//W3C//DTD SVG 1.1//EN"
 .monochrome-5 {-sfsymbols-variable-threshold:0.72;-sfsymbols-motion-group:0}
 .monochrome-6 {-sfsymbols-variable-threshold:0.87;-sfsymbols-motion-group:0}
 
-.multicolor-0:custom {fill:#9A27DE;-sfsymbols-variable-threshold:0.0;-sfsymbols-motion-group:5}
-.multicolor-1:custom {fill:#3463AF;-sfsymbols-variable-threshold:0.15;-sfsymbols-motion-group:4}
+.multicolor-0:custom {fill:#901DBD;-sfsymbols-variable-threshold:0.0;-sfsymbols-motion-group:5}
+.multicolor-1:custom {fill:#274F9F;-sfsymbols-variable-threshold:0.15;-sfsymbols-motion-group:4}
 .multicolor-2:custom {fill:#559B9A;-sfsymbols-variable-threshold:0.3;-sfsymbols-motion-group:3}
 .multicolor-3:custom {fill:#DAA520;-sfsymbols-variable-threshold:0.44;-sfsymbols-motion-group:2}
-.multicolor-4:custom {fill:#D4294D;-sfsymbols-variable-threshold:0.58;-sfsymbols-motion-group:1}
+.multicolor-4:custom {fill:#B8193E;-sfsymbols-variable-threshold:0.58;-sfsymbols-motion-group:1}
 .multicolor-5:custom {fill:#9BA0FA;-sfsymbols-variable-threshold:0.72;-sfsymbols-motion-group:0}
 .multicolor-6:custom {fill:#0C0F30;-sfsymbols-variable-threshold:0.87;-sfsymbols-motion-group:0}
 

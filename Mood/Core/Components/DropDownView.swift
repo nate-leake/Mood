@@ -67,8 +67,8 @@ struct DropDownView: View {
                                 .frame(height: 40)
                                 .padding(.horizontal)
                                 .onTapGesture {
+                                    selection = option
                                     withAnimation(.snappy){
-                                        selection = option
                                         isExpanded.toggle()
                                     }
                                 }
