@@ -12,6 +12,10 @@ import Firebase
 import SwiftUI
 import LocalAuthentication
 
+enum BiometricsError: Error {
+    case biometryNotEnabled
+}
+
 class AuthService: Stateable, ObservableObject {
     
     @Published var userSession: FirebaseAuth.User?
@@ -177,7 +181,7 @@ class AuthService: Stateable, ObservableObject {
         return isValidPin
     }
     
-    private func authenticateBiometrics(completion: @escaping (Bool) -> Void) {
+    private func authenticateBiometrics(completion: @escaping (Result<Bool, Error>) -> Void) {
         let context = LAContext()
         var error: NSError?
         
@@ -188,20 +192,20 @@ class AuthService: Stateable, ObservableObject {
                 if success {
                     // authenticated succesfully
                     DispatchQueue.main.async {
-                        completion(true)
+                        completion(.success(true))
                     }
                 } else {
                     // there was a problem
                     print(authenticationError ?? "error could not be read")
                     DispatchQueue.main.async {
-                        completion(false)
+                        completion(.failure(authenticationError!))
                     }
                 }
             }
         } else {
             // no biometrics
             cp("no biometrics available on this device")
-            completion(false)
+            completion(.failure(BiometricsError.biometryNotEnabled))
         }
     }
     
@@ -226,20 +230,23 @@ class AuthService: Stateable, ObservableObject {
     }
     
     func unlockUsingBiometrics() {
-        authenticateBiometrics() { isAuthenticated in
-            withAnimation(self.animation) {
-                self.isUnlocked = isAuthenticated
-            }
-        }
+        authenticateBiometrics() { _ in }
     }
     
-    func unlockUsingBiometrics(completion: @escaping (Bool) -> Void) {
-        authenticateBiometrics() { isAuthenticated in
+    func unlockUsingBiometrics(completion: @escaping (Result<Bool, Error>) -> Void) {
+        authenticateBiometrics() { result in
             withAnimation(self.animation) {
-                self.isUnlocked = isAuthenticated
-                DispatchQueue.main.async {
-                    completion(isAuthenticated)
+                switch result {
+                case .success(let success):
+                    self.isUnlocked = success
+                    
+                case .failure( _):
+                    self.isUnlocked = false
+                    
                 }
+            }
+            DispatchQueue.main.async {
+                completion(result)
             }
         }
     }
