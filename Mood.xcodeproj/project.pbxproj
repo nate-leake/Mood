@@ -164,6 +164,7 @@
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
 		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		AFE75EC12D7FC0EC005F0D8D /* Mood.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mood.entitlements; sourceTree = "<group>"; };
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
 		AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureMoodPost.swift; sourceTree = "<group>"; };
 		AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTagView.swift; sourceTree = "<group>"; };
@@ -269,6 +270,7 @@
 		AF6BFA2B2AAFCD2C005B4DDA /* Mood */ = {
 			isa = PBXGroup;
 			children = (
+				AFE75EC12D7FC0EC005F0D8D /* Mood.entitlements */,
 				AFDC464E2CBDAD8200AD5782 /* Info.plist */,
 				AFF2F2F22AB14681002FB6C7 /* Resources */,
 				AF6BFA402AAFCDC0005B4DDA /* App */,
@@ -841,8 +843,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -881,8 +884,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
