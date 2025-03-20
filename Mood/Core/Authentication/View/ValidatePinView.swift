@@ -29,7 +29,7 @@ struct ValidatePinView: View {
     private func bioAuth() {
         AuthService.shared.unlockUsingBiometrics() { result in
             switch result {
-            case .success(let success):
+            case .success(_):
                 biometricsError = ""
             case .failure(let error):
                 biometricsError = error.localizedDescription.lowercased().trimmingCharacters(in: .punctuationCharacters)

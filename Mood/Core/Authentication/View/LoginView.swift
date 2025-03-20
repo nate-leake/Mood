@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import AuthenticationServices
+import FirebaseAuth
 
 struct LoginView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel = LoginViewModel()
     @State var isLoading: Bool = false
     @State var errorMessage: String = ""
+    @State var currentNonce: String?
     
     var body: some View {
         ZStack{
@@ -20,6 +24,7 @@ struct LoginView: View {
                 .ignoresSafeArea()
             
             VStack{
+                Spacer()
                 Text("we're glad you're back")
                     .font(.title)
                     .foregroundStyle(.white)
@@ -63,11 +68,26 @@ struct LoginView: View {
                         .background(isLoading ? .white.opacity(0.5) : .white)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .disabled(isLoading)
+                .disabled(isLoading || viewModel.email.isEmpty || viewModel.passwd.isEmpty)
+                .opacity(viewModel.email.isEmpty || viewModel.passwd.isEmpty ? 0.5 : 1)
                 .loadable(isLoading: $isLoading, shape: RoundedRectangle(cornerRadius: 8), frameSize: CGSize(width: 360, height: 44))
-//                .onAppear{
-//                    isLoading = true
-//                }
+
+                
+                Spacer()
+                
+                SignInWithAppleButton() { request in
+                    let nonce = SecurityService.randomNonceString()
+                    currentNonce = nonce
+                    viewModel.handleSignInWithAppleRequest(request, nonce: nonce)
+                } onCompletion: { result in
+                    viewModel.handleSignInWithAppleCompletion(result, nonce: currentNonce)
+                }
+                .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .frame(width: 360, height: 44)
+                .padding(.bottom, 24)
+                
+                Spacer()
             }
             
         }

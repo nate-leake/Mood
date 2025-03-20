@@ -89,6 +89,26 @@ class AuthService: Stateable, ObservableObject {
     }
     
     @MainActor
+    func login(with credential: AuthCredential) {
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            if (error != nil) {
+                // Error. If error.code == .MissingOrInvalidNonce, make sure
+                // you're sending the SHA256-hashed nonce as a hex string with
+                // your request to Apple.
+                print(error?.localizedDescription as Any)
+                return
+            } else {
+                self.userSession = authResult?.user
+                Task {
+                    try await self.loadUserData()
+                }
+            }
+            print("signed in")
+//#warning("AuthService expects currentUser and userSession to be updated with userIsSignedIn when signing in with apple.")
+        }
+    }
+    
+    @MainActor
     func createUser(email:String, password: String, name: String, birthday: Date, userPin: String) async throws -> String {
         var errorMessage: String = ""
         do {
