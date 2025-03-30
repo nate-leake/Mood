@@ -33,7 +33,7 @@ struct CompleteSignUpView: View, Hashable {
                 .ignoresSafeArea()
             
             VStack{
-                RegistrationHeaderView(header: "all set", subheading: "click below to finish signing up")
+                RegistrationHeaderView(header: "all set", subheading: viewModel.isSigningUpFromSignIn ? "click below to continue" : "click below to finish signing up")
                 
                 Spacer()
                 
@@ -78,6 +78,7 @@ struct CompleteSignUpView: View, Hashable {
                         }
                         Task {
                             do {
+                                print("RegiVm from CompoleteSignUpView. Current authResult: \(String(describing: viewModel.signUpWithAppleAuthResult))")
                                 let msg: String = try await viewModel.createUser()
                                 withAnimation(.easeInOut){
                                     errorMessage = msg
@@ -90,7 +91,14 @@ struct CompleteSignUpView: View, Hashable {
                             }
                         }
                     } label: {
-                        Text(isLoading ? "creating account..." : "complete sign up")
+                        var buttonText: String {
+                            if viewModel.isSigningUpFromSignIn {
+                                return "continue signn in"
+                            } else {
+                                return "complete sign up"
+                            }
+                        }
+                        Text(isLoading ? "creating account..." : buttonText)
                             .font(.headline)
                             .fontWeight(.bold)
                             .frame(width: 360, height: 44)

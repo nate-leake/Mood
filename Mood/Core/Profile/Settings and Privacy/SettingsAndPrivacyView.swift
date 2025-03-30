@@ -22,8 +22,13 @@ struct SettingsAndPrivacyView: View {
                     Toggle("use biometrics to unlock", isOn: $useBiometricsToUnlock)
                         .onChange(of: useBiometricsToUnlock) { old, new in
                             if old == false && new == true {
-                                AuthService.shared.unlockUsingBiometrics() { success in                                    
-                                    if !success { useBiometricsToUnlock = false }
+                                AuthService.shared.unlockUsingBiometrics() { result in
+                                    switch result {
+                                    case .success(_):
+                                        useBiometricsToUnlock = true
+                                    case .failure(_):
+                                        useBiometricsToUnlock = false
+                                    }
                                 }
                                 
                             }

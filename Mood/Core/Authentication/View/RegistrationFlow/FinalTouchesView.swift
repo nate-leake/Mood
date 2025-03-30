@@ -7,33 +7,29 @@
 
 import SwiftUI
 
-struct SignUpView: View {
+struct FinalTouchesView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
+    @State var needsAdditionalInformation: Bool = false
     
     var body: some View {
         ZStack{
             Color.appPurple
                 .ignoresSafeArea()
-        
-                        
+            
+            
             VStack{
-                RegistrationHeaderView(header: "no problem", subheading: "we'll need these few things from you")
+                if needsAdditionalInformation {
+                    RegistrationHeaderView(header: "additional information", subheading: "we need more information to continue")
+                } else {
+                    RegistrationHeaderView(header: "final touches", subheading: "we'll need these few things from you")
+                }
                 
                 Spacer()
                 
                 VStack(spacing: 45){
-                    Text("\u{2022} email")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
                     
-                    Text("\u{2022} password")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                    
-                    Text("\u{2022} name")
+                    Text("\u{2022} username")
                         .font(.title2)
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
@@ -48,12 +44,16 @@ struct SignUpView: View {
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
                 }
+                .onAppear{
+                    print("RegiVM from FinalTouchesView. Current AuthResult: \(String(describing: viewModel.signUpWithAppleAuthResult))")
+                }
                 
                 Spacer()
                 
                 NavigationLink{
-                    AddEmailView()
+                    AddNameView()
                         .navigationBarBackButtonHidden()
+                        .environmentObject(viewModel)
                 } label: {
                     Text("next")
                         .font(.headline)
@@ -79,6 +79,6 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
+    FinalTouchesView()
         .environmentObject(RegistrationViewModel())
 }

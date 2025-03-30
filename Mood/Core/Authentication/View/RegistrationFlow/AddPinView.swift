@@ -110,6 +110,7 @@ struct AddPinView: View {
         .navigationDestination(isPresented: $pinIsValid) {
             CompleteSignUpView()
                 .navigationBarBackButtonHidden()
+                .environmentObject(viewModel)
         }
         .onAppear {
             isTextFieldFocused = true  // Auto-focus the text field when the view appears

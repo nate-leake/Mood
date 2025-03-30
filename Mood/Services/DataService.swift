@@ -47,12 +47,17 @@ class DataService : ObservableObject, Stateable {
     @Published var numberOfEntries: Int = 0
     @Published var state: AppStateCase = .startup
     @Published var loadedContexts: [UnsecureContext] = []
+    @Published var userSignInNeedsMoreInformation: Bool = false
     public var isPerformingManagedAGUpdate: Bool = false
     
     static let shared = DataService()
     
     let securityService = SecurityService()
     let dateFormatter = CustomDateFormatter()
+    
+    static private func cp(_ text: String, state: PrintableStates = .none) {
+        DataService.shared.cp(text, state: state)
+    }
     
     private func cp(_ text: String, state: PrintableStates = .none) {
         let finalString = "💿\(state.rawValue) DATA SERVICE: " + text
@@ -171,7 +176,7 @@ class DataService : ObservableObject, Stateable {
     
     @MainActor
     func updateContext(to context: UnsecureContext) async throws -> Result<Bool, Error> {
-//        cp(try Firestore.Encoder().encode(context))
+        //        cp(try Firestore.Encoder().encode(context))
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
         let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
@@ -198,7 +203,7 @@ class DataService : ObservableObject, Stateable {
         let encryptedContext = SecureContext(from: context)
         
         let result = await uploadData(document: docRef, uploadData: encryptedContext)
-
+        
         self.loadedContexts.sort { $0.name.lowercased() < $1.name.lowercased() }
         return result
     }
@@ -216,27 +221,27 @@ class DataService : ObservableObject, Stateable {
         
         cp("attempting to fetch \(context.associatedPostIDs.count) posts related to this context")
         for postID in context.associatedPostIDs {
-//            cp("getting post with id: \(postID)")
+            //            cp("getting post with id: \(postID)")
             if var post = try await fetchMoodPost(withID: postID) {
-//                cp("getting deletable pairs...")
+                //                cp("getting deletable pairs...")
                 var deletablePairs: [Int] = []
                 for pair in post.contextLogContainers {
                     if pair.contextId == context.id {
                         if let index = post.contextLogContainers.firstIndex(of: pair){
                             deletablePairs.append(index)
-//                            cp("added deletable pair")
+                            //                            cp("added deletable pair")
                         }
                     }
                 }
                 
                 deletablePairs.sort{$0 > $1}
                 
-//                cp("post has \(post.data.count) pairs")
+                //                cp("post has \(post.data.count) pairs")
                 for index in deletablePairs {
-//                    cp("deleting pair at index \(index): \(post.data[index].contextName)")
+                    //                    cp("deleting pair at index \(index): \(post.data[index].contextName)")
                     post.contextLogContainers.remove(at: index)
                 }
-//                cp("post now has \(post.data.count) pairs", state: post.data.count==0 ? .warning : .none)
+                //                cp("post now has \(post.data.count) pairs", state: post.data.count==0 ? .warning : .none)
                 if post.contextLogContainers.count == 0 {
                     cp("post should be auto deleted when it has 0 pairs.", state: .warning)
                     _ = try await self.deleteMoodPost(postID: post.id)
@@ -283,7 +288,7 @@ class DataService : ObservableObject, Stateable {
         let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
         
         let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
-//        let unsecure = UnsecureMoodPost(from: privatePost)
+        //        let unsecure = UnsecureMoodPost(from: privatePost)
         
         if privatePost.data != nil{
             
@@ -511,7 +516,7 @@ class DataService : ObservableObject, Stateable {
         }
         
         if insecureFlag {
-            cp("DATA SERVICE _WARNING_: One or more posts in firebase firestore is not encrypted.")
+            cp("DATA SERVICE : One or more posts in firebase firestore is not encrypted.", state: .warning)
         }
         
         return filteredPosts
@@ -585,6 +590,33 @@ class DataService : ObservableObject, Stateable {
         
         cp("user has logged: \(self.userHasLoggedToday)")
         cp("log window open: \(self.logWindowOpen)")
+        
+    }
+    
+    static func userDoesExist(withID: String, completion: @escaping (Bool) -> Void) {
+        do {
+            guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+            
+            let userDocument = Firestore.firestore().collection("users").document(uid)
+            
+            userDocument.getDocument { document, error in
+                if let error = error {
+                    cp("Error fetching document: \(error)", state: .debug)
+                    completion(false) // Assume it does not exist if there's an error
+                }
+                
+                if let document = document, document.exists {
+                    cp("Document \(uid) exists.", state: .debug)
+                    completion(true)
+                } else {
+                    cp("Document \(uid) does NOT exist.", state: .debug)
+                    completion(false)
+                }
+            }
+            
+        } catch {
+            completion(false)
+        }
         
     }
 }

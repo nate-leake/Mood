@@ -1,41 +1,43 @@
 //
-//  AddBirthdayView.swift
+//  AddNameView.swift
 //  Mood
 //
-//  Created by Nate Leake on 9/15/23.
+//  Created by Nate Leake on 9/28/23.
 //
 
 import SwiftUI
 
-var globalDate = Date.now
-
-struct AddBirthdayView: View {
+struct AddNameView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: RegistrationViewModel
     
-    
-    var dateClosedRange: ClosedRange<Date> {
-        let min = Calendar.current.date(byAdding: .year, value: -125, to: Date())!
-        let max = Calendar.current.date(byAdding: .year, value: -13, to: Date())!
-        return min...max
-    }
+    private let nameMaxLenght: Int = 12
     
     var body: some View {
         ZStack{
             Color.appPurple
                 .ignoresSafeArea()
+            
                         
             VStack{
-                RegistrationHeaderView(header: "add your birthday", subheading: "you'll need to be at least 13")
-     
-                DatePicker(selection: $viewModel.birthday, in: dateClosedRange, displayedComponents: .date){}
-                    .datePickerStyle(.wheel)
-                    .tint(.accent)
-                    .frame(width: 200, alignment: .center)
+                RegistrationHeaderView(header: "add a username",
+                                       subheading: "this is what we'll call you\n(it doesn't have to be your real name)"
+                )
+                
+                TextField("", text: $viewModel.name, prompt: Text("username").foregroundStyle(.gray))
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                    .modifier(TextFieldModifier())
+                    .padding(.vertical)
+                    .onChange(of: viewModel.name) {
+                        viewModel.name = String(viewModel.name.prefix(nameMaxLenght))
+                    }
+                    
                 
                 NavigationLink{
-                    AddPinView()
+                    AddBirthdayView()
                         .navigationBarBackButtonHidden()
+                        .environmentObject(viewModel)
                 } label: {
                     Text("next")
                         .font(.headline)
@@ -63,6 +65,6 @@ struct AddBirthdayView: View {
 }
 
 #Preview {
-    AddBirthdayView()
+    AddNameView()
         .environmentObject(RegistrationViewModel())
 }

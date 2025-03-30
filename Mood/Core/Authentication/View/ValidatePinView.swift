@@ -12,8 +12,9 @@ struct ValidatePinView: View {
     @Environment(\.scenePhase) var scenePhase
     @State var pinEntered: String = ""
     @State var isPinIncorrect: Bool = false
-    @State var error: String = ""
-    @FocusState private var isTextFieldFocused: Bool  // To handle text field focus state
+    @State var biometricsError: String = ""
+    @State var biometricsWasCanceled: Bool = false
+    @FocusState private var isTextFieldFocused: Bool
     
     // Check if the PIN is complete (4 digits)
     func isPinComplete() -> Bool {
@@ -25,6 +26,19 @@ struct ValidatePinView: View {
         print("Entered PIN: \(pinEntered)")  // Handle PIN validation here, or save it to the viewModel
     }
     
+    private func bioAuth() {
+        AuthService.shared.unlockUsingBiometrics() { result in
+            switch result {
+            case .success(_):
+                biometricsError = ""
+            case .failure(let error):
+                biometricsError = error.localizedDescription.lowercased().trimmingCharacters(in: .punctuationCharacters)
+                isPinIncorrect = true
+                biometricsWasCanceled = true
+            }
+        }
+    }
+    
     var body: some View {
         ZStack {
             Color.appPurple
@@ -34,7 +48,7 @@ struct ValidatePinView: View {
                 RegistrationHeaderView(header: "quick unlock", subheading: "unlock mood with your pin or biometrics")
                 
                 VStack{
-                    Text(error)
+                    Text(biometricsError)
                         .foregroundStyle(.white)
                         .font(.headline)
                         .padding(7)
@@ -60,7 +74,6 @@ struct ValidatePinView: View {
                 )
                 .onChange(of: pinEntered) { newValue, oldValue in
                     // Limit input to 4 digits, and allow only numbers
-                    print("change")
                     pinEntered = String(newValue.prefix(4).filter { $0.isNumber })
                 }
                 .focused($isTextFieldFocused)  // Set focus state
@@ -71,7 +84,7 @@ struct ValidatePinView: View {
                     isTextFieldFocused = false
                     let success: Bool = AuthService.shared.unlock(using: pinEntered)
                     withAnimation(.easeInOut(duration: 0.2)){
-                        error = "incorrect pin"
+                        biometricsError = "incorrect pin"
                         isPinIncorrect = !success
                     }
                 } label: {
@@ -95,12 +108,7 @@ struct ValidatePinView: View {
                         .foregroundStyle(Color.appPurple.isLight() ? .black : .white)
                     
                     Button {
-                        AuthService.shared.unlockUsingBiometrics() { isAuthenticated in
-                            if !isAuthenticated {
-                                error = "FaceID failed to authenticate"
-                                isPinIncorrect = true
-                            }
-                        }
+                        bioAuth()
                     } label: {
                         HStack {
                             Text("use FaceID")
@@ -120,13 +128,8 @@ struct ValidatePinView: View {
         }
         .onChange(of: scenePhase) { old, new in
             if new == .active {
-                if useBiometricsToUnlock {
-                    AuthService.shared.unlockUsingBiometrics() { isAuthenticated in
-                        if !isAuthenticated {
-                            error = "FaceID failed to authenticate"
-                            isPinIncorrect = true
-                        }
-                    }
+                if useBiometricsToUnlock && !biometricsWasCanceled {
+                    bioAuth()
                 } else {
                     isTextFieldFocused = true  // Auto-focus the text field when the view appears
                 }
