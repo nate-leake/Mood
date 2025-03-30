@@ -49,7 +49,7 @@ struct CreatePasswordView: View {
                     }
                 
                 NavigationLink{
-                    AddNameView()
+                    FinalTouchesView()
                         .navigationBarBackButtonHidden()
                 } label: {
                     Text("next")

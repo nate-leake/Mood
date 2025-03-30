@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    @StateObject var registrationViewModel: RegistrationViewModel = RegistrationViewModel()
     
     var body: some View {
         NavigationStack {
@@ -62,9 +63,9 @@ struct WelcomeView: View {
                             }
                             
                             NavigationLink{
-                                SignUpView()
+                                SignUpMethodView()
                                     .navigationBarBackButtonHidden()
-                                    .environmentObject(RegistrationViewModel())
+                                    .environmentObject(registrationViewModel)
                             } label: {
                                 Text("no")
                                     .font(.headline)

@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 import Firebase
 import SwiftUI
 import LocalAuthentication
+import AuthenticationServices
 
 enum BiometricsError: Error {
     case biometryNotEnabled
@@ -28,13 +29,15 @@ class AuthService: Stateable, ObservableObject {
     
     static let shared = AuthService()
     
-    private func cp(_ text: String, state: PrintableStates = .none) {
+    private func cp(_ text: String, _ state: PrintableStates = .none) {
         let finalString = "🔐\(state.rawValue) AUTH SERVICE: " + text
         print(finalString)
     }
 
     
     init(){
+        self.signout()
+        #warning("AuthService will sign out on every launch.")
         AppState.shared.addContributor(adding: self)
         Task {try await loadUserData()}
     }
@@ -89,23 +92,77 @@ class AuthService: Stateable, ObservableObject {
     }
     
     @MainActor
-    func login(with credential: AuthCredential) {
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-            if (error != nil) {
-                // Error. If error.code == .MissingOrInvalidNonce, make sure
-                // you're sending the SHA256-hashed nonce as a hex string with
-                // your request to Apple.
-                print(error?.localizedDescription as Any)
-                return
-            } else {
-                self.userSession = authResult?.user
-                Task {
-                    try await self.loadUserData()
+    func login(with credential: AuthCredential) async -> AuthDataResult? {
+        var authResult: AuthDataResult?
+        do {
+            authResult = try await Auth.auth().signIn(with: credential)
+            
+            if let res = authResult {
+                DataService.userDoesExist(withID: res.user.uid) { doesUserExist in
+                    self.cp("doesUserExist: \(doesUserExist)", .debug)
+                    
+                    if doesUserExist {
+                        self.userSession = res.user
+                        Task {
+                            _ = try await self.loadUserData()
+                        }
+                        self.cp("signed in", .debug)
+                    } else {
+                        DataService.shared.userSignInNeedsMoreInformation = true
+                        self.cp("account created", .debug)
+                    }
+                    
+                    self.cp("DS.shared.userSignInNeedsMoreInformation is set to \(DataService.shared.userSignInNeedsMoreInformation)", .debug)
                 }
+                
             }
-            print("signed in")
-//#warning("AuthService expects currentUser and userSession to be updated with userIsSignedIn when signing in with apple.")
+            
+            
+        } catch {
+            print(error)
         }
+        
+        return authResult
+    }
+    
+    func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest, nonce: String) {
+        request.requestedScopes = [.email]
+        request.nonce = SecurityService.sha256(nonce)
+    }
+    
+    func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>, nonce currentNonce: String?) async -> AuthDataResult? {
+        var res: AuthDataResult?
+        switch result {
+        case .success(let authResults):
+            switch authResults.credential {
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                
+                guard let nonce = currentNonce else {
+                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                }
+                guard let appleIDToken = appleIDCredential.identityToken else {
+                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                }
+                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                    print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                    return nil
+                }
+                
+                let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
+                
+                res = await self.login(with: credential)
+                
+                
+                print("\(String(describing: Auth.auth().currentUser?.uid))")
+            default:
+                break
+                
+            }
+        default:
+            break
+        }
+        
+        return res
     }
     
     @MainActor
@@ -113,8 +170,20 @@ class AuthService: Stateable, ObservableObject {
         var errorMessage: String = ""
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            self.userSession = result.user
-            await self.uploaduserData(uid: result.user.uid, email: email, name: name, birthday: birthday, userPin: userPin)
+            errorMessage = try await self.uploadUserAccount(user: result.user, name: name, birthday: birthday, userPin: userPin)
+        } catch {
+            // Attempt to cast error to `AuthErrorCode` type to handle specific Firebase errors
+            errorMessage = provideAuthErrorDescription(from: error)
+        }
+        return errorMessage
+    }
+    
+    @MainActor
+    func uploadUserAccount(user: FirebaseAuth.User, name: String, birthday: Date, userPin: String) async throws -> String {
+        var errorMessage: String = ""
+        do {
+            self.userSession = user
+            await self.uploaduserData(uid: user.uid, email: user.email!, name: name, birthday: birthday, userPin: userPin)
             for context in UnsecureContext.defaultContexts {
                 _ = try await DataService.shared.uploadContext(context: context)
             }

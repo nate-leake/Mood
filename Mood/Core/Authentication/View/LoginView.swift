@@ -14,9 +14,13 @@ struct LoginView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel = LoginViewModel()
+    @StateObject var signUpVM = RegistrationViewModel()
+    @StateObject var dataService: DataService = DataService.shared
     @State var isLoading: Bool = false
     @State var errorMessage: String = ""
     @State var currentNonce: String?
+    @State var signedUpWithAppleDisplayNext: Bool = false
+    @State var authDataResult: AuthDataResult?
     
     var body: some View {
         ZStack{
@@ -72,24 +76,53 @@ struct LoginView: View {
                 .opacity(viewModel.email.isEmpty || viewModel.passwd.isEmpty ? 0.5 : 1)
                 .loadable(isLoading: $isLoading, shape: RoundedRectangle(cornerRadius: 8), frameSize: CGSize(width: 360, height: 44))
 
-                
-                Spacer()
+                VStack {
+                    Divider()
+                        .background(.white)
+                    Text("or")
+                }
+                .foregroundStyle(.white)
+                .frame(width: 360)
+                .padding(10)
                 
                 SignInWithAppleButton() { request in
                     let nonce = SecurityService.randomNonceString()
                     currentNonce = nonce
-                    viewModel.handleSignInWithAppleRequest(request, nonce: nonce)
+                    AuthService.shared.handleSignInWithAppleRequest(request, nonce: nonce)
                 } onCompletion: { result in
-                    viewModel.handleSignInWithAppleCompletion(result, nonce: currentNonce)
+                    Task {
+                        authDataResult = await AuthService.shared.handleSignInWithAppleCompletion(result, nonce: currentNonce)
+                    }
                 }
                 .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .frame(width: 360, height: 44)
                 .padding(.bottom, 24)
+                .onChange(of: dataService.userSignInNeedsMoreInformation){ old, new in
+                    print("LOGIN VIEW: dataservice userNeedsMoreInfo changed from \(old) to \(new)")
+                    if new {
+                        signUpVM.isSigningUpFromSignIn = true
+                        if let res = authDataResult {
+                            signUpVM.setAuthResult(to: res)
+                        }
+                    }
+                }
                 
                 Spacer()
             }
             
+        }
+        .onChange(of: signUpVM.signUpWithAppleAuthResult) { old, new in
+            print("RegiVM signUpWithAppleAuthResult old: \(String(describing: old)), new: \(String(describing: new))")
+            if let _ = new {
+                signedUpWithAppleDisplayNext = true
+            } else {
+                print(new ?? "signUpWithAppleAuthResult is nill")
+            }
+        }
+        .navigationDestination(isPresented: $signedUpWithAppleDisplayNext) {
+            FinalTouchesView(needsAdditionalInformation: true)
+                .environmentObject(signUpVM)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading){
