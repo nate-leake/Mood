@@ -237,9 +237,6 @@ struct YourMoodView: View {
             }
         }
         .scrollContentBackground(.hidden)
-        
-        .navigationTitle("your moods")
-        .navigationBarTitleDisplayMode(.inline)
         .onChange(of: dataService.recentMoodPosts, initial: true){
             Task {
                 do {
