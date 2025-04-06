@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabBar: View {
     // selection var forces the default selected tab to match the tag assigned to that tabItem
-    @State private var selection = 2
+    @State private var selection = 1
     @EnvironmentObject var dataService: DataService
     let user: User
     
@@ -26,6 +26,13 @@ struct MainTabBar: View {
                 .environmentObject(dataService)
                 .tabItem {
                     Image(systemName: "brain")
+                }
+                .tag(1)
+            
+            ToolsAndObjectivesView()
+                .environmentObject(dataService)
+                .tabItem {
+                    Image(systemName: "wrench.and.screwdriver.fill")
                 }
                 .tag(2)
             
