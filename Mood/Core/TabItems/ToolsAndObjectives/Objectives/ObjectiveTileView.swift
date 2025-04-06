@@ -50,7 +50,7 @@ struct WavyCircle: Shape {
 }
 
 struct ObjectiveTileView: View {
-    var frameSize: CGFloat
+    var frameSize: CGFloat = 150
     var label: String
     var color: Color
     
