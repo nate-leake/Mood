@@ -59,8 +59,8 @@ struct AppLoadingView: View {
             VStack {
                 Spacer()
                 Text("made by humans")
-                    .bold()
                     .foregroundStyle(.appPurple)
+                    .font(.system(size: 17, weight: .bold))
             }
         }
         
