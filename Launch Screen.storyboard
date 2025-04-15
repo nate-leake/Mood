@@ -25,22 +25,37 @@
                                 </constraints>
                                 <imageReference key="image" image="MoodSymbol" symbolScale="large" renderingMode="original"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="made by humans" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jod-j7-Sgv">
+                                <rect key="frame" x="132" y="820" width="138.33333333333337" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="aJU-Yt-5ql"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" name="AppPurple"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" name="SplashScreenColor"/>
                         <constraints>
                             <constraint firstItem="hYD-5h-eON" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Apv-Sh-DL9"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="jod-j7-Sgv" secondAttribute="bottom" id="RgO-F0-ci2"/>
+                            <constraint firstItem="jod-j7-Sgv" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="X4E-xB-cf6"/>
                             <constraint firstItem="hYD-5h-eON" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gjk-1n-y17"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
+            <point key="canvasLocation" x="52.238805970149251" y="374.14187643020591"/>
         </scene>
     </scenes>
     <resources>
         <image name="MoodSymbol" width="17" height="9"/>
+        <namedColor name="AppPurple">
+            <color red="0.60784313725490191" green="0.62745098039215685" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="SplashScreenColor">
             <color red="0.86274509803921573" green="0.8666666666666667" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

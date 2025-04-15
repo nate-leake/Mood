@@ -38,22 +38,32 @@ struct AppLoadingView: View {
     
     
     var body: some View {
-        ZStack{
-            Color.splashScreen
-            
-            HStack{
-                Image("MoodSymbol")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 170)
-                    .symbolRenderingMode(.multicolor)
-//                    .symbolEffect(.variableColor.cumulative.hideInactiveLayers, options: .speed(1), isActive: isAnimating)
-                    .symbolEffect(.breathe.plain, options: .speed(1.5))
-                    .onAppear {
-                        startAnimation()
-                    }
+        ZStack {
+            ZStack{
+                Color.splashScreen
+                
+                HStack{
+                    Image("MoodSymbol")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 170)
+                        .symbolRenderingMode(.multicolor)
+                        .symbolEffect(.breathe.plain, options: .speed(1.5))
+                        .onAppear {
+                            startAnimation()
+                        }
+                }
             }
-        }.ignoresSafeArea()
+            .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                Text("made by humans")
+                    .foregroundStyle(.appPurple)
+                    .font(.system(size: 17, weight: .bold))
+            }
+        }
+        
         
     }
 }

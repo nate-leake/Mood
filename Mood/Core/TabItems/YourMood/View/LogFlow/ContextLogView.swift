@@ -279,13 +279,16 @@ struct ContextLogView: View {
     
     var body: some View {
         VStack {
-            VStack{
-                Text("how do you feel about **\(context.name)**?")
+            HStack(spacing:0){
+                Text("how do you feel about \(Text(context.name).bold()) ")
+                Image(systemName: context.iconName)
+                .bold()
+                .padding(0)
             }
-            
-            Divider()
-                .padding(.top, 20)
-                .padding(.bottom, 10)
+            .foregroundStyle(context.color.isLight() ? .black : .white)
+            .padding(.bottom, 10)
+            .frame(maxWidth: .infinity)
+            .background(context.color)
             
             ScrollView{
                 
@@ -391,6 +394,6 @@ struct ContextLogView: View {
 }
 
 #Preview {
-    ContextLogView(context: UnsecureContext.defaultContexts[0])
+    ContextLogView(context: UnsecureContext.defaultContexts[4])
         .environmentObject(UploadMoodViewModel())
 }

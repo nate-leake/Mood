@@ -42,7 +42,7 @@ struct YourMoodsChartsView: View {
             .task {
                 
                 do {
-                    moodPosts = try await DataService.shared.fetchRecentMoodPosts(quantity: 7)
+                    moodPosts = try await DataService.shared.fetchRecentMoodPosts(quantity: 14)
                     withAnimation(.easeInOut){loadingSuccess = true}
                 } catch {
                     loadingSuccess = false

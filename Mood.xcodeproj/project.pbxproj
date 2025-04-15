@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AF041A0F2CC1838200A99FF3 /* RegistrationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF041A0E2CC1838200A99FF3 /* RegistrationHeaderView.swift */; };
+		AF0628B62DA1FD6C0092071B /* UnsecureObjective.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */; };
+		AF0628B82DA205240092071B /* ObjectivesBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0628B72DA205240092071B /* ObjectivesBuilderView.swift */; };
 		AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */; };
 		AF16D7622CC5F931002BF1DC /* ContextSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF16D7612CC5F931002BF1DC /* ContextSelectorView.swift */; };
 		AF16D7652CC5FAE6002BF1DC /* ContextBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF16D7642CC5FAE6002BF1DC /* ContextBuilderView.swift */; };
@@ -26,6 +28,8 @@
 		AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */; };
 		AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF40154F2AC61FAA003DE7DE /* AddNameView.swift */; };
 		AF4392342AD4D42700E4FC15 /* EmotionTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4392332AD4D42700E4FC15 /* EmotionTagView.swift */; };
+		AF4ABDF02DAC17D800F4BC8D /* ObjectiveAdderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4ABDEF2DAC17D800F4BC8D /* ObjectiveAdderView.swift */; };
+		AF4ABDF22DAC197E00F4BC8D /* ObjectiveEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4ABDF12DAC197E00F4BC8D /* ObjectiveEditorView.swift */; };
 		AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A32AB0B839004CF248 /* ProfileView.swift */; };
 		AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */; };
 		AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */; };
@@ -66,10 +70,12 @@
 		AF901FD42D6C268C0057AD11 /* LavaLampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF901FD32D6C26850057AD11 /* LavaLampView.swift */; };
 		AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */; };
 		AF97A2A52CB85BEF00E18440 /* ValidatePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */; };
+		AF99328F2D99D18E0022FE36 /* ToolsAndObjectivesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99328E2D99D18E0022FE36 /* ToolsAndObjectivesView.swift */; };
 		AF9DBB3D2CA1C6C30051C515 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */; };
 		AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */; };
 		AFA7AF5D2C88EABF002E911B /* MoodLineChartBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA7AF5C2C88EABF002E911B /* MoodLineChartBreakdownView.swift */; };
 		AFAADDF82ADF32D20065E9CE /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAADDF72ADF32D20065E9CE /* DataService.swift */; };
+		AFAB2ABF2D9DF17D00A0B03B /* ObjectiveTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAB2ABE2D9DF17D00A0B03B /* ObjectiveTileView.swift */; };
 		AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB789622C9CBD28007B375A /* ContextLogView.swift */; };
 		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
 		AFC28D2E2D44786B002D2A53 /* LogHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC28D2D2D447833002D2A53 /* LogHistoryView.swift */; };
@@ -78,6 +84,8 @@
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
 		AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */; };
 		AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE59E812C768BCA002285E8 /* NotificationService.swift */; };
+		AFE5AF5D2DA0855300D737F0 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE5AF5C2DA0855300D737F0 /* ToolsView.swift */; };
+		AFE5AF602DA08E6900D737F0 /* ObjectivesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE5AF5F2DA08E6900D737F0 /* ObjectivesView.swift */; };
 		AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */; };
 		AFEC9B3B2AD4581800F35F8B /* UnsecureMoodPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */; };
 		AFEC9B402AD4615200F35F8B /* MoodTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */; };
@@ -98,6 +106,8 @@
 
 /* Begin PBXFileReference section */
 		AF041A0E2CC1838200A99FF3 /* RegistrationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationHeaderView.swift; sourceTree = "<group>"; };
+		AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureObjective.swift; sourceTree = "<group>"; };
+		AF0628B72DA205240092071B /* ObjectivesBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectivesBuilderView.swift; sourceTree = "<group>"; };
 		AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		AF16D7612CC5F931002BF1DC /* ContextSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextSelectorView.swift; sourceTree = "<group>"; };
 		AF16D7642CC5FAE6002BF1DC /* ContextBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextBuilderView.swift; sourceTree = "<group>"; };
@@ -115,6 +125,8 @@
 		AF3DF9E52AC619A7003453F1 /* ListRowBackgroundModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowBackgroundModifer.swift; sourceTree = "<group>"; };
 		AF40154F2AC61FAA003DE7DE /* AddNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameView.swift; sourceTree = "<group>"; };
 		AF4392332AD4D42700E4FC15 /* EmotionTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTagView.swift; sourceTree = "<group>"; };
+		AF4ABDEF2DAC17D800F4BC8D /* ObjectiveAdderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveAdderView.swift; sourceTree = "<group>"; };
+		AF4ABDF12DAC197E00F4BC8D /* ObjectiveEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveEditorView.swift; sourceTree = "<group>"; };
 		AF4B33A32AB0B839004CF248 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMoodView.swift; sourceTree = "<group>"; };
 		AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodView.swift; sourceTree = "<group>"; };
@@ -153,10 +165,12 @@
 		AF901FD32D6C26850057AD11 /* LavaLampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LavaLampView.swift; sourceTree = "<group>"; };
 		AF95217A2AD61DCA00BDA427 /* MoodLoggedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLoggedView.swift; sourceTree = "<group>"; };
 		AF97A2A42CB85BEF00E18440 /* ValidatePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatePinView.swift; sourceTree = "<group>"; };
+		AF99328E2D99D18E0022FE36 /* ToolsAndObjectivesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsAndObjectivesView.swift; sourceTree = "<group>"; };
 		AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AFA7AF592C88E4A2002E911B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AFA7AF5C2C88EABF002E911B /* MoodLineChartBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLineChartBreakdownView.swift; sourceTree = "<group>"; };
 		AFAADDF72ADF32D20065E9CE /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		AFAB2ABE2D9DF17D00A0B03B /* ObjectiveTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveTileView.swift; sourceTree = "<group>"; };
 		AFB789622C9CBD28007B375A /* ContextLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextLogView.swift; sourceTree = "<group>"; };
 		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		AFC28D2D2D447833002D2A53 /* LogHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHistoryView.swift; sourceTree = "<group>"; };
@@ -166,6 +180,8 @@
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
 		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		AFE5AF5C2DA0855300D737F0 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
+		AFE5AF5F2DA08E6900D737F0 /* ObjectivesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectivesView.swift; sourceTree = "<group>"; };
 		AFE75EC12D7FC0EC005F0D8D /* Mood.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mood.entitlements; sourceTree = "<group>"; };
 		AFEC9B382AD4543200F35F8B /* UploadMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMoodViewModel.swift; sourceTree = "<group>"; };
 		AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureMoodPost.swift; sourceTree = "<group>"; };
@@ -331,6 +347,7 @@
 				AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */,
 				AF7EABE42D75586D0021E87C /* Mood.swift */,
 				AF7EABE62D75589F0021E87C /* Emotion.swift */,
+				AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -348,13 +365,12 @@
 		AF6BFA3F2AAFCDBC005B4DDA /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AF99328C2D99D1290022FE36 /* TabItems */,
 				AF2A89802AB0CAFF00D05234 /* Components */,
 				AF6BFA412AAFCE01005B4DDA /* Authentication */,
 				AF4B33AA2AB0C6B5004CF248 /* GlobalMood */,
-				AF6BFA422AAFCE10005B4DDA /* Profile */,
 				AF6BFA432AAFCE1E005B4DDA /* Root */,
 				AF6BFA452AAFCE62005B4DDA /* TabBar */,
-				AF4B33A72AB0BCA4004CF248 /* YourMood */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -446,6 +462,26 @@
 			path = LogHistory;
 			sourceTree = "<group>";
 		};
+		AF99328C2D99D1290022FE36 /* TabItems */ = {
+			isa = PBXGroup;
+			children = (
+				AF99328D2D99D1760022FE36 /* ToolsAndObjectives */,
+				AF4B33A72AB0BCA4004CF248 /* YourMood */,
+				AF6BFA422AAFCE10005B4DDA /* Profile */,
+			);
+			path = TabItems;
+			sourceTree = "<group>";
+		};
+		AF99328D2D99D1760022FE36 /* ToolsAndObjectives */ = {
+			isa = PBXGroup;
+			children = (
+				AFE5AF5E2DA08E5200D737F0 /* Objectives */,
+				AFE5AF5B2DA0852800D737F0 /* Tools */,
+				AF99328E2D99D18E0022FE36 /* ToolsAndObjectivesView.swift */,
+			);
+			path = ToolsAndObjectives;
+			sourceTree = "<group>";
+		};
 		AFA7AF5B2C88EAA8002E911B /* Charts */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +510,26 @@
 				AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AFE5AF5B2DA0852800D737F0 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				AFE5AF5C2DA0855300D737F0 /* ToolsView.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		AFE5AF5E2DA08E5200D737F0 /* Objectives */ = {
+			isa = PBXGroup;
+			children = (
+				AFAB2ABE2D9DF17D00A0B03B /* ObjectiveTileView.swift */,
+				AFE5AF5F2DA08E6900D737F0 /* ObjectivesView.swift */,
+				AF0628B72DA205240092071B /* ObjectivesBuilderView.swift */,
+				AF4ABDEF2DAC17D800F4BC8D /* ObjectiveAdderView.swift */,
+				AF4ABDF12DAC197E00F4BC8D /* ObjectiveEditorView.swift */,
+			);
+			path = Objectives;
 			sourceTree = "<group>";
 		};
 		AFEC9B362AD453D700F35F8B /* View */ = {
@@ -648,6 +704,7 @@
 				AF4392342AD4D42700E4FC15 /* EmotionTagView.swift in Sources */,
 				AF7EABE72D75589F0021E87C /* Emotion.swift in Sources */,
 				AF7EABE12D75577C0021E87C /* BinidngExtension.swift in Sources */,
+				AF0628B62DA1FD6C0092071B /* UnsecureObjective.swift in Sources */,
 				AF5B877B2AB53273000E204F /* CompleteSignUpView.swift in Sources */,
 				AF8AB5B22AB38F0000BE810A /* ContentViewModel.swift in Sources */,
 				AF5542832C8A0B4A00CD4DC0 /* DropDownView.swift in Sources */,
@@ -659,9 +716,11 @@
 				AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */,
 				AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */,
 				AF7EABE92D7558CD0021E87C /* BundleExtension.swift in Sources */,
+				AF4ABDF02DAC17D800F4BC8D /* ObjectiveAdderView.swift in Sources */,
 				AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */,
 				AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */,
 				AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */,
+				AFE5AF602DA08E6900D737F0 /* ObjectivesView.swift in Sources */,
 				AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */,
 				AF5B87752AB5277B000E204F /* CreatePasswordView.swift in Sources */,
 				AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */,
@@ -669,7 +728,9 @@
 				AF2A89822AB0CB5600D05234 /* ContextLogContainer.swift in Sources */,
 				AF97A2A52CB85BEF00E18440 /* ValidatePinView.swift in Sources */,
 				AF8D749B2AE6FAF900C0729E /* GlobalMoodLockedView.swift in Sources */,
+				AFE5AF5D2DA0855300D737F0 /* ToolsView.swift in Sources */,
 				AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */,
+				AFAB2ABF2D9DF17D00A0B03B /* ObjectiveTileView.swift in Sources */,
 				AF6BFA472AAFCECB005B4DDA /* MainTabBar.swift in Sources */,
 				AF8173942CC2D86300CE76BE /* LoadableAnimator.swift in Sources */,
 				AF041A0F2CC1838200A99FF3 /* RegistrationHeaderView.swift in Sources */,
@@ -694,6 +755,7 @@
 				AF8D74992AE6FABE00C0729E /* GlobalMoodViewWrapper.swift in Sources */,
 				AF16D7622CC5F931002BF1DC /* ContextSelectorView.swift in Sources */,
 				AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */,
+				AF0628B82DA205240092071B /* ObjectivesBuilderView.swift in Sources */,
 				AF5B87712AB521BB000E204F /* AddEmailView.swift in Sources */,
 				AF5B87792AB52C59000E204F /* AddBirthdayView.swift in Sources */,
 				AF4B33A92AB0C63F004CF248 /* YourMoodView.swift in Sources */,
@@ -704,7 +766,9 @@
 				AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */,
 				AF8C07F02D46B44800046CE5 /* LogDetailView.swift in Sources */,
 				AF3008822AB4F02D0068F3B0 /* LoginView.swift in Sources */,
+				AF4ABDF22DAC197E00F4BC8D /* ObjectiveEditorView.swift in Sources */,
 				AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */,
+				AF99328F2D99D18E0022FE36 /* ToolsAndObjectivesView.swift in Sources */,
 				AF1ECA3C2C9C87F0005A225A /* UnsecureContext.swift in Sources */,
 				AFEC9B3B2AD4581800F35F8B /* UnsecureMoodPost.swift in Sources */,
 				AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */,
@@ -857,7 +921,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;
@@ -898,7 +962,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				DEVELOPMENT_TEAM = BK7GR7SKX2;
 				ENABLE_PREVIEWS = YES;

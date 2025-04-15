@@ -22,21 +22,27 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             VStack{
-                VStack{
-                    Text("\(dataService.numberOfEntries)")
-                        .font(.title)
-                    Text("entries")
-                }
-                .foregroundStyle(.white)
-                .background(
-                    RoundedRectangle(cornerRadius: 8.0)
-                        .fill(.appGreen)
-                        .frame(width: 80, height: 80)
-                )
-                .padding(.top, 20)
-                .padding(.bottom, 10)
                 
                 List{
+                    HStack {
+                        Spacer()
+                        VStack(){
+                            Text("\(dataService.numberOfEntries)")
+                                .font(.title)
+                            Text("entries")
+                        }
+                        .foregroundStyle(.white)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8.0)
+                                .fill(.appGreen)
+                                .frame(width: 80, height: 80)
+                        )
+                        //                    .padding(.top, 20)
+                        .padding(.bottom, 10)
+                        Spacer()
+                    }
+                    .modifier(ListRowBackgroundModifer(foregroundColor: .clear))
+                    
                     Section{
                         HStack{
                             Text("name")
@@ -95,10 +101,6 @@ struct ProfileView: View {
                 }
                 .scrollContentBackground(.hidden)
             }
-            
-            
-            .navigationTitle("profile")
-            .navigationBarTitleDisplayMode(.inline)
         }
         
     }
