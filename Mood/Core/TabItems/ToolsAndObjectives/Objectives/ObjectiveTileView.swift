@@ -53,11 +53,11 @@ struct ObjectiveTileView: View {
     var frameSize: CGFloat = 150
     var label: String
     var color: Color
+    var isCompleted: Bool
     
     var body: some View {
         ZStack {
             WavyCircle(waves: Int(frameSize / 15), amplitude: 20)
-                .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                 .fill(color)
             
             Text(label)
@@ -65,6 +65,23 @@ struct ObjectiveTileView: View {
                 .multilineTextAlignment(.center)
                 .bold()
                 .padding()
+            
+            VStack {
+                HStack {
+                    Spacer()
+                    if isCompleted {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.title2)
+                            .foregroundStyle(.appGreen)
+                            .background(Circle().fill(.appWhite))
+                            .padding(.trailing, frameSize/7)
+                            .padding(.top, frameSize/25)
+                            .transition(.scale.animation(.spring(bounce: 0.4)).combined(with: .opacity))
+                    }
+                    
+                }
+                Spacer()
+            }
         }
         .frame(width: frameSize, height: frameSize)
     }
@@ -72,5 +89,14 @@ struct ObjectiveTileView: View {
 }
 
 #Preview {
-    ObjectiveTileView(frameSize: 150, label: "meet more friends", color: .pink)
+    @Previewable @State var isCompleted: Bool = false
+    ObjectiveTileView(frameSize: 150, label: "meet more friends", color: .pink, isCompleted: isCompleted)
+    
+    Button {
+        withAnimation {
+            isCompleted.toggle()
+        }
+    } label: {
+        Text("toggle completed")
+    }
 }

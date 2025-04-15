@@ -38,7 +38,7 @@ class CustomDateFormatter{
     }
 }
 
-/// The DailyDataService is responsable for handling the user's daily logs
+/// The DataService is responsible for handling all user data stored in Firebase
 class DataService : ObservableObject, Stateable {
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
@@ -48,6 +48,7 @@ class DataService : ObservableObject, Stateable {
     @Published var state: AppStateCase = .startup
     @Published var loadedContexts: [UnsecureContext] = []
     @Published var userSignInNeedsMoreInformation: Bool = false
+    @Published var loadedObjectives: [UnsecureObjective] = []
     public var isPerformingManagedAGUpdate: Bool = false
     
     static let shared = DataService()
@@ -55,11 +56,11 @@ class DataService : ObservableObject, Stateable {
     let securityService = SecurityService()
     let dateFormatter = CustomDateFormatter()
     
-    static private func cp(_ text: String, state: PrintableStates = .none) {
-        DataService.shared.cp(text, state: state)
+    static private func cp(_ text: String, _ state: PrintableStates = .none) {
+        DataService.shared.cp(text, state)
     }
     
-    private func cp(_ text: String, state: PrintableStates = .none) {
+    private func cp(_ text: String, _ state: PrintableStates = .none) {
         let finalString = "💿\(state.rawValue) DATA SERVICE: " + text
         print(finalString)
     }
@@ -83,8 +84,9 @@ class DataService : ObservableObject, Stateable {
                 cp("refreshing...")
                 Task {
                     try await fetchContexts()
+                    try await fetchObjectives()
                     try await getLoggedToday()
-                    try await setRecentMoodPosts(quantity: 7)
+                    try await setRecentMoodPosts(quantity: 14)
                     try await getNumberOfEntries()
                     if self.userHasLoggedToday { self.updateAG() }
                     if recentMoodPosts != nil {
@@ -102,6 +104,11 @@ class DataService : ObservableObject, Stateable {
         
     }
     
+    /// Uploads any encodable object to the defined document. Sensitive data should be encrypted before calling this function.
+    /// - Parameters:
+    ///   - document: The Firebase DocumentReference
+    ///   - uploadData: The
+    /// - Returns: The result of the upload.
     @MainActor
     private func uploadData(document: DocumentReference, uploadData: Encodable) async -> Result<Bool, Error> {
         do {
@@ -212,7 +219,7 @@ class DataService : ObservableObject, Stateable {
     func deleteContext(context: UnsecureContext) async throws {
         cp("beginning delete for context \(context.id)")
         context.isDeleting = true
-        cp("context delete state set to \(context.isDeleting)", state: .debug)
+        cp("context delete state set to \(context.isDeleting)", .debug)
         self.isPerformingManagedAGUpdate = true
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         let contextDocRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
@@ -243,14 +250,14 @@ class DataService : ObservableObject, Stateable {
                 }
                 //                cp("post now has \(post.data.count) pairs", state: post.data.count==0 ? .warning : .none)
                 if post.contextLogContainers.count == 0 {
-                    cp("post should be auto deleted when it has 0 pairs.", state: .warning)
+                    cp("post should be auto deleted when it has 0 pairs.", .warning)
                     _ = try await self.deleteMoodPost(postID: post.id)
                 } else {
                     try await updatePost(with: post)
                 }
                 
             } else {
-                cp("no post with that ID was found", state: .error)
+                cp("no post with that ID was found", .error)
             }
             completedDeletes += 1
             context.percentDeleted = completedDeletes*100 / initialPostCount
@@ -260,17 +267,127 @@ class DataService : ObservableObject, Stateable {
         do {
             context.percentDeleted = 100
             context.isDeleting = false
-            cp("context delete state set to \(context.isDeleting)", state: .debug)
+            cp("context delete state set to \(context.isDeleting)", .debug)
             
             try await contextDocRef.delete()
-            cp("deleted firebase context doc", state: .debug)
+            cp("deleted firebase context doc", .debug)
         } catch {
-            cp("error deleting context: \(error)", state: .error)
+            cp("error deleting context: \(error)", .error)
         }
         
         self.isPerformingManagedAGUpdate = false
         self.refreshServiceData()
         cp("finished delete for context \(context.id)")
+    }
+    
+    // MARK: - objectives data section
+    
+    @MainActor
+    func fetchObjectives() async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let objectivesCollection = userDocument.collection("objectives")
+        let query = objectivesCollection
+        
+        let documents = try await query.getDocuments().documents
+        
+        self.loadedObjectives = []
+        
+        for document in documents {
+            var optionalObjective: SecureObjective?
+            do {
+                optionalObjective = try document.data(as: SecureObjective.self)
+                
+                if let secureObjective = optionalObjective {
+                    let unsecureObjective = UnsecureObjective(from: secureObjective)
+                    self.loadedObjectives.append(unsecureObjective)
+                } else {
+                    cp("secure objective was not found", .warning)
+                }
+            } catch {
+                cp("error loading data from document: \(error.localizedDescription)", .warning)
+            }
+        }
+        
+        self.loadedObjectives.sort { $0.title.lowercased() < $1.title.lowercased() }
+    }
+    
+    @MainActor
+    func uploadObjective(objective: UnsecureObjective) async throws -> Result<Bool, Error> {
+        cp("uploading objective...", .debug)
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = Firestore.firestore().collection("users").document(uid).collection("objectives").document(objective.id)
+        
+        let encryptedObjective = SecureObjective(from: objective)
+        
+        let res = await uploadData(document: docRef, uploadData: encryptedObjective)
+        
+        switch res {
+        case .success(let success):
+            if success {
+                withAnimation {
+                    self.loadedObjectives.append(objective)
+                    self.loadedObjectives.sort { $0.title.lowercased() < $1.title.lowercased() }
+                }
+            }
+        case .failure(let error):
+            cp("error uploading objective: \(error)")
+        }
+        
+        return res
+    }
+    
+    @MainActor
+    func updateObjective(to objective: UnsecureObjective) async throws -> Result<Bool, Error> {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = Firestore.firestore().collection("users").document(uid).collection("objectives").document(objective.id)
+        
+        let foundObjective = UnsecureObjective.getObjective(from: objective.id)
+        
+        if objective.title != foundObjective?.title {
+            foundObjective?.title = objective.title
+        }
+        if objective.description != foundObjective?.description {
+            foundObjective?.description = objective.description
+        }
+        if objective.color != foundObjective?.color {
+            foundObjective?.colorHex = objective.colorHex
+            foundObjective?.color = objective.color
+        }
+        if objective.isCompleted != foundObjective?.isCompleted {
+            foundObjective?.isCompleted = objective.isCompleted
+        }
+        
+        let encryptedObjective = SecureObjective(from: objective)
+        
+        let result = await uploadData(document: docRef, uploadData: encryptedObjective)
+        
+        self.loadedObjectives.sort { $0.title.lowercased() < $1.title.lowercased() }
+        return result
+    }
+    
+    @MainActor
+    func deleteObjective(objectiveID: String) async throws -> Result<Bool, Error> {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userObjectivesCollection = userDocument.collection("objectives")
+        let docRef = userObjectivesCollection.document(objectiveID)
+        
+        do {
+            try await docRef.delete()
+            withAnimation {
+                self.loadedObjectives.removeAll(where: { $0.id == objectiveID } )
+            }
+            return .success(true)
+        } catch {
+            cp("an error occured while deleting objective \(objectiveID): \(objectiveID)")
+            return .failure(error)
+        }
+        
+        
     }
     
     
@@ -321,14 +438,14 @@ class DataService : ObservableObject, Stateable {
                                     uploadSuccess = true
                                 }
                             case .failure(let error):
-                                cp("an error occured while updating the post's context associatedPostIDs: \(error)", state: .error)
+                                cp("an error occured while updating the post's context associatedPostIDs: \(error)", .error)
                                 uploadSuccess = false
                             }
                         }
                     }
                 }
             case .failure(let error):
-                cp("an error occured while uploading the post: \(error)", state: .error)
+                cp("an error occured while uploading the post: \(error)", .error)
                 uploadSuccess = false
                 
             }
@@ -416,7 +533,7 @@ class DataService : ObservableObject, Stateable {
         if querySnapshot.documents.count > 1 {
             cp("error fetching document with id \(postID) as mutliple posts share this ID.")
         } else if querySnapshot.documents.count == 0 {
-            cp("no documents were found with id \(postID)", state: .error)
+            cp("no documents were found with id \(postID)", .error)
         } else if querySnapshot.documents.count == 1{
             let securePost = try querySnapshot.documents[0].data(as: SecureMoodPost.self)
             moodPost = UnsecureMoodPost(from: securePost)
@@ -516,7 +633,7 @@ class DataService : ObservableObject, Stateable {
         }
         
         if insecureFlag {
-            cp("DATA SERVICE : One or more posts in firebase firestore is not encrypted.", state: .warning)
+            cp("One or more posts in firebase firestore is not encrypted.", .warning)
         }
         
         return filteredPosts
@@ -601,15 +718,15 @@ class DataService : ObservableObject, Stateable {
             
             userDocument.getDocument { document, error in
                 if let error = error {
-                    cp("Error fetching document: \(error)", state: .debug)
+                    cp("Error fetching document: \(error)", .debug)
                     completion(false) // Assume it does not exist if there's an error
                 }
                 
                 if let document = document, document.exists {
-                    cp("Document \(uid) exists.", state: .debug)
+                    cp("Document \(uid) exists.", .debug)
                     completion(true)
                 } else {
-                    cp("Document \(uid) does NOT exist.", state: .debug)
+                    cp("Document \(uid) does NOT exist.", .debug)
                     completion(false)
                 }
             }

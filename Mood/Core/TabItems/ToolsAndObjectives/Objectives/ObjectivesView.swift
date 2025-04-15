@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ObjectivesView: View {
-    @EnvironmentObject var dataService: DataService
+    @ObservedObject var dataService: DataService = DataService.shared
     let layout = [
         GridItem(.adaptive(minimum:150), spacing: 0),
         GridItem(.adaptive(minimum:150), spacing: 0)
@@ -18,17 +18,50 @@ struct ObjectivesView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: layout) {
-                ForEach(dataService.loadedObjectives) { objective in
-                    ObjectiveTileView(frameSize: 150, label: objective.title, color: objective.color).padding(.bottom)
+                if dataService.loadedObjectives.isEmpty {
+                    NavigationLink {
+                        ObjectiveAdderView()
+                    } label: {
+                        ObjectiveTileView(label: "create an objective", color: .appYellow, isCompleted: false)
+                    }
+                } else {
+                    ForEach(dataService.loadedObjectives, id:\.id) { objective in
+                        if !objective.isCompleted {
+                            NavigationLink {
+                                ObjectiveEditorView(editing: objective)
+                            } label: {
+                                ObjectiveTileView(label: objective.title, color: objective.color, isCompleted: objective.isCompleted).padding(.bottom)
+                            }
+                        }
+                    }
+                    
+                    
                 }
             }
+            
+            if !dataService.loadedObjectives.allSatisfy({ !$0.isCompleted }) {
+                Divider()
+            }
+            
+            LazyVGrid(columns: layout) {
+                ForEach(dataService.loadedObjectives, id:\.id) { objective in
+                    if objective.isCompleted {
+                        NavigationLink {
+                            ObjectiveEditorView(editing: objective)
+                        } label: {
+                            ObjectiveTileView(label: objective.title, color: objective.color, isCompleted: objective.isCompleted).padding(.bottom)
+                        }
+                    }
+                }
+            }
+            .padding(.top)
         }
         .navigationTitle("objectives")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing){
                 NavigationLink {
-                    ObjectivesBuilderView()
+                    ObjectiveAdderView()
                 } label: {
                     Image(systemName: "plus")
                         .imageScale(.large)

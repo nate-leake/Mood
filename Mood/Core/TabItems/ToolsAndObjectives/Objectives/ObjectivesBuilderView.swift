@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ObjectivesBuilderView: View {
-    @EnvironmentObject var dataService: DataService
-    @State var givenTitle: String = ""
-    @State var givenDescription: String = ""
-    @State var givenColor: Color = .appGreen
-    @State var isNamed: Bool = false
-    @State var hasDescrption: Bool = false
+    @Binding var givenTitle: String
+    @Binding var givenDescription: String
+    @Binding var givenColor: Color
+    @Binding var isCompleted: Bool
+    @Binding var isNamed: Bool
+    @Binding var hasDescrption: Bool
     
     var body: some View {
         VStack(spacing: 20) {
-            ObjectiveTileView(label: givenTitle == "" ? "give it a title" : givenTitle, color: givenColor)
+            ObjectiveTileView(label: givenTitle == "" ? "give it a title" : givenTitle, color: givenColor, isCompleted: isCompleted)
             
             TextField("title", text: $givenTitle)
                 .padding(12)
                 .background(.appPurple.opacity(0.25))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.leading, 24)
+                .padding(.horizontal, 24)
                 .foregroundStyle(.appBlack)
             
                 .textInputAutocapitalization(.never)
@@ -43,7 +43,7 @@ struct ObjectivesBuilderView: View {
                 .padding(12)
                 .background(.appPurple.opacity(0.25))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.leading, 24)
+                .padding(.horizontal, 24)
                 .foregroundStyle(.appBlack)
                 .lineLimit(5...10)
                 .textInputAutocapitalization(.never)
@@ -72,6 +72,11 @@ struct ObjectivesBuilderView: View {
 }
 
 #Preview {
-    ObjectivesBuilderView()
-        .environmentObject(DataService())
+    @Previewable @State var givenTitle: String = ""
+    @Previewable @State var givenDescription: String = ""
+    @Previewable @State var givenColor: Color = .appGreen
+    @Previewable @State var isCompleted: Bool = false
+    @Previewable @State var isNamed: Bool = false
+    @Previewable @State var hasDescrption: Bool = false
+    ObjectivesBuilderView(givenTitle: $givenTitle, givenDescription: $givenDescription, givenColor: $givenColor, isCompleted: $isCompleted, isNamed: $isNamed, hasDescrption: $hasDescrption)
 }

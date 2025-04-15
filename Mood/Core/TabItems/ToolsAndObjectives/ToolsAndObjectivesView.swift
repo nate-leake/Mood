@@ -77,26 +77,26 @@ struct ToolsAndObjectivesView: View {
                             
                         HStack {
                             WavyCircle(waves: 6, amplitude: 10)
-                                .stroke(Color.appBlue, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+//                                .stroke(Color.appBlue, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                                 .fill(Color.appBlue)
                                 .frame(width: 35, height: 35)
                             
                             WavyCircle(waves: 6, amplitude: 10)
-                                .stroke(Color.appRed, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+//                                .stroke(Color.appRed, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                                 .fill(Color.appRed)
                                 .frame(width: 35, height: 35)
                         }
                         HStack {
                             WavyCircle(waves: 6, amplitude: 10)
-                                .stroke(Color.appGreen, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+//                                .stroke(Color.appGreen, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                                 .fill(Color.appGreen)
                                 .frame(width: 35, height: 35)
                             WavyCircle(waves: 6, amplitude: 10)
-                                .stroke(Color.appPurple, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+//                                .stroke(Color.appPurple, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                                 .fill(Color.appPurple)
                                 .frame(width: 35, height: 35)
                             WavyCircle(waves: 6, amplitude: 10)
-                                .stroke(Color.appBlue, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+//                                .stroke(Color.appBlue, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                                 .fill(Color.appBlue)
                                 .frame(width: 35, height: 35)
                             
