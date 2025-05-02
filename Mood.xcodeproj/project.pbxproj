@@ -35,6 +35,8 @@
 		AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */; };
 		AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */; };
 		AF519BCD2ABBA5BB00850DD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF519BCC2ABBA5BB00850DD4 /* User.swift */; };
+		AF529DA62DBD8F6300C94C10 /* NotableMomentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF529DA52DBD8F6300C94C10 /* NotableMomentsView.swift */; };
+		AF529DA82DBD970A00C94C10 /* AddNotableMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF529DA72DBD970A00C94C10 /* AddNotableMomentView.swift */; };
 		AF54957D2D8CC48E00D6074D /* SignUpMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF54957C2D8CC48E00D6074D /* SignUpMethodView.swift */; };
 		AF5542832C8A0B4A00CD4DC0 /* DropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5542822C8A0B4900CD4DC0 /* DropDownView.swift */; };
 		AF5B87712AB521BB000E204F /* AddEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B87702AB521BB000E204F /* AddEmailView.swift */; };
@@ -44,6 +46,7 @@
 		AF5B87792AB52C59000E204F /* AddBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B87782AB52C59000E204F /* AddBirthdayView.swift */; };
 		AF5B877B2AB53273000E204F /* CompleteSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */; };
 		AF6315D02ACB5373005561B9 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6315CF2ACB5373005561B9 /* SecureInputView.swift */; };
+		AF67FDDA2DC0429300D95FA3 /* BuildNotableMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67FDD92DC0429300D95FA3 /* BuildNotableMomentView.swift */; };
 		AF6BFA2D2AAFCD2C005B4DDA /* MoodApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */; };
 		AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */; };
 		AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */; };
@@ -81,6 +84,7 @@
 		AFC28D2E2D44786B002D2A53 /* LogHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC28D2D2D447833002D2A53 /* LogHistoryView.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
 		AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */; };
+		AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */; };
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
 		AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */; };
 		AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE59E812C768BCA002285E8 /* NotificationService.swift */; };
@@ -132,6 +136,8 @@
 		AF4B33AB2AB0C6C6004CF248 /* GlobalMoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMoodView.swift; sourceTree = "<group>"; };
 		AF5024F62ABCDA2100DCF8A2 /* GlobalPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPercentView.swift; sourceTree = "<group>"; };
 		AF519BCC2ABBA5BB00850DD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AF529DA52DBD8F6300C94C10 /* NotableMomentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableMomentsView.swift; sourceTree = "<group>"; };
+		AF529DA72DBD970A00C94C10 /* AddNotableMomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotableMomentView.swift; sourceTree = "<group>"; };
 		AF54957C2D8CC48E00D6074D /* SignUpMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMethodView.swift; sourceTree = "<group>"; };
 		AF5542822C8A0B4900CD4DC0 /* DropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownView.swift; sourceTree = "<group>"; };
 		AF5B87702AB521BB000E204F /* AddEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddEmailView.swift; path = Mood/Core/Authentication/View/RegistrationFlow/AddEmailView.swift; sourceTree = SOURCE_ROOT; };
@@ -141,6 +147,7 @@
 		AF5B87782AB52C59000E204F /* AddBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddBirthdayView.swift; path = Mood/Core/Authentication/View/RegistrationFlow/AddBirthdayView.swift; sourceTree = SOURCE_ROOT; };
 		AF5B877A2AB53273000E204F /* CompleteSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteSignUpView.swift; path = Mood/Core/Authentication/View/RegistrationFlow/CompleteSignUpView.swift; sourceTree = SOURCE_ROOT; };
 		AF6315CF2ACB5373005561B9 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
+		AF67FDD92DC0429300D95FA3 /* BuildNotableMomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildNotableMomentView.swift; sourceTree = "<group>"; };
 		AF6BFA292AAFCD2C005B4DDA /* Mood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6BFA2C2AAFCD2C005B4DDA /* MoodApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodApp.swift; sourceTree = "<group>"; };
 		AF6BFA2E2AAFCD2C005B4DDA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -176,6 +183,7 @@
 		AFC28D2D2D447833002D2A53 /* LogHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHistoryView.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysFeelingsView.swift; sourceTree = "<group>"; };
+		AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableMomentTileView.swift; sourceTree = "<group>"; };
 		AFDC464E2CBDAD8200AD5782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
@@ -264,6 +272,17 @@
 				AF8D749A2AE6FAF900C0729E /* GlobalMoodLockedView.swift */,
 			);
 			path = GlobalMood;
+			sourceTree = "<group>";
+		};
+		AF529DA42DBD8F4B00C94C10 /* NotableMoments */ = {
+			isa = PBXGroup;
+			children = (
+				AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */,
+				AF529DA52DBD8F6300C94C10 /* NotableMomentsView.swift */,
+				AF529DA72DBD970A00C94C10 /* AddNotableMomentView.swift */,
+				AF67FDD92DC0429300D95FA3 /* BuildNotableMomentView.swift */,
+			);
+			path = NotableMoments;
 			sourceTree = "<group>";
 		};
 		AF54957E2D8CCA0200D6074D /* RegistrationFlow */ = {
@@ -370,7 +389,6 @@
 				AF6BFA412AAFCE01005B4DDA /* Authentication */,
 				AF4B33AA2AB0C6B5004CF248 /* GlobalMood */,
 				AF6BFA432AAFCE1E005B4DDA /* Root */,
-				AF6BFA452AAFCE62005B4DDA /* TabBar */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -410,14 +428,6 @@
 				AF8AB5B02AB38ED700BE810A /* ViewModel */,
 			);
 			path = Root;
-			sourceTree = "<group>";
-		};
-		AF6BFA452AAFCE62005B4DDA /* TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */,
-			);
-			path = TabBar;
 			sourceTree = "<group>";
 		};
 		AF7BB2D12AB3650A0057EE18 /* MoodTests */ = {
@@ -465,6 +475,7 @@
 		AF99328C2D99D1290022FE36 /* TabItems */ = {
 			isa = PBXGroup;
 			children = (
+				AF6BFA462AAFCECB005B4DDA /* MainTabBar.swift */,
 				AF99328D2D99D1760022FE36 /* ToolsAndObjectives */,
 				AF4B33A72AB0BCA4004CF248 /* YourMood */,
 				AF6BFA422AAFCE10005B4DDA /* Profile */,
@@ -485,6 +496,7 @@
 		AFA7AF5B2C88EAA8002E911B /* Charts */ = {
 			isa = PBXGroup;
 			children = (
+				AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */,
 				AFA7AF5C2C88EABF002E911B /* MoodLineChartBreakdownView.swift */,
 			);
 			path = Charts;
@@ -535,13 +547,13 @@
 		AFEC9B362AD453D700F35F8B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */,
+				AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */,
+				AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */,
+				AF529DA42DBD8F4B00C94C10 /* NotableMoments */,
 				AF8C07EE2D46B41600046CE5 /* LogHistory */,
 				AFA7AF5B2C88EAA8002E911B /* Charts */,
 				AFEC9B3C2AD45F9C00F35F8B /* LogFlow */,
-				AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */,
-				AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */,
-				AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */,
-				AF8897642C8A49E90077B847 /* YourMoodsChartsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -699,6 +711,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF67FDDA2DC0429300D95FA3 /* BuildNotableMomentView.swift in Sources */,
 				AFEF11242CB7151200FECDCD /* SettingsAndPrivacyView.swift in Sources */,
 				AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */,
 				AF4392342AD4D42700E4FC15 /* EmotionTagView.swift in Sources */,
@@ -719,11 +732,13 @@
 				AF4ABDF02DAC17D800F4BC8D /* ObjectiveAdderView.swift in Sources */,
 				AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */,
 				AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */,
+				AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */,
 				AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */,
 				AFE5AF602DA08E6900D737F0 /* ObjectivesView.swift in Sources */,
 				AF8AB5AE2AB38D8E00BE810A /* AuthService.swift in Sources */,
 				AF5B87752AB5277B000E204F /* CreatePasswordView.swift in Sources */,
 				AF5024F72ABCDA2100DCF8A2 /* GlobalPercentView.swift in Sources */,
+				AF529DA82DBD970A00C94C10 /* AddNotableMomentView.swift in Sources */,
 				AF5B87732AB525D1000E204F /* TextFieldModifier.swift in Sources */,
 				AF2A89822AB0CB5600D05234 /* ContextLogContainer.swift in Sources */,
 				AF97A2A52CB85BEF00E18440 /* ValidatePinView.swift in Sources */,
@@ -735,6 +750,7 @@
 				AF8173942CC2D86300CE76BE /* LoadableAnimator.swift in Sources */,
 				AF041A0F2CC1838200A99FF3 /* RegistrationHeaderView.swift in Sources */,
 				AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */,
+				AF529DA62DBD8F6300C94C10 /* NotableMomentsView.swift in Sources */,
 				AFA7AF5D2C88EABF002E911B /* MoodLineChartBreakdownView.swift in Sources */,
 				AFC28D2E2D44786B002D2A53 /* LogHistoryView.swift in Sources */,
 				AF2864742D276D8900E3CAA6 /* OverflowLayout.swift in Sources */,
