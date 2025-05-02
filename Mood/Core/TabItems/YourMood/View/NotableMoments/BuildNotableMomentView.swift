@@ -7,12 +7,184 @@
 
 import SwiftUI
 
+enum PleasureScale: String {
+    case displeasure, uncertainty, pleasure
+}
+
 struct BuildNotableMomentView: View {
+    @Binding var title: String
+    @Binding var description: String
+    @Binding var date: Date
+    @Binding var pleasureSelection: PleasureScale
+    @Binding var hasName: Bool
+    @Binding var hasDescription: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack (spacing: 20) {
+            NotableMomentTileView(title: title == "" ? "title" : title, description: description == "" ? "description" : description, date: date, color: Color(pleasureSelection.rawValue.capitalized))
+            
+            TextField("title", text: $title)
+                .padding(12)
+                .background(.appPurple.opacity(0.25))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 24)
+                .foregroundStyle(.appBlack)
+            
+                .textInputAutocapitalization(.never)
+                .onChange(of: title) { old, new in
+                    if new.count > 0 && old.count == 0 {
+                        withAnimation(.easeInOut) {
+                            hasName = true
+                        }
+                    } else if new.count == 0 && old.count > 0 {
+                        withAnimation(.easeInOut) {
+                            hasName = false
+                        }
+                    }
+                }
+            
+            TextField("description", text: $description, axis: .vertical)
+                .padding(12)
+                .background(.appPurple.opacity(0.25))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 24)
+                .foregroundStyle(.appBlack)
+                .lineLimit(5...10)
+                .textInputAutocapitalization(.never)
+                .onChange(of: description) { old, new in
+                    if new.count > 0 && old.count == 0 {
+                        withAnimation(.easeInOut) {
+                            hasDescription = true
+                        }
+                    } else if new.count == 0 && old.count > 0 {
+                        withAnimation(.easeInOut) {
+                            hasDescription = false
+                        }
+                    }
+                }
+            
+            VStack (alignment: .leading) {
+                Text("what did you feel?")
+                
+                HStack {
+                    VStack {
+                        WavyCircle(waves: 5, amplitude: 10)
+                            .frame(width: 40, height: 40)
+                        Text("pleasure")
+                            .bold()
+                            .font(.callout)
+                            .opacity(0.8)
+                            .padding(.bottom, -4)
+                        
+                    }
+                    .foregroundStyle(.pleasure.optimalForegroundColor())
+                    .padding(10)
+                    .frame(minWidth: 100)
+                    .background(.pleasure)
+                    .foregroundStyle(.appGreen.optimalForegroundColor())
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .opacity(pleasureSelection == .pleasure ? 1 : 0.75)
+                    .onTapGesture {
+                        withAnimation {
+                            pleasureSelection = .pleasure
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        WavyCircle(waves: 7, amplitude: 20)
+                            .frame(width: 40, height: 40)
+                        Text("unsure")
+                            .bold()
+                            .font(.callout)
+                            .opacity(0.8)
+                            .padding(.bottom, -4)
+                    }
+                    .foregroundStyle(.uncertainty.optimalForegroundColor())
+                    .padding(10)
+                    .frame(minWidth: 100)
+                    .background(.uncertainty)
+                    .foregroundStyle(.appBlue.optimalForegroundColor())
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .opacity(pleasureSelection == .uncertainty ? 1 : 0.75)
+                    .onTapGesture {
+                        withAnimation {
+                            pleasureSelection = .uncertainty
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        WavyCircle(waves: 10, amplitude: 30)
+                            .frame(width: 40, height: 40)
+                        Text("displeasure")
+                            .bold()
+                            .font(.callout)
+                            .opacity(0.8)
+                            .padding(.bottom, -4)
+                    }
+                    .foregroundStyle(.displeasure.optimalForegroundColor())
+                    .padding(10)
+                    .frame(minWidth: 100)
+                    .background(.displeasure)
+                    .foregroundStyle(.appRed.optimalForegroundColor())
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .opacity(pleasureSelection == .displeasure ? 1 : 0.75)
+                    .onTapGesture {
+                        withAnimation {
+                            pleasureSelection = .displeasure
+                        }
+                    }
+                
+                    
+                
+                }
+            }
+            .padding(12)
+            .background(.appPurple.opacity(0.25))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.horizontal, 24)
+            
+            VStack (alignment: .leading) {
+                Text("when did it happen?")
+                    
+                HStack {
+                    Spacer()
+                    DatePicker(selection: $date, in:...Date.now/*, displayedComponents: .date*/){ EmptyView() }
+                        .tint(.appPurple)
+//                        .background(.red)
+                        .frame(width: 200)
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .padding(12)
+            .background(.appPurple.opacity(0.25))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.horizontal, 24)
+            
+            Spacer()
+        }
+        
+        .onAppear {
+            TabBarManager.shared.hideTabBar()
+        }
+        .onDisappear {
+            TabBarManager.shared.unhideTabBar()
+        }
+        
     }
 }
 
 #Preview {
-    BuildNotableMomentView()
+    @Previewable @State var title: String = ""
+    @Previewable @State var description: String = ""
+    @Previewable @State var date: Date = Date.now
+    @Previewable @State var hasName: Bool = false
+    @Previewable @State var hasDescription: Bool = false
+    @Previewable @State var pleasureSelection: PleasureScale = .uncertainty
+    
+    BuildNotableMomentView(title: $title, description: $description, date: $date, pleasureSelection: $pleasureSelection, hasName: $hasName, hasDescription: $hasDescription)
 }

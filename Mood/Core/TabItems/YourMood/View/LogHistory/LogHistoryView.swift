@@ -13,17 +13,23 @@ class ShortDate{
     // Get the current year and the year of the date to format
     let calendar = Calendar.current
 
-    func string(from: Date) -> String {
+    func string(from: Date, includeTime: Bool = false) -> String {
         let currentYear = calendar.component(.year, from: Date())
         let dateYear = calendar.component(.year, from: from)
-        print(currentYear, dateYear, from)
+        var format: String = ""
         
         // Set the date format based on whether the year should be included
         if currentYear == dateYear {
-            formatter.dateFormat = "MMM d" // Without year
+            format = "MMM d" // Without year
         } else {
-            formatter.dateFormat = "MMM d, yyyy" // Include year
+            format = "MMM d, yyyy" // Include year
         }
+        
+        if includeTime {
+            format = format + ", h:mm a"
+        }
+        
+        formatter.dateFormat = format
         
         return formatter.string(from: from).lowercased()
     }
