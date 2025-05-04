@@ -46,12 +46,19 @@ class DataService : ObservableObject, Stateable {
     @Published var recentMoodPosts: [UnsecureMoodPost]?
     @Published var numberOfEntries: Int = 0
     @Published var state: AppStateCase = .startup
-    @Published var loadedContexts: [UnsecureContext] = []
     @Published var userSignInNeedsMoreInformation: Bool = false
+    
+    
+    @Published var loadedContexts: [UnsecureContext] = []
     @Published var loadedObjectives: [UnsecureObjective] = []
+    @Published var loadedMoments: [UnsecureNotableMoment] = []
+    
     public var isPerformingManagedAGUpdate: Bool = false
     
     static let shared = DataService()
+    
+//    public var userID: String?
+    private var usersCollection: CollectionReference = Firestore.firestore().collection("users")
     
     let securityService = SecurityService()
     let dateFormatter = CustomDateFormatter()
@@ -74,6 +81,10 @@ class DataService : ObservableObject, Stateable {
     init(){
         AppState.shared.addContributor(adding: self)
         self.state = .loading
+//        if let _ = AuthService.shared.userIsSignedIn {
+//            self.userID = AuthService.shared.userSession?.uid
+//            self.userDocument = Firestore.firestore().collection("users").document(userID!)
+//        }
     }
     
     @MainActor
@@ -85,6 +96,7 @@ class DataService : ObservableObject, Stateable {
                 Task {
                     try await fetchContexts()
                     try await fetchObjectives()
+                    try await fetchMoments()
                     try await getLoggedToday()
                     try await setRecentMoodPosts(quantity: 14)
                     try await getNumberOfEntries()
@@ -131,7 +143,7 @@ class DataService : ObservableObject, Stateable {
     func fetchContexts() async throws {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let contextCollection = userDocument.collection("contexts")
         let query = contextCollection
         
@@ -162,7 +174,7 @@ class DataService : ObservableObject, Stateable {
     func uploadContext(context: UnsecureContext) async throws -> Result<Bool, Error> {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
+        let docRef = usersCollection.document(uid).collection("contexts").document(context.id)
         
         let encryptedContext = SecureContext(from: context)
         
@@ -186,7 +198,7 @@ class DataService : ObservableObject, Stateable {
         //        cp(try Firestore.Encoder().encode(context))
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let docRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
+        let docRef = usersCollection.document(uid).collection("contexts").document(context.id)
         
         let foundContext = UnsecureContext.getContext(from: context.id)
         
@@ -222,7 +234,7 @@ class DataService : ObservableObject, Stateable {
         cp("context delete state set to \(context.isDeleting)", .debug)
         self.isPerformingManagedAGUpdate = true
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
-        let contextDocRef = Firestore.firestore().collection("users").document(uid).collection("contexts").document(context.id)
+        let contextDocRef = usersCollection.document(uid).collection("contexts").document(context.id)
         var completedDeletes = 0
         let initialPostCount = context.associatedPostIDs.count
         
@@ -286,7 +298,7 @@ class DataService : ObservableObject, Stateable {
     func fetchObjectives() async throws {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let objectivesCollection = userDocument.collection("objectives")
         let query = objectivesCollection
         
@@ -318,7 +330,7 @@ class DataService : ObservableObject, Stateable {
         cp("uploading objective...", .debug)
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let docRef = Firestore.firestore().collection("users").document(uid).collection("objectives").document(objective.id)
+        let docRef = usersCollection.document(uid).collection("objectives").document(objective.id)
         
         let encryptedObjective = SecureObjective(from: objective)
         
@@ -343,7 +355,7 @@ class DataService : ObservableObject, Stateable {
     func updateObjective(to objective: UnsecureObjective) async throws -> Result<Bool, Error> {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let docRef = Firestore.firestore().collection("users").document(uid).collection("objectives").document(objective.id)
+        let docRef = usersCollection.document(uid).collection("objectives").document(objective.id)
         
         let foundObjective = UnsecureObjective.getObjective(from: objective.id)
         
@@ -372,7 +384,7 @@ class DataService : ObservableObject, Stateable {
     @MainActor
     func deleteObjective(objectiveID: String) async throws -> Result<Bool, Error> {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let userObjectivesCollection = userDocument.collection("objectives")
         let docRef = userObjectivesCollection.document(objectiveID)
         
@@ -383,11 +395,116 @@ class DataService : ObservableObject, Stateable {
             }
             return .success(true)
         } catch {
-            cp("an error occured while deleting objective \(objectiveID): \(objectiveID)")
+            cp("an error occured while deleting objective \(objectiveID): \(error)")
             return .failure(error)
         }
+    }
+    
+    // MARK: - notable moments data section
+    
+    @MainActor
+    func fetchMoments() async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
+        let userDocument = usersCollection.document(uid)
+        let momentsCollection = userDocument.collection("moments")
+        let query = momentsCollection
         
+        let documents = try await query.getDocuments().documents
+        
+        self.loadedMoments = []
+        
+        for document in documents {
+            var optionalMoment: SecureNotableMoment?
+            do {
+                optionalMoment = try document.data(as: SecureNotableMoment.self)
+                
+                if let secureMoment = optionalMoment {
+                    let unsecureMoment = UnsecureNotableMoment(from: secureMoment)
+                    self.loadedMoments.append(unsecureMoment)
+                } else {
+                    cp("secure moment was not found", .warning)
+                }
+            } catch {
+                cp("error loading data from document: \(error.localizedDescription)", .warning)
+            }
+        }
+        
+        self.loadedMoments.sort { $0.date > $1.date }
+    }
+    
+    @MainActor
+    func uploadMoment(notableMoment: UnsecureNotableMoment)async throws -> Result<Bool, Error> {
+        cp("uploading moment...", .debug)
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = usersCollection.document(uid).collection("moments").document(notableMoment.id)
+        
+        let encryptedMoment = SecureNotableMoment(from: notableMoment)
+        
+        let res = await uploadData(document: docRef, uploadData: encryptedMoment)
+        
+        switch res {
+        case .success(let success):
+            if success {
+                withAnimation {
+                    self.loadedMoments.append(notableMoment)
+                    self.loadedMoments.sort { $0.date > $1.date }
+                }
+            }
+        case .failure(let error):
+            cp("error uploading objective: \(error)")
+        }
+        
+        return res
+    }
+    
+    @MainActor
+    func updateMoment(to moment: UnsecureNotableMoment) async throws -> Result<Bool, Error> {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let docRef = usersCollection.document(uid).collection("moments").document(moment.id)
+        
+        let foundMoment = UnsecureNotableMoment.getMoment(from: moment.id)
+        
+        if moment.title != foundMoment?.title {
+            foundMoment?.title = moment.title
+        }
+        if moment.description != foundMoment?.description {
+            foundMoment?.description = moment.description
+        }
+        if moment.date != foundMoment?.date {
+            foundMoment?.date = moment.date
+        }
+        if moment.pleasureSelection != foundMoment?.pleasureSelection {
+            foundMoment?.pleasureSelection = moment.pleasureSelection
+        }
+        
+        let encryptedMoment = SecureNotableMoment(from: moment)
+        
+        let result = await uploadData(document: docRef, uploadData: encryptedMoment)
+        
+        self.loadedMoments.sort { $0.date > $1.date }
+        return result
+    }
+    
+    @MainActor
+    func deleteMoment(notableMomentID: String) async throws -> Result<Bool, Error> {
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        let userDocument = usersCollection.document(uid)
+        let userMomentsCollection = userDocument.collection("moments")
+        let docRef = userMomentsCollection.document(notableMomentID)
+        
+        do {
+            try await docRef.delete()
+            withAnimation {
+                self.loadedMoments.removeAll(where: { $0.id == notableMomentID } )
+            }
+            return .success(true)
+        } catch {
+            cp("an error occured while deleting moment \(notableMomentID): \(error)")
+            return .failure(error)
+        }
     }
     
     
@@ -402,7 +519,7 @@ class DataService : ObservableObject, Stateable {
         var uploadSuccess = false
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let privatePostRef = Firestore.firestore().collection("users").document(uid).collection("posts").document()
+        let privatePostRef = usersCollection.document(uid).collection("posts").document()
         
         let privatePost = SecureMoodPost(id: privatePostRef.documentID, data: dailyData)
         //        let unsecure = UnsecureMoodPost(from: privatePost)
@@ -462,7 +579,7 @@ class DataService : ObservableObject, Stateable {
         
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let docRef = Firestore.firestore().collection("users").document(uid).collection("posts").document(newPost.id)
+        let docRef = usersCollection.document(uid).collection("posts").document(newPost.id)
         
         let encryptedUpdate = SecureMoodPost(from: newPost)
         
@@ -482,7 +599,7 @@ class DataService : ObservableObject, Stateable {
     @MainActor
     func deleteMoodPost(postID: String) async throws -> Result<Bool, Error> {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let userPostsCollection = userDocument.collection("posts")
         let docRef = userPostsCollection.document(postID)
         
@@ -522,7 +639,7 @@ class DataService : ObservableObject, Stateable {
     func fetchMoodPost(withID postID: String) async throws -> UnsecureMoodPost? {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let userPostsCollection = userDocument.collection("posts")
         var moodPost: UnsecureMoodPost?
         
@@ -548,7 +665,7 @@ class DataService : ObservableObject, Stateable {
     func getNumberOfEntries() async throws {
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let userPostsCollection = userDocument.collection("posts")
         
         let snapshot = try await userPostsCollection.count.getAggregation(source: .server)
@@ -562,7 +679,7 @@ class DataService : ObservableObject, Stateable {
     func fetchDocuments(limit: Int) async throws -> QuerySnapshot{
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
         
-        let userDocument = Firestore.firestore().collection("users").document(uid)
+        let userDocument = usersCollection.document(uid)
         let userPostsCollection = userDocument.collection("posts")
         let query = userPostsCollection.order(by: "timestamp", descending: true).limit(to: limit)
         

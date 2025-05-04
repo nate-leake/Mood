@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum PleasureScale: String {
+enum PleasureScale: String, Codable {
     case displeasure, uncertainty, pleasure
 }
 
@@ -16,8 +16,6 @@ struct BuildNotableMomentView: View {
     @Binding var description: String
     @Binding var date: Date
     @Binding var pleasureSelection: PleasureScale
-    @Binding var hasName: Bool
-    @Binding var hasDescription: Bool
     
     var body: some View {
         VStack (spacing: 20) {
@@ -31,17 +29,6 @@ struct BuildNotableMomentView: View {
                 .foregroundStyle(.appBlack)
             
                 .textInputAutocapitalization(.never)
-                .onChange(of: title) { old, new in
-                    if new.count > 0 && old.count == 0 {
-                        withAnimation(.easeInOut) {
-                            hasName = true
-                        }
-                    } else if new.count == 0 && old.count > 0 {
-                        withAnimation(.easeInOut) {
-                            hasName = false
-                        }
-                    }
-                }
             
             TextField("description", text: $description, axis: .vertical)
                 .padding(12)
@@ -51,22 +38,13 @@ struct BuildNotableMomentView: View {
                 .foregroundStyle(.appBlack)
                 .lineLimit(5...10)
                 .textInputAutocapitalization(.never)
-                .onChange(of: description) { old, new in
-                    if new.count > 0 && old.count == 0 {
-                        withAnimation(.easeInOut) {
-                            hasDescription = true
-                        }
-                    } else if new.count == 0 && old.count > 0 {
-                        withAnimation(.easeInOut) {
-                            hasDescription = false
-                        }
-                    }
-                }
             
             VStack (alignment: .leading) {
                 Text("what did you feel?")
                 
-                HStack {
+                HStack(/*spacing: 10*/) {
+                    Spacer()
+                    
                     VStack {
                         WavyCircle(waves: 5, amplitude: 10)
                             .frame(width: 40, height: 40)
@@ -79,7 +57,7 @@ struct BuildNotableMomentView: View {
                     }
                     .foregroundStyle(.pleasure.optimalForegroundColor())
                     .padding(10)
-                    .frame(minWidth: 100)
+                    .frame(minWidth: 100, maxWidth: 150)
                     .background(.pleasure)
                     .foregroundStyle(.appGreen.optimalForegroundColor())
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -91,7 +69,7 @@ struct BuildNotableMomentView: View {
                     }
                     
                     Spacer()
-                    
+                                        
                     VStack {
                         WavyCircle(waves: 7, amplitude: 20)
                             .frame(width: 40, height: 40)
@@ -103,7 +81,7 @@ struct BuildNotableMomentView: View {
                     }
                     .foregroundStyle(.uncertainty.optimalForegroundColor())
                     .padding(10)
-                    .frame(minWidth: 100)
+                    .frame(minWidth: 75, maxWidth: 100)
                     .background(.uncertainty)
                     .foregroundStyle(.appBlue.optimalForegroundColor())
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -113,7 +91,7 @@ struct BuildNotableMomentView: View {
                             pleasureSelection = .uncertainty
                         }
                     }
-                    
+                         
                     Spacer()
                     
                     VStack {
@@ -127,7 +105,7 @@ struct BuildNotableMomentView: View {
                     }
                     .foregroundStyle(.displeasure.optimalForegroundColor())
                     .padding(10)
-                    .frame(minWidth: 100)
+                    .frame(minWidth: 110, maxWidth: 150)
                     .background(.displeasure)
                     .foregroundStyle(.appRed.optimalForegroundColor())
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -138,9 +116,11 @@ struct BuildNotableMomentView: View {
                         }
                     }
                 
-                    
+                    Spacer()
                 
                 }
+                .frame(maxWidth: .infinity
+                )
             }
             .padding(12)
             .background(.appPurple.opacity(0.25))
@@ -182,9 +162,7 @@ struct BuildNotableMomentView: View {
     @Previewable @State var title: String = ""
     @Previewable @State var description: String = ""
     @Previewable @State var date: Date = Date.now
-    @Previewable @State var hasName: Bool = false
-    @Previewable @State var hasDescription: Bool = false
     @Previewable @State var pleasureSelection: PleasureScale = .uncertainty
     
-    BuildNotableMomentView(title: $title, description: $description, date: $date, pleasureSelection: $pleasureSelection, hasName: $hasName, hasDescription: $hasDescription)
+    BuildNotableMomentView(title: $title, description: $description, date: $date, pleasureSelection: $pleasureSelection)
 }
