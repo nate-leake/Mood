@@ -16,6 +16,8 @@
 		AF16D7682CC60494002BF1DC /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = AF16D7672CC60494002BF1DC /* SymbolPicker */; };
 		AF1BEC072AB0EFFB0092FB0D /* DailyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */; };
 		AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */; };
+		AF1D8E512DC578A000132716 /* EditNotableMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D8E502DC578A000132716 /* EditNotableMomentView.swift */; };
+		AF1D8E532DC5796800132716 /* UnsecureNotableMoment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D8E522DC5796800132716 /* UnsecureNotableMoment.swift */; };
 		AF1ECA3A2C9C8745005A225A /* ContextTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA392C9C8745005A225A /* ContextTileView.swift */; };
 		AF1ECA3C2C9C87F0005A225A /* UnsecureContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */; };
 		AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1ECA3D2C9C8A9B005A225A /* contexts.json */; };
@@ -117,6 +119,8 @@
 		AF16D7642CC5FAE6002BF1DC /* ContextBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextBuilderView.swift; sourceTree = "<group>"; };
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		AF1BEC082AB0F6710092FB0D /* AnalyticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsGenerator.swift; sourceTree = "<group>"; };
+		AF1D8E502DC578A000132716 /* EditNotableMomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotableMomentView.swift; sourceTree = "<group>"; };
+		AF1D8E522DC5796800132716 /* UnsecureNotableMoment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureNotableMoment.swift; sourceTree = "<group>"; };
 		AF1ECA392C9C8745005A225A /* ContextTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTileView.swift; sourceTree = "<group>"; };
 		AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureContext.swift; sourceTree = "<group>"; };
 		AF1ECA3D2C9C8A9B005A225A /* contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contexts.json; sourceTree = "<group>"; };
@@ -279,8 +283,9 @@
 			children = (
 				AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */,
 				AF529DA52DBD8F6300C94C10 /* NotableMomentsView.swift */,
-				AF529DA72DBD970A00C94C10 /* AddNotableMomentView.swift */,
 				AF67FDD92DC0429300D95FA3 /* BuildNotableMomentView.swift */,
+				AF529DA72DBD970A00C94C10 /* AddNotableMomentView.swift */,
+				AF1D8E502DC578A000132716 /* EditNotableMomentView.swift */,
 			);
 			path = NotableMoments;
 			sourceTree = "<group>";
@@ -360,13 +365,14 @@
 			isa = PBXGroup;
 			children = (
 				AF519BCC2ABBA5BB00850DD4 /* User.swift */,
-				AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */,
 				AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */,
 				AF2A89812AB0CB5600D05234 /* ContextLogContainer.swift */,
 				AF1ECA3B2C9C87F0005A225A /* UnsecureContext.swift */,
+				AFEC9B3A2AD4581800F35F8B /* UnsecureMoodPost.swift */,
+				AF1D8E522DC5796800132716 /* UnsecureNotableMoment.swift */,
+				AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */,
 				AF7EABE42D75586D0021E87C /* Mood.swift */,
 				AF7EABE62D75589F0021E87C /* Emotion.swift */,
-				AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -486,9 +492,9 @@
 		AF99328D2D99D1760022FE36 /* ToolsAndObjectives */ = {
 			isa = PBXGroup;
 			children = (
+				AF99328E2D99D18E0022FE36 /* ToolsAndObjectivesView.swift */,
 				AFE5AF5E2DA08E5200D737F0 /* Objectives */,
 				AFE5AF5B2DA0852800D737F0 /* Tools */,
-				AF99328E2D99D18E0022FE36 /* ToolsAndObjectivesView.swift */,
 			);
 			path = ToolsAndObjectives;
 			sourceTree = "<group>";
@@ -535,8 +541,8 @@
 		AFE5AF5E2DA08E5200D737F0 /* Objectives */ = {
 			isa = PBXGroup;
 			children = (
-				AFAB2ABE2D9DF17D00A0B03B /* ObjectiveTileView.swift */,
 				AFE5AF5F2DA08E6900D737F0 /* ObjectivesView.swift */,
+				AFAB2ABE2D9DF17D00A0B03B /* ObjectiveTileView.swift */,
 				AF0628B72DA205240092071B /* ObjectivesBuilderView.swift */,
 				AF4ABDEF2DAC17D800F4BC8D /* ObjectiveAdderView.swift */,
 				AF4ABDF12DAC197E00F4BC8D /* ObjectiveEditorView.swift */,
@@ -731,6 +737,7 @@
 				AF7EABE92D7558CD0021E87C /* BundleExtension.swift in Sources */,
 				AF4ABDF02DAC17D800F4BC8D /* ObjectiveAdderView.swift in Sources */,
 				AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */,
+				AF1D8E532DC5796800132716 /* UnsecureNotableMoment.swift in Sources */,
 				AF4015502AC61FAA003DE7DE /* AddNameView.swift in Sources */,
 				AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */,
 				AF4B33A42AB0B839004CF248 /* ProfileView.swift in Sources */,
@@ -765,6 +772,7 @@
 				AF841F9B2D220D050009709D /* CollapsableView.swift in Sources */,
 				AF16D7652CC5FAE6002BF1DC /* ContextBuilderView.swift in Sources */,
 				AF901FD42D6C268C0057AD11 /* LavaLampView.swift in Sources */,
+				AF1D8E512DC578A000132716 /* EditNotableMomentView.swift in Sources */,
 				AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */,
 				AF95217B2AD61DCA00BDA427 /* MoodLoggedView.swift in Sources */,
 				AF6BFA2F2AAFCD2C005B4DDA /* ContentView.swift in Sources */,
@@ -862,6 +870,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_ITSEncryptionExportComplianceCode = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -919,6 +928,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_ITSEncryptionExportComplianceCode = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;

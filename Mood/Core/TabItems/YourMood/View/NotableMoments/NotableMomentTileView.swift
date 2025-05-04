@@ -11,7 +11,7 @@ struct NotableMomentTileView: View {
     var title: String
     var description: String
     var date: Date
-    var color: Color = .appYellow
+    var color: Color = .uncertainty
     var withEditor: Bool = true
     
     var body: some View {
@@ -26,6 +26,7 @@ struct NotableMomentTileView: View {
                     .font(.callout)
                     .opacity(0.8)
             }
+            .lineLimit(1)
             .bold()
             
             .padding(.horizontal, 7)
@@ -34,6 +35,8 @@ struct NotableMomentTileView: View {
             .foregroundStyle(color.optimalForegroundColor())
                         
             Text(description)
+                .foregroundStyle(.appBlack)
+                .multilineTextAlignment(.leading)
                 .padding(.horizontal, 7)
                 .padding(.vertical, 6)
                 .lineLimit(4)
@@ -42,6 +45,7 @@ struct NotableMomentTileView: View {
         .background(color.opacity(0.25))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .padding(.horizontal, 24)
+        .transition(.opacity)
         
         
 //            VStack {
