@@ -83,7 +83,7 @@ struct ObjectiveEditorView: View {
                     }
                 }
                 .alert(
-                    "this action will permenantly erase this objective. tThis action cannot be undone.", isPresented: $isShowingDeleteConfirmation
+                    "this action will permenantly erase this objective. this action cannot be undone.", isPresented: $isShowingDeleteConfirmation
                 ) {
                     Button("cancel", role: .cancel) {}
                     
@@ -96,6 +96,7 @@ struct ObjectiveEditorView: View {
                     }
                     
                 }
+//                .sensoryFeedback(.warning, trigger: isShowingDeleteConfirmation)
             }
         }
     }
