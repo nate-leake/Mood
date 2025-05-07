@@ -36,10 +36,8 @@ struct ToolbarDeleteButton: View {
     }
 }
 
-#Preview {
-    var dm = "this will delete if you continue"
-    
-    ToolbarDeleteButton(deleteMessage: dm) {
+#Preview {    
+    ToolbarDeleteButton(deleteMessage: "this will delete if you continue") {
         print("DELETE ITEM!")
     }
 }
