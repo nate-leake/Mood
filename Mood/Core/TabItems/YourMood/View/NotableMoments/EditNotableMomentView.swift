@@ -11,8 +11,6 @@ struct EditNotableMomentView: View {
     @EnvironmentObject var dataService: DataService
     @Environment(\.dismiss) var dismiss
         
-    @State private var isShowingDeleteConfirmation = false
-    @State private var hapticDeleteTrigger: Bool = false
     @State var hasName: Bool = true
     @State var hasDescription: Bool = true
     var editing: UnsecureNotableMoment
@@ -73,31 +71,12 @@ struct EditNotableMomentView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing){
-                Button {
-                    hapticDeleteTrigger.toggle()
-                    isShowingDeleteConfirmation = true
-                } label: {
-                    HStack {
-                        Image(systemName: "trash")
-                            .font(.headline)
-                            .tint(.appRed)
+                ToolbarDeleteButton(deleteMessage: "this action will permenantly erase this notable moment. this action cannot be undone.") {
+                    Task {
+                        let _ = try await DataService.shared.deleteMoment(notableMomentID: moment.id)
+                        dismiss()
                     }
                 }
-                .alert(
-                    "this action will permenantly erase this notable moment. this action cannot be undone.", isPresented: $isShowingDeleteConfirmation
-                ) {
-                    Button("cancel", role: .cancel) {}
-                    
-                    Button("delete", role: .destructive) {
-                        Task {
-                            print("delete")
-                            let _ = try await DataService.shared.deleteMoment(notableMomentID: moment.id)
-                            dismiss()
-                        }
-                    }
-                    
-                }
-                .sensoryFeedback(.warning, trigger: hapticDeleteTrigger)
             }
         }
     }
