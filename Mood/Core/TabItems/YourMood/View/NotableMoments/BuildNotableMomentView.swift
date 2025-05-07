@@ -11,26 +11,34 @@ enum PleasureScale: String, Codable {
     case displeasure, uncertainty, pleasure
 }
 
+enum Field: Hashable {
+    case title
+    case description
+}
+
 struct BuildNotableMomentView: View {
     @Binding var title: String
     @Binding var description: String
     @Binding var date: Date
     @Binding var pleasureSelection: PleasureScale
     
+    @FocusState private var focusField: Field?
+    
     var body: some View {
         VStack (spacing: 20) {
             NotableMomentTileView(title: title == "" ? "title" : title, description: description == "" ? "description" : description, date: date, color: Color(pleasureSelection.rawValue.capitalized))
             
             TextField("title", text: $title)
+                .focused($focusField, equals: .title)
                 .padding(12)
                 .background(.appPurple.opacity(0.25))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 24)
                 .foregroundStyle(.appBlack)
-            
                 .textInputAutocapitalization(.never)
             
             TextField("description", text: $description, axis: .vertical)
+                .focused($focusField, equals: .description)
                 .padding(12)
                 .background(.appPurple.opacity(0.25))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -41,6 +49,8 @@ struct BuildNotableMomentView: View {
             
             VStack (alignment: .leading) {
                 Text("what did you feel?")
+                    .padding(.top, 12)
+                    .padding(.leading, 12)
                 
                 HStack(/*spacing: 10*/) {
                     Spacer()
@@ -69,7 +79,7 @@ struct BuildNotableMomentView: View {
                     }
                     
                     Spacer()
-                                        
+                    
                     VStack {
                         WavyCircle(waves: 7, amplitude: 20)
                             .frame(width: 40, height: 40)
@@ -91,7 +101,7 @@ struct BuildNotableMomentView: View {
                             pleasureSelection = .uncertainty
                         }
                     }
-                         
+                    
                     Spacer()
                     
                     VStack {
@@ -115,26 +125,38 @@ struct BuildNotableMomentView: View {
                             pleasureSelection = .displeasure
                         }
                     }
-                
+                    
                     Spacer()
-                
+                    
                 }
-                .frame(maxWidth: .infinity
-                )
+                .padding(.bottom, 12)
+                .frame(maxWidth: .infinity)
             }
-            .padding(12)
             .background(.appPurple.opacity(0.25))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 24)
+            .toolbar {
+                  ToolbarItemGroup(placement: .keyboard) {
+                     Spacer()
+                     Button(focusField == .title ? "Next" : "Done") {
+                         if focusField == .title {
+                           focusField = .description
+                        } else {
+                           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                           focusField = nil
+                        }
+                     }
+                  }
+               }
             
             VStack (alignment: .leading) {
                 Text("when did it happen?")
-                    
+                
                 HStack {
                     Spacer()
                     DatePicker(selection: $date, in:...Date.now/*, displayedComponents: .date*/){ EmptyView() }
                         .tint(.appPurple)
-//                        .background(.red)
+                    //                        .background(.red)
                         .frame(width: 200)
                     Spacer()
                 }
