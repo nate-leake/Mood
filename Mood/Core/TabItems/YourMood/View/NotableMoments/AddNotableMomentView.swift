@@ -47,6 +47,7 @@ struct AddNotableMomentView: View {
                 }
             
             Button {
+            print("AddNotableMomentView: hasName and hasDescription: \(hasName), \(hasDescription). OR: \(hasName || hasDescription). NOT OR \(!hasName || !hasDescription)")
                 let newMoment: UnsecureNotableMoment = UnsecureNotableMoment(title: title, description: description, date: date, pleasureSelection: pleasureSelection)
                 Task {
                     try await dataService.uploadMoment(notableMoment: newMoment)
@@ -64,7 +65,7 @@ struct AddNotableMomentView: View {
                     .padding(.horizontal, 24)
                     .foregroundStyle(.white)
             }
-            .disabled(!hasName && !hasDescription)
+            .disabled(!hasName || !hasDescription)
             
         }
         .navigationTitle("add a moment")
