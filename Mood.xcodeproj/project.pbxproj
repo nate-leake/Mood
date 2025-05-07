@@ -88,6 +88,7 @@
 		AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */; };
 		AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */; };
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
+		AFDF21462DCAE89B0085DF77 /* ToolbarDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */; };
 		AFDFDB642ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */; };
 		AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE59E812C768BCA002285E8 /* NotificationService.swift */; };
 		AFE5AF5D2DA0855300D737F0 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE5AF5C2DA0855300D737F0 /* ToolsView.swift */; };
@@ -190,6 +191,7 @@
 		AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableMomentTileView.swift; sourceTree = "<group>"; };
 		AFDC464E2CBDAD8200AD5782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarDeleteButton.swift; sourceTree = "<group>"; };
 		AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDailyMoodSuggestionView.swift; sourceTree = "<group>"; };
 		AFE59E812C768BCA002285E8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AFE5AF5C2DA0855300D737F0 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				AF5542822C8A0B4900CD4DC0 /* DropDownView.swift */,
 				AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */,
 				AF841F9A2D220D050009709D /* CollapsableView.swift */,
+				AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 				AF4B33AC2AB0C6C6004CF248 /* GlobalMoodView.swift in Sources */,
 				AF841F9B2D220D050009709D /* CollapsableView.swift in Sources */,
 				AF16D7652CC5FAE6002BF1DC /* ContextBuilderView.swift in Sources */,
+				AFDF21462DCAE89B0085DF77 /* ToolbarDeleteButton.swift in Sources */,
 				AF901FD42D6C268C0057AD11 /* LavaLampView.swift in Sources */,
 				AF1D8E512DC578A000132716 /* EditNotableMomentView.swift in Sources */,
 				AF8897652C8A49E90077B847 /* YourMoodsChartsView.swift in Sources */,
