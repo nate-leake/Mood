@@ -84,6 +84,7 @@
 		AFB789632C9CBD28007B375A /* ContextLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB789622C9CBD28007B375A /* ContextLogView.swift */; };
 		AFBABB2F2AB24C9A00ADCB8A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */; };
 		AFC28D2E2D44786B002D2A53 /* LogHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC28D2D2D447833002D2A53 /* LogHistoryView.swift */; };
+		AFC4D8682DD54ACC00758411 /* TabBarVisibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
 		AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */; };
 		AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */; };
@@ -186,6 +187,7 @@
 		AFB789622C9CBD28007B375A /* ContextLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextLogView.swift; sourceTree = "<group>"; };
 		AFBABB2E2AB24C9A00ADCB8A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		AFC28D2D2D447833002D2A53 /* LogHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHistoryView.swift; sourceTree = "<group>"; };
+		AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVisibilityController.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysFeelingsView.swift; sourceTree = "<group>"; };
 		AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableMomentTileView.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				AF8173932CC2D86300CE76BE /* LoadableAnimator.swift */,
 				AF841F9A2D220D050009709D /* CollapsableView.swift */,
 				AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */,
+				AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 		AF4B33A72AB0BCA4004CF248 /* YourMood */ = {
 			isa = PBXGroup;
 			children = (
+				AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */,
 				AFEC9B362AD453D700F35F8B /* View */,
 				AFEC9B372AD453E000F35F8B /* ViewModel */,
 			);
@@ -556,7 +560,6 @@
 		AFEC9B362AD453D700F35F8B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AF4B33A82AB0C63F004CF248 /* YourMoodView.swift */,
 				AFDFDB632ACE2C6B00D8F37B /* LogDailyMoodSuggestionView.swift */,
 				AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */,
 				AF529DA42DBD8F4B00C94C10 /* NotableMoments */,
@@ -738,6 +741,7 @@
 				AFEC9B392AD4543200F35F8B /* UploadMoodViewModel.swift in Sources */,
 				AF1BEC092AB0F6710092FB0D /* AnalyticsGenerator.swift in Sources */,
 				AF7EABE92D7558CD0021E87C /* BundleExtension.swift in Sources */,
+				AFC4D8682DD54ACC00758411 /* TabBarVisibilityController.swift in Sources */,
 				AF4ABDF02DAC17D800F4BC8D /* ObjectiveAdderView.swift in Sources */,
 				AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */,
 				AF1D8E532DC5796800132716 /* UnsecureNotableMoment.swift in Sources */,
