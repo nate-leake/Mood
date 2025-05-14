@@ -67,7 +67,7 @@ struct ObjectivesBuilderView: View {
             
             Spacer()
         }
-        
+        .withTabBarVisibilityController()
     }
 }
 

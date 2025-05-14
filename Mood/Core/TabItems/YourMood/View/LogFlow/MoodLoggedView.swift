@@ -10,7 +10,6 @@ import SwiftUI
 struct MoodLoggedView: View {
     @EnvironmentObject var viewModel: UploadMoodViewModel
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var tabBarManager = TabBarManager.shared
     
     @State private var appear = false
     
@@ -67,8 +66,8 @@ struct MoodLoggedView: View {
         }
         .transition(.slide)
         .navigationBarBackButtonHidden(true)
+        .withTabBarVisibilityController()
         .onAppear{
-            tabBarManager.hideTabBar()
             var uploadStatus : Bool = false
             Task {
                 uploadStatus = try await viewModel.uploadMoodPost()
@@ -95,8 +94,6 @@ struct MoodLoggedView: View {
                     }
                     
                     _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (closeTimer) in
-                        tabBarManager.unhideTabBar()
-//                        tabBarManager.setTabSelection(to: .yourMood)
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }

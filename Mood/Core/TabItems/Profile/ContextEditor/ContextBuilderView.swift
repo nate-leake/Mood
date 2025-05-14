@@ -353,7 +353,7 @@ struct ContextBuilderView: View {
                 : "editing \"\(editingContext?.name ?? "")\""
         )
         .navigationBarTitleDisplayMode(.inline)
-
+        .withTabBarVisibilityController()
     }
 }
 
