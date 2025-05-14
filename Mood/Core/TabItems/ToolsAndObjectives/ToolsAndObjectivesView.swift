@@ -8,108 +8,84 @@
 import SwiftUI
 
 struct ToolsAndObjectivesView: View {
-    @EnvironmentObject var dataService: DataService
-    let mainGridLayout = [
-        GridItem(.adaptive(minimum:150), spacing: 0),
-        GridItem(.adaptive(minimum:150), spacing: 0)
-    ]
-    
-    let spacedHGridLayout = [
-        GridItem(.adaptive(minimum: 50), spacing: 0),
-        GridItem(.adaptive(minimum: 50), spacing: 0),
-        GridItem(.adaptive(minimum: 50), spacing: 0)
-    ]
-    
+    @ObservedObject var dataService: DataService = DataService.shared
+
     var body: some View {
         NavigationStack {
             
-            LazyVGrid(columns: mainGridLayout) {
-                
-                LazyHGrid(rows: spacedHGridLayout){
-                    
-                    NavigationLink {
-                        ToolsView()
-                    } label: {
-                        HStack() {
-                            Spacer()
-                            
-                            Image(systemName: "link")
-                                .font(.footnote)
-                                .bold()
-                                .frame(width: 30, height: 30)
-                                .background(.white)
-                                .clipShape(Circle())
-                            
-                            Text("external resouces")
-                                .foregroundStyle(.white)
-                                .bold()
-                                .font(.caption)
-                                .padding(7)
-                            
-                            Spacer()
-                        }
-                        .frame(width: 150, height: 50)
-                        .background(.appPurple)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                    
-                    Text("")
-                        .frame(width: 150, height: 50)
-                    
-                    Text("")
-                        .frame(width: 150, height: 50)
-//                        .background(.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
-                }
-                .frame(width: 150, height: 150)
-                
-                
+            VStack {
+
                 NavigationLink {
                     ObjectivesView()
                 } label: {
                     VStack(alignment: .center) {
-                        Text("objectives")
-                            .foregroundStyle(.black)
+                        HStack {
+                            Text("objectives")
+                                .foregroundStyle(.black)
+                                .bold()
+                                .padding(12)
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(.appYellow)
+                        
+                        OverflowLayout {
+                            if dataService.loadedObjectives.count == 0 {
+                                ObjectiveTileView(frameSize: 100, label: "add one today", color: .appBlue, isCompleted: false)
+                                
+                            } else {
+                                ForEach(dataService.loadedObjectives.prefix(6)) { objective in
+                                    if !objective.isCompleted {
+                                        ObjectiveTileView(frameSize: 100, label: objective.title, color: objective.color, isCompleted: false)
+                                    }
+                                }
+                            }
+                            
+//                            ObjectiveTileView(frameSize: 100, label: "go fishing more", color: .pink, isCompleted: false)
+//                            ObjectiveTileView(frameSize: 100, label: "finish module 1 in HM", color: .appRed, isCompleted: false)
+//                            ObjectiveTileView(frameSize: 100, label: "extra things!!", color: .blue, isCompleted: false)
+                        }
+//                        .padding(.horizontal, 10)
+                        .padding(.bottom, 12)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: 150)
+                    .background(.appYellow.opacity(0.25))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.horizontal, 24)
+                    
+                }
+                
+                NavigationLink {
+                    ToolsView()
+                } label: {
+                    HStack() {
+                        Spacer()
+                        
+                        Image(systemName: "link")
+                            .font(.footnote)
+                            .bold()
+                            .frame(width: 30, height: 30)
+                            .background(.white)
+                            .clipShape(Circle())
+                        
+                        Text("external resources")
+                            .foregroundStyle(.white)
                             .bold()
                             .padding(7)
-                        Spacer()
-                            
-                        HStack {
-                            WavyCircle(waves: 6, amplitude: 10)
-//                                .stroke(Color.appBlue, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                                .fill(Color.appBlue)
-                                .frame(width: 35, height: 35)
-                            
-                            WavyCircle(waves: 6, amplitude: 10)
-//                                .stroke(Color.appRed, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                                .fill(Color.appRed)
-                                .frame(width: 35, height: 35)
-                        }
-                        HStack {
-                            WavyCircle(waves: 6, amplitude: 10)
-//                                .stroke(Color.appGreen, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                                .fill(Color.appGreen)
-                                .frame(width: 35, height: 35)
-                            WavyCircle(waves: 6, amplitude: 10)
-//                                .stroke(Color.appPurple, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                                .fill(Color.appPurple)
-                                .frame(width: 35, height: 35)
-                            WavyCircle(waves: 6, amplitude: 10)
-//                                .stroke(Color.appBlue, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                                .fill(Color.appBlue)
-                                .frame(width: 35, height: 35)
-                            
-                        }
+                        
                         Spacer()
                     }
-                    .frame(width: 150, height: 150)
-                    .background(.appYellow)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(.appPurple)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.horizontal, 24)
                 }
+                
+                Spacer()
             }
             .padding(.top, 35)
-            Spacer()
         }
         
     }
@@ -117,4 +93,7 @@ struct ToolsAndObjectivesView: View {
 
 #Preview {
     ToolsAndObjectivesView()
+        .onAppear{
+//            DataService.shared.loadedObjectives = UnsecureObjective.MOCK_DATA
+        }
 }

@@ -26,6 +26,29 @@ extension Color {
         UIColor(self).resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)).toSwiftUIColor()
     }
     
+    /// Returns the inverted mode varient of the color
+    func invertModeVarient() -> Color {
+        let currentStyle = UITraitCollection.current.userInterfaceStyle
+        
+        switch currentStyle {
+        case .dark :
+            return self.lightModeVariant()
+        case .light:
+            return self.darkModeVariant()
+        default:
+            return self
+        }
+    }
+    
+    /// Returns the optimal foreground color for the receiving color
+    func optimalForegroundColor() -> Color {
+        if self.isLight() {
+            return .black
+        } else {
+            return .white
+        }
+    }
+    
     /// Initialize the Color with a hex value
     /// - Parameter hex: The hex value as a string of the desired color
     init(hex: String) {

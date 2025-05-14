@@ -66,6 +66,7 @@ struct MoodLoggedView: View {
         }
         .transition(.slide)
         .navigationBarBackButtonHidden(true)
+        .withTabBarVisibilityController()
         .onAppear{
             var uploadStatus : Bool = false
             Task {

@@ -7,14 +7,37 @@
 
 import SwiftUI
 
+enum TabItem {
+    case yourMood, toolsAndObjectives, profile
+}
+
+class TabBarManager: ObservableObject {
+    @Published var tabBarVisibility: Visibility = .visible
+    
+    static var shared = TabBarManager()
+    
+    func hideTabBar() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            self.tabBarVisibility = .hidden
+        }
+    }
+    
+    func unhideTabBar() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            self.tabBarVisibility = .visible
+        }
+    }
+}
+
 struct MainTabBar: View {
     // selection var forces the default selected tab to match the tag assigned to that tabItem
-    @State private var selection = 1
     @EnvironmentObject var dataService: DataService
+    @State var selected: Int = 1
+    @ObservedObject var tabViewManager: TabBarManager = TabBarManager.shared
     let user: User
     
     var body: some View {
-        TabView(selection:$selection){
+        TabView(selection: $selected) {
 //            GlobalMoodViewWrapper()
 //                .environmentObject(dataService)
 //                .tabItem {
@@ -28,6 +51,7 @@ struct MainTabBar: View {
                     Image(systemName: "brain")
                 }
                 .tag(1)
+                .toolbar(tabViewManager.tabBarVisibility, for: .tabBar)
             
             ToolsAndObjectivesView()
                 .environmentObject(dataService)
@@ -35,6 +59,7 @@ struct MainTabBar: View {
                     Image(systemName: "wrench.and.screwdriver.fill")
                 }
                 .tag(2)
+                .toolbar(tabViewManager.tabBarVisibility, for: .tabBar)
             
             ProfileView(user: user)
                 .environmentObject(dataService)
@@ -42,7 +67,10 @@ struct MainTabBar: View {
                     Image(systemName: "person")
                 }
                 .tag(3)
+                .toolbar(tabViewManager.tabBarVisibility, for: .tabBar)
+            
         }
+        
     }
 }
 

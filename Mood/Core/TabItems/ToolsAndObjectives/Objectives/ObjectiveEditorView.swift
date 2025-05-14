@@ -72,29 +72,12 @@ struct ObjectiveEditorView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing){
-                Button {
-                    isShowingDeleteConfirmation = true
-                } label: {
-                    HStack {
-                        Image(systemName: "trash")
-                            .font(.headline)
-                            .tint(.appRed)
-                            .padding()
+                ToolbarDeleteButton(deleteMessage: "this action will permenantly erase this objective. this action cannot be undone.") {
+                    Task {
+                        print("delete")
+                        let _ = try await DataService.shared.deleteObjective(objectiveID: objective.id)
+                        dismiss()
                     }
-                }
-                .alert(
-                    "this action will permenantly erase this objective. tThis action cannot be undone.", isPresented: $isShowingDeleteConfirmation
-                ) {
-                    Button("cancel", role: .cancel) {}
-                    
-                    Button("delete", role: .destructive) {
-                        Task {
-                            print("delete")
-                            let _ = try await DataService.shared.deleteObjective(objectiveID: objective.id)
-                            dismiss()
-                        }
-                    }
-                    
                 }
             }
         }

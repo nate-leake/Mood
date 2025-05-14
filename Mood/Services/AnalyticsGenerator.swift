@@ -35,11 +35,19 @@ class AnalyticsGenerator : ObservableObject {
             groupedItems[mood.moodType, default: 0] += mood.intensity
         }
         
+        groupedItems = groupedItems.filter { $0.value != 0 }
+        
         // Step 2: Convert the dictionary to an array and sort by quantity in descending order
         let sortedItems = groupedItems.map {
             (mood: $0.key, intensity: $0.value)
         }
-            .sorted { $0.intensity > $1.intensity }
+            .sorted {
+                if $0.intensity == $1.intensity {
+                    $0.mood < $1.mood
+                } else {
+                    $0.intensity > $1.intensity
+                }
+            }
         
         return sortedItems
     }

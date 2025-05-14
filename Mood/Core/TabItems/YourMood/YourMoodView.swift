@@ -24,7 +24,7 @@ struct YourMoodView: View {
                 // and that if they have not logged yet that the logging window is open
                 if !dataService.userHasLoggedToday && dataService.logWindowOpen || true {
                     Section {
-                        Text("log today's mood")
+                        Text("log your mood")
                             .fontWeight(.bold)
                             .foregroundStyle(.white.opacity(0.75))
                             .modifier(ListRowBackgroundModifer(foregroundColor: .appBlue))
@@ -40,23 +40,19 @@ struct YourMoodView: View {
                         YourMoodsChartsView()
                     } label: {
                         
-                        HStack {
+                        HStack(alignment: .top) {
                             if loadingSuccess {
                                 
-                                VStack{
-                                    HStack{
+                                VStack(alignment: .leading) {
                                         Text("recent moods")
                                             .fontWeight(.bold)
                                             .foregroundStyle(.appBlack.opacity(0.5))
-                                        Spacer()
-                                    }
+                                    
                                     if recentMoods?.count ?? 0 > 0 {
-                                        Spacer()
-                                        Spacer()
                                         if let recentMoodData = recentMoods{
                                             HStack{
                                                 OverflowLayout {
-                                                    ForEach(0...3, id:\.self) { index in
+                                                    ForEach(0...recentMoodData.count-1, id:\.self) { index in
                                                         HStack{
                                                             Circle()
                                                                 .fill(Mood(name: recentMoodData[index].mood, emotions: []).getColor())
@@ -68,10 +64,8 @@ struct YourMoodView: View {
                                                 }
                                                 Spacer()
                                             }
+                                            .padding(.top, 7)
                                         }
-                                        
-                                        Spacer()
-                                        
                                     } else {
                                         Text("charts will be availble after you log your mood at least once")
                                             .padding(.vertical)
@@ -95,15 +89,11 @@ struct YourMoodView: View {
                                 
                             }
                             else {
-                                VStack{
-                                    HStack{
-                                        Text("recent moods")
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(.appBlack.opacity(0.5))
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                    
+                                VStack(alignment: .leading){
+                                    Text("recent moods")
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(.appBlack.opacity(0.5))
+//                                    Spacer()
                                 }
                                 Spacer()
                                 Chart {
@@ -125,51 +115,72 @@ struct YourMoodView: View {
                 }
                 .modifier(ListRowBackgroundModifer())
                 
+//                Section {
+//                    NavigationLink {
+//                        Text("More charts go here too!!")
+//                    } label: {
+//                        HStack {
+//                            VStack{
+//                                Text("recent emotions")
+//                                    .fontWeight(.bold)
+//                                    .foregroundStyle(.appBlack.opacity(0.5))
+//                                Spacer()
+//                            }
+//                            Spacer()
+//                            Chart {
+//                                BarMark(x: .value("logs", 20), y: .value("mood", "peaceful"))
+//                                    .foregroundStyle(.happiness)
+//                                    .cornerRadius(4)
+//                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
+//                                        Text("peaceful").font(.caption)
+//                                    })
+//                                
+//                                BarMark(x: .value("logs", 14), y: .value("mood", "confident"))
+//                                    .foregroundStyle(.happiness)
+//                                    .cornerRadius(4)
+//                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
+//                                        Text("confident").font(.caption)
+//                                    })
+//                                
+//                                BarMark(x: .value("logs", 12), y: .value("mood", "calm"))
+//                                    .foregroundStyle(.neutrality)
+//                                    .cornerRadius(4)
+//                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
+//                                        Text("calm").font(.caption)
+//                                    })
+//                                
+//                                BarMark(x: .value("logs", 9), y: .value("mood", "annoyed"))
+//                                    .foregroundStyle(.anger)
+//                                    .cornerRadius(4)
+//                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
+//                                        Text("annoyed").font(.caption)
+//                                    })
+//                            }
+//                            //                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 130, height: 70)
+//                            .chartYAxis(.hidden)
+//                            .chartXAxis(.hidden)
+//                        }
+//                    }
+//                }
+//                .modifier(ListRowBackgroundModifer())
+                
                 Section {
-                    NavigationLink {
-                        Text("More charts go here too!!")
+                    NavigationLink{
+                        NotableMomentsView()
                     } label: {
-                        HStack {
-                            VStack{
-                                Text("recent emotions")
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading){
+                                
+                                Text("notable moments")
                                     .fontWeight(.bold)
                                     .foregroundStyle(.appBlack.opacity(0.5))
-                                Spacer()
+                                
+                                
+                                Text("keep track of significant moments")
+                                    .padding(.top, 7)
                             }
-                            Spacer()
-                            Chart {
-                                BarMark(x: .value("logs", 20), y: .value("mood", "peaceful"))
-                                    .foregroundStyle(.happiness)
-                                    .cornerRadius(4)
-                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
-                                        Text("peaceful").font(.caption)
-                                    })
-                                
-                                BarMark(x: .value("logs", 14), y: .value("mood", "confident"))
-                                    .foregroundStyle(.happiness)
-                                    .cornerRadius(4)
-                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
-                                        Text("confident").font(.caption)
-                                    })
-                                
-                                BarMark(x: .value("logs", 12), y: .value("mood", "calm"))
-                                    .foregroundStyle(.neutrality)
-                                    .cornerRadius(4)
-                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
-                                        Text("calm").font(.caption)
-                                    })
-                                
-                                BarMark(x: .value("logs", 9), y: .value("mood", "annoyed"))
-                                    .foregroundStyle(.anger)
-                                    .cornerRadius(4)
-                                    .annotation(position: .leading, alignment: .trailing, spacing: 5, content: {
-                                        Text("annoyed").font(.caption)
-                                    })
-                            }
-                            //                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 130, height: 70)
-                            .chartYAxis(.hidden)
-                            .chartXAxis(.hidden)
+                            
                         }
                     }
                 }
@@ -187,12 +198,11 @@ struct YourMoodView: View {
                     NavigationLink{
                         LogHistoryView()
                     } label: {
-                        HStack {
-                            VStack{
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading){
                                 Text("log history")
                                     .fontWeight(.bold)
                                     .foregroundStyle(.appBlack.opacity(0.5))
-                                Spacer()
                             }
                             Spacer()
                             ZStack {
