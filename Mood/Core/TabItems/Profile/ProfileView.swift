@@ -37,8 +37,8 @@ struct ProfileView: View {
                                 .fill(.appGreen)
                                 .frame(width: 80, height: 80)
                         )
-                        //                    .padding(.top, 20)
-                        .padding(.bottom, 10)
+                        .padding(.top, 3)
+                        .padding(.bottom, 3)
                         Spacer()
                     }
                     .modifier(ListRowBackgroundModifer(foregroundColor: .clear))
