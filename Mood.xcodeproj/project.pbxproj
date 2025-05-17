@@ -274,13 +274,6 @@
 			path = ContextEditor;
 			sourceTree = "<group>";
 		};
-		AF2864752D27759800E3CAA6 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		AF2A89802AB0CAFF00D05234 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -615,7 +608,6 @@
 		AFEC9B3C2AD45F9C00F35F8B /* LogFlow */ = {
 			isa = PBXGroup;
 			children = (
-				AF2864752D27759800E3CAA6 /* ViewModel */,
 				AF1ECA392C9C8745005A225A /* ContextTileView.swift */,
 				AFEC9B3F2AD4615200F35F8B /* MoodTagView.swift */,
 				AF4392332AD4D42700E4FC15 /* EmotionTagView.swift */,
