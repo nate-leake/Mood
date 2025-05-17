@@ -366,8 +366,13 @@ class DataService : ObservableObject, Stateable {
             foundObjective?.description = objective.description
         }
         if objective.color != foundObjective?.color {
-            foundObjective?.colorHex = objective.colorHex
+            if let newColor = objective.color.toHex() {
+                foundObjective?.colorHex = newColor
+                objective.colorHex = newColor
+            }
             foundObjective?.color = objective.color
+            
+            print("changing \(objective.title) color from \(foundObjective?.colorHex ?? "!unavailable!") to \(objective.colorHex)")
         }
         if objective.isCompleted != foundObjective?.isCompleted {
             foundObjective?.isCompleted = objective.isCompleted

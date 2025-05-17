@@ -12,19 +12,19 @@ enum TabItem {
 }
 
 class TabBarManager: ObservableObject {
-    @Published var tabBarVisibility: Visibility = .visible
+    @Published var tabBarVisibile: Bool = true
     
     static var shared = TabBarManager()
     
     func hideTabBar() {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            self.tabBarVisibility = .hidden
+        withAnimation(.easeInOut(duration: 0.4)) {
+            self.tabBarVisibile = false
         }
     }
     
     func unhideTabBar() {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            self.tabBarVisibility = .visible
+        withAnimation(.easeInOut(duration: 0.4)) {
+            self.tabBarVisibile = true
         }
     }
 }
@@ -32,12 +32,12 @@ class TabBarManager: ObservableObject {
 struct MainTabBar: View {
     // selection var forces the default selected tab to match the tag assigned to that tabItem
     @EnvironmentObject var dataService: DataService
-    @State var selected: Int = 1
+    @State var selected: TabBarItem = .mood
     @ObservedObject var tabViewManager: TabBarManager = TabBarManager.shared
     let user: User
     
     var body: some View {
-        TabView(selection: $selected) {
+        TabBar(selection: $selected, isVisible: tabViewManager.tabBarVisibile) {
 //            GlobalMoodViewWrapper()
 //                .environmentObject(dataService)
 //                .tabItem {
@@ -47,27 +47,15 @@ struct MainTabBar: View {
             
             YourMoodView()
                 .environmentObject(dataService)
-                .tabItem {
-                    Image(systemName: "brain")
-                }
-                .tag(1)
-                .toolbar(tabViewManager.tabBarVisibility, for: .tabBar)
+                .tabBarItem(tab: .mood, selection: $selected)
             
             ToolsAndObjectivesView()
                 .environmentObject(dataService)
-                .tabItem {
-                    Image(systemName: "wrench.and.screwdriver.fill")
-                }
-                .tag(2)
-                .toolbar(tabViewManager.tabBarVisibility, for: .tabBar)
+                .tabBarItem(tab: .tools, selection: $selected)
             
             ProfileView(user: user)
                 .environmentObject(dataService)
-                .tabItem {
-                    Image(systemName: "person")
-                }
-                .tag(3)
-                .toolbar(tabViewManager.tabBarVisibility, for: .tabBar)
+                .tabBarItem(tab: .profile, selection: $selected)
             
         }
         

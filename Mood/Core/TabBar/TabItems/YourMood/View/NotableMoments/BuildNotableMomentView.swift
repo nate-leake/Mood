@@ -23,9 +23,7 @@ struct BuildNotableMomentView: View {
     @Binding var pleasureSelection: PleasureScale
     
     @FocusState private var focusField: Field?
-    
-    @State private var tabbarVisible: Bool = true
-    
+        
     var body: some View {
         VStack (spacing: 20) {
             NotableMomentTileView(title: title == "" ? "title" : title, description: description == "" ? "description" : description, date: date, color: Color(pleasureSelection.rawValue.capitalized))

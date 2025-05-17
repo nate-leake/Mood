@@ -23,7 +23,7 @@ struct TabBarVisibilityController: ViewModifier {
                     TabBarManager.shared.unhideTabBar()
                 }
             }
-            .animation(.easeInOut, value: TabBarManager.shared.tabBarVisibility)
+            .animation(.easeInOut, value: TabBarManager.shared.tabBarVisibile)
     }
 }
 

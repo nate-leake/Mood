@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ObjectivesView: View {
+    @Namespace private var objectivesNamespace
     @ObservedObject var dataService: DataService = DataService.shared
     let layout = [
         GridItem(.adaptive(minimum:150), spacing: 0),
@@ -29,9 +30,11 @@ struct ObjectivesView: View {
                         if !objective.isCompleted {
                             NavigationLink {
                                 ObjectiveEditorView(editing: objective)
+                                    .navigationTransition(.zoom(sourceID: objective.id, in: objectivesNamespace))
                             } label: {
                                 ObjectiveTileView(label: objective.title, color: objective.color, isCompleted: objective.isCompleted).padding(.bottom)
                             }
+                            .matchedTransitionSource(id: objective.id, in: objectivesNamespace)
                         }
                     }
                     
@@ -48,13 +51,18 @@ struct ObjectivesView: View {
                     if objective.isCompleted {
                         NavigationLink {
                             ObjectiveEditorView(editing: objective)
+                                .navigationTransition(.zoom(sourceID: objective.id, in: objectivesNamespace))
                         } label: {
                             ObjectiveTileView(label: objective.title, color: objective.color, isCompleted: objective.isCompleted).padding(.bottom)
                         }
+                        .matchedTransitionSource(id: objective.id, in: objectivesNamespace)
                     }
                 }
             }
             .padding(.top)
+            Rectangle()
+                .fill(.clear)
+                .frame(height: 60)
         }
         .navigationTitle("objectives")
         .navigationBarTitleDisplayMode(.inline)

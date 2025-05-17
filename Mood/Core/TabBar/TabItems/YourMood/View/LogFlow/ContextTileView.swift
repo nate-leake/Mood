@@ -170,7 +170,7 @@ struct ContextTileView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing){
                 NavigationLink {
-                    ContextBuilderView()
+                    AddContextView()
                 } label: {
                     Image(systemName: "plus")
                         .imageScale(.large)

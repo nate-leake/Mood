@@ -71,6 +71,10 @@ struct ToolsView: View {
                 .foregroundStyle(.appBlack.opacity(0.7))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
+            
+            Rectangle()
+                .fill(.clear)
+                .frame(height: 60)
         }
         .navigationTitle("external resources")
         .navigationBarTitleDisplayMode(.inline)
