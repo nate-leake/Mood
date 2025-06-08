@@ -36,7 +36,30 @@ struct ToolbarDeleteButton: View {
     }
 }
 
-#Preview {    
+struct WithToolbarDeleteButton: ViewModifier {
+    let deleteMessage: String
+    let deleteAction: () -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing){
+                    ToolbarDeleteButton(deleteMessage: deleteMessage) {
+                        deleteAction()
+                    }
+                }
+            }
+    }
+}
+
+
+extension View{
+    func withToolbarDeleteButton(deleteMessage: String, deleteAction: @escaping () -> Void) -> some View {
+        self.modifier(WithToolbarDeleteButton(deleteMessage: deleteMessage, deleteAction: deleteAction))
+    }
+}
+
+#Preview {
     ToolbarDeleteButton(deleteMessage: "this will delete if you continue") {
         print("DELETE ITEM!")
     }

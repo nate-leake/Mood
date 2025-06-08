@@ -45,17 +45,15 @@ struct ContentView: View {
                     WelcomeView()
                         .environmentObject(registrationViewModel)
                 } else if let currentUser = viewModel.currentUser {
-                    if authService.isUnlocked{
+                    ZStack {
                         MainTabBar(user: currentUser)
-                            .environmentObject(dataService)
-                            .onAppear{
-//                                testMassUpload()
-                            }
-                    } else {
-                        ValidatePinView()
-                            .onChange(of: authService.isUnlocked) { old, new in
-                                print("old: \(old), new: \(new)")
-                            }
+                        if !authService.isUnlocked {
+                            ValidatePinView()
+                                .zIndex(.infinity)
+                                .onChange(of: authService.isUnlocked) { old, new in
+                                    print("old: \(old), new: \(new)")
+                                }
+                        }
                     }
                 }
             }
