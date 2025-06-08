@@ -72,10 +72,8 @@ struct ToolsView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             
-            Rectangle()
-                .fill(.clear)
-                .frame(height: 60)
         }
+        .reservingTabBarSpace()
         .navigationTitle("external resources")
         .navigationBarTitleDisplayMode(.inline)
     }
