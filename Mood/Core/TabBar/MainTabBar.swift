@@ -31,7 +31,7 @@ class TabBarManager: ObservableObject {
 
 struct MainTabBar: View {
     // selection var forces the default selected tab to match the tag assigned to that tabItem
-    @EnvironmentObject var dataService: DataService
+    @ObservedObject var dataService: DataService = DataService.shared
     @State var selected: TabBarItem = .mood
     @ObservedObject var tabViewManager: TabBarManager = TabBarManager.shared
     let user: User
@@ -63,6 +63,12 @@ struct MainTabBar: View {
 }
 
 #Preview {
+    @Previewable @StateObject var dataService: DataService = DataService.shared
     MainTabBar(user: User.MOCK_USERS[0])
-        .environmentObject(DataService())
+        .environmentObject(dataService)
+        .onAppear {
+            dataService.loadedContexts = UnsecureContext.defaultContexts
+            dataService.loadedObjectives = UnsecureObjective.MOCK_DATA
+            dataService.loadedMoments = UnsecureNotableMoment.MOCK_DATA
+        }
 }

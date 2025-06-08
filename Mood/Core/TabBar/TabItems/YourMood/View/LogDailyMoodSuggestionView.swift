@@ -19,6 +19,8 @@ struct LogDailyMoodSuggestionView: View {
                     HStack{
                         Text("logging consistently can help build awareness")
                             .font(.system(.callout))
+                            .multilineTextAlignment(.leading)
+                            .foregroundStyle(.appBlack)
                         
                         Spacer()
                         

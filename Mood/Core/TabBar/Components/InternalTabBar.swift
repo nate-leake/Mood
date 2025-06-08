@@ -52,7 +52,7 @@ extension InternalTabBar {
             ZStack {
                 if localSelection == tab {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(tab.color.opacity(0.15))
+                        .fill(tab.color.opacity(0.25))
                         .matchedGeometryEffect(id: "background_rect", in: namespace)
                         .frame(maxWidth: 50)
                 }
@@ -64,6 +64,7 @@ extension InternalTabBar {
         HStack {
             ForEach(tabs, id: \.self) { tab in
                 tabView(tab: tab)
+                    .background(.clear) // this expands the view to the max size without changing its appearance. it makes it clickable in as large a space as possible
                     .onTapGesture {
                         switchToTab(tab: tab)
                     }
@@ -77,7 +78,7 @@ extension InternalTabBar {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 30)
-                .stroke(.thinMaterial, lineWidth: 5)
+                .stroke(.thinMaterial, lineWidth: 2)
         )
         .padding(.horizontal)
     }
