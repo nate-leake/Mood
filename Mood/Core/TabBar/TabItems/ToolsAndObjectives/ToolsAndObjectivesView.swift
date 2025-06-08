@@ -30,7 +30,7 @@ struct ToolsAndObjectivesView: View {
                         .background(.appYellow)
                         
                         OverflowLayout {
-                            if dataService.loadedObjectives.count == 0 {
+                            if dataService.loadedObjectives.count == 0 || dataService.loadedObjectives.allSatisfy( {$0.isCompleted} ) {
                                 ObjectiveTileView(frameSize: 100, label: "add one today", color: .appBlue, isCompleted: false)
                                 
                             } else {
