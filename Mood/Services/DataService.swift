@@ -638,6 +638,8 @@ class DataService : ObservableObject, Stateable {
             cp("an error occured while deleting post \(postID): \(error)")
         }
         
+        try await self.getLoggedToday()
+        
         return .success(true)
     }
     
