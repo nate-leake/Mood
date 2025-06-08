@@ -69,14 +69,10 @@ struct EditNotableMomentView: View {
         }
         .navigationTitle("edit this moment")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing){
-                ToolbarDeleteButton(deleteMessage: "this action will permenantly erase this notable moment. this action cannot be undone.") {
-                    Task {
-                        let _ = try await DataService.shared.deleteMoment(notableMomentID: moment.id)
-                        dismiss()
-                    }
-                }
+        .withToolbarDeleteButton(deleteMessage: "this action will permenantly erase this notable moment. this action cannot be undone.") {
+            Task {
+                let _ = try await DataService.shared.deleteMoment(notableMomentID: moment.id)
+                dismiss()
             }
         }
     }

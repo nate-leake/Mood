@@ -92,16 +92,10 @@ struct EditContextView: View {
         }
         .navigationTitle("edit this context")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing){
-                ToolbarDeleteButton(
-                    deleteMessage: "this action will permenantly erase this context from all entries. if you wish to keep this data but no longer see the context, please hide the context instead. this action cannot be undone."
-                    ) {
-                    Task {
-                        let _ = try await DataService.shared.deleteContext(context: context)
-                        dismiss()
-                    }
-                }
+        .withToolbarDeleteButton(deleteMessage: "this action will permenantly erase this context from all entries. if you wish to keep this data but no longer see the context, please hide the context instead. this action cannot be undone.") {
+            Task {
+                let _ = try await DataService.shared.deleteContext(context: context)
+                dismiss()
             }
         }
     }

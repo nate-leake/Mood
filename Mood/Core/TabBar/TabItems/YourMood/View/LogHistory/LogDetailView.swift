@@ -73,48 +73,23 @@ struct LogDetailView: View {
                 LogItemView(contextLogContainer: container)
             }
             
-            Button{
-                isShowingConfirmation = true
-            } label: {
-                HStack{
-                    Spacer()
-                    Image(systemName: "trash")
-                    Text("delete log")
-                    Spacer()
-                }
-            }
-            .bold()
-            .foregroundStyle(.white)
-            .modifier(ListRowBackgroundModifer(foregroundColor: .appRed))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .alert(
-                "this action will permenantly erase this entry. this action cannot be undone.", isPresented: $isShowingConfirmation
-            ) {
-                Button("cancel", role: .cancel) {
-                }
-
-                Button("delete", role: .destructive) {
-                    Task {
-                        print("delete day")
-                        let result = try await DataService.shared.deleteMoodPost(postID: post.id)
-                        
-                        switch result {
-                        case .success(_):
-                            dismiss()
-                        case .failure(let error):
-                            print("error deleting mood post: \(error)")
-                        }
-                    }
-                }
-
-            }
-            
-            
         }
         .scrollContentBackground(.hidden)
         .navigationTitle("\(ShortDate().string(from: post.timestamp))")
         .navigationBarTitleDisplayMode(.inline)
-        
+        .withToolbarDeleteButton(deleteMessage: "this action will permenantly erase this log. this action cannot be undone.") {
+            Task {
+                print("delete day")
+                let result = try await DataService.shared.deleteMoodPost(postID: post.id)
+                
+                switch result {
+                case .success(_):
+                    dismiss()
+                case .failure(let error):
+                    print("error deleting mood post: \(error)")
+                }
+            }
+        }
     }
 }
 

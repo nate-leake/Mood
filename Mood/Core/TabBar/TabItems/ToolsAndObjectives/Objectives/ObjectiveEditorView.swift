@@ -70,15 +70,11 @@ struct ObjectiveEditorView: View {
         }
         .navigationTitle("editing \"\(editing.title)\"")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing){
-                ToolbarDeleteButton(deleteMessage: "this action will permenantly erase this objective. this action cannot be undone.") {
-                    Task {
-                        print("delete")
-                        let _ = try await DataService.shared.deleteObjective(objectiveID: objective.id)
-                        dismiss()
-                    }
-                }
+        .withToolbarDeleteButton(deleteMessage: "this action will permenantly erase this objective. this action cannot be undone."){
+            Task {
+                print("delete")
+                let _ = try await DataService.shared.deleteObjective(objectiveID: objective.id)
+                dismiss()
             }
         }
     }
