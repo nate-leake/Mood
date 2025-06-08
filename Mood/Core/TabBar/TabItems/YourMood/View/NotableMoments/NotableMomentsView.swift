@@ -24,6 +24,7 @@ struct NotableMomentsView: View {
                     }
                     .matchedTransitionSource(id: moment.id, in: momentsNamespace)
                 }
+                TabBarSpaceReservation()
             }
         }
         .navigationTitle("notable moments")

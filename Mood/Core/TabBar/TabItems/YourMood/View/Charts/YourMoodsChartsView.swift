@@ -39,6 +39,7 @@ struct YourMoodsChartsView: View {
                 }
                 
             }
+            .transition(.opacity.combined(with: .blurReplace))
             .task {
                 
                 do {
@@ -51,6 +52,7 @@ struct YourMoodsChartsView: View {
                 withAnimation(.easeInOut){isLoading = false}
                 
             }
+            TabBarSpaceReservation()
         }
     }
 }

@@ -9,10 +9,10 @@ import SwiftUI
 
 class ShortDate{
     private var formatter = DateFormatter()
-
+    
     // Get the current year and the year of the date to format
     let calendar = Calendar.current
-
+    
     func string(from: Date, includeTime: Bool = false) -> String {
         let currentYear = calendar.component(.year, from: Date())
         let dateYear = calendar.component(.year, from: from)
@@ -44,32 +44,36 @@ struct LogDayView: View {
     
     var body: some View {
         
-        
-        Text("\(ShortDate().string(from: post.timestamp))")
-            .fontWeight(.bold)
-            .foregroundStyle(.appBlack.opacity(0.75))
-            .modifier(ListRowBackgroundModifer())
-        
         NavigationLink {
             LogDetailView(post: post)
         } label: {
-            HStack{
-                OverflowLayout {
-                    ForEach(post.contextLogContainers, id:\.contextId) { data in
-                        if let context = UnsecureContext.getContext(from: data.contextId) {
-                            ContextTile(context: context, frameSize: CGFloat(50))
-                        } else {
-                            Text("nil")
-                                .onAppear{
-                                    print("nil context: \(data.contextName), \(data.contextId)")
-                                }
+            VStack{
+                
+                HStack {
+                    Text("\(ShortDate().string(from: post.timestamp))")
+                        .fontWeight(.bold)
+                        .foregroundStyle(.appBlack.opacity(0.75))
+                    Spacer()
+                }
+                
+                HStack {
+                    OverflowLayout {
+                        ForEach(post.contextLogContainers, id:\.contextId) { data in
+                            if let context = UnsecureContext.getContext(from: data.contextId) {
+                                ContextTile(context: context, frameSize: CGFloat(50))
+                            } else {
+                                Text("nil")
+                                    .onAppear{
+                                        print("nil context: \(data.contextName), \(data.contextId)")
+                                    }
+                            }
                         }
                     }
+                    Spacer()
                 }
             }
+            .navLinkModifier()
         }
-        .modifier(ListRowBackgroundModifer())
-        
         
     }
 }
@@ -79,20 +83,21 @@ struct LogHistoryView: View {
     
     var body: some View {
         
-        List{
+        ScrollView{
             if let moodPosts = dataService.recentMoodPosts {
                 ForEach(moodPosts, id: \.id){ post in
-                    Section {
-                        LogDayView(post: post)
-                    }
+                    
+                    LogDayView(post: post)
+                        .padding(.bottom, 10)
+                    
                 }
             }
-            
+            TabBarSpaceReservation()
         }
         .scrollContentBackground(.hidden)
         .navigationTitle("log history")
     }
-        
+    
 }
 
 

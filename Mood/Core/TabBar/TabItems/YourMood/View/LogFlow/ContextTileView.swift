@@ -123,6 +123,7 @@ struct ContextTileView: View {
                         .background(.clear)
                         .foregroundStyle(.clear)
                 }
+                TabBarSpaceReservation()
             }
             if !viewModel.contextLogContainers.isEmpty{
                 VStack{
@@ -152,6 +153,7 @@ struct ContextTileView: View {
                         .padding(.horizontal)
                         
                     }
+                    TabBarSpaceReservation()
                 }
             }
             

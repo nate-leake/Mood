@@ -59,10 +59,7 @@ struct ObjectivesView: View {
                     }
                 }
             }
-            .padding(.top)
-            Rectangle()
-                .fill(.clear)
-                .frame(height: 60)
+            TabBarSpaceReservation()
         }
         .navigationTitle("objectives")
         .navigationBarTitleDisplayMode(.inline)

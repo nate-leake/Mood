@@ -98,9 +98,7 @@ struct ContextSelectorView: View {
                     }
                 }
             }
-            Rectangle()
-                .fill(.clear)
-                .frame(height: 60)
+            TabBarSpaceReservation()
         }
         .navigationTitle("edit contexts")
         .navigationBarTitleDisplayMode(.inline)
