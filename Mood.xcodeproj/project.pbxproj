@@ -93,6 +93,7 @@
 		AFC4D8682DD54ACC00758411 /* TabBarVisibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
 		AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */; };
+		AFD12EDE2DF8E34000778DA7 /* moodIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AFD12EDD2DF8E34000778DA7 /* moodIcon.icon */; };
 		AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */; };
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
 		AFDF21462DCAE89B0085DF77 /* ToolbarDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */; };
@@ -202,6 +203,7 @@
 		AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVisibilityController.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysFeelingsView.swift; sourceTree = "<group>"; };
+		AFD12EDD2DF8E34000778DA7 /* moodIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = moodIcon.icon; sourceTree = "<group>"; };
 		AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableMomentTileView.swift; sourceTree = "<group>"; };
 		AFDC464E2CBDAD8200AD5782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				AF6BFA3A2AAFCD80005B4DDA /* Services */,
 				AF9DBB3C2CA1C6C30051C515 /* GoogleService-Info.plist */,
 				AF6BFA302AAFCD30005B4DDA /* Assets.xcassets */,
+				AFD12EDD2DF8E34000778DA7 /* moodIcon.icon */,
 				AF6BFA322AAFCD30005B4DDA /* Preview Content */,
 			);
 			path = Mood;
@@ -727,6 +730,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF6BFA342AAFCD30005B4DDA /* Preview Assets.xcassets in Resources */,
+				AFD12EDE2DF8E34000778DA7 /* moodIcon.icon in Resources */,
 				AF1ECA3E2C9C8AA2005A225A /* contexts.json in Resources */,
 				AF6BFA312AAFCD30005B4DDA /* Assets.xcassets in Resources */,
 				AFA7AF5A2C88E4A2002E911B /* Launch Screen.storyboard in Resources */,
@@ -984,12 +988,12 @@
 		AF6BFA382AAFCD30005B4DDA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = moodIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = Z1;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1004,7 +1008,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1024,12 +1028,12 @@
 		AF6BFA392AAFCD30005B4DDA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = moodIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = Z1;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1044,7 +1048,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
