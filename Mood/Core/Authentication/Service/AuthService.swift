@@ -38,6 +38,10 @@ class AuthService: Stateable, ObservableObject {
     init(){
 //        self.signout()
 //        #warning("AuthService will sign out on every launch.")
+        
+//        self.isUnlocked = true
+//        #warning("AuthService Security Warning: is unlocked at every launch.")
+        
         AppState.shared.addContributor(adding: self)
         Task {try await loadUserData()}
     }
