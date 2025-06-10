@@ -189,14 +189,14 @@ struct YourChartsNavLink: View {
             }
             .navLinkModifier()
         }
-        .onChange(of: dataService.recentMoodPosts, initial: true){
+        .onChange(of: dataService.loadedMoodPosts, initial: true){
             Task {
                 do {
                     totalMoodScore = 0
                     loadingSuccess = false
                     isLoading = true
                     
-                    if let moodPosts = dataService.recentMoodPosts {
+                    if let moodPosts = dataService.loadedMoodPosts {
                         let ag = AnalyticsGenerator()
                         let tmp = ag.aggregateMoodIntensityByDate(moodPosts: moodPosts)
                         recentMoods = ag.aggregateMoodIntensityTotals(moodData: tmp)

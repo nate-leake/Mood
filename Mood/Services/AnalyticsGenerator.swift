@@ -112,7 +112,7 @@ class AnalyticsGenerator : ObservableObject {
         // Ensure each day has exactly 5 mood types
         let expectedMoodTypes: Set<String> = Set(
             Mood.allMoodNames
-        ) // Update with your specific mood types
+        ) 
         
         var finalResult: [MoodData] = []
         

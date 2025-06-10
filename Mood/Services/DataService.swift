@@ -43,22 +43,22 @@ class DataService : ObservableObject, Stateable {
     @Published var userHasLoggedToday: Bool = false
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
-    @Published var recentMoodPosts: [UnsecureMoodPost]?
     @Published var numberOfEntries: Int = 0
     @Published var state: AppStateCase = .startup
     @Published var userSignInNeedsMoreInformation: Bool = false
     
-    
+    @Published var loadedMoodPosts: [UnsecureMoodPost]?
     @Published var loadedContexts: [UnsecureContext] = []
     @Published var loadedObjectives: [UnsecureObjective] = []
     @Published var loadedMoments: [UnsecureNotableMoment] = []
     
+    private var moodPostLimit: Int = 7
+    private let moodPostScrollIncrease: Int = 7
+    
+    private var usersCollection: CollectionReference = Firestore.firestore().collection("users")
     public var isPerformingManagedAGUpdate: Bool = false
     
     static let shared = DataService()
-    
-//    public var userID: String?
-    private var usersCollection: CollectionReference = Firestore.firestore().collection("users")
     
     let securityService = SecurityService()
     let dateFormatter = CustomDateFormatter()
@@ -98,10 +98,10 @@ class DataService : ObservableObject, Stateable {
                     try await fetchObjectives()
                     try await fetchMoments()
                     try await getLoggedToday()
-                    try await setRecentMoodPosts(quantity: 14)
+                    try await fetchMoodPosts(limit: moodPostLimit)
                     try await getNumberOfEntries()
                     if self.userHasLoggedToday { self.updateAG() }
-                    if recentMoodPosts != nil {
+                    if loadedMoodPosts != nil {
                         await MainActor.run {
                             withAnimation(.easeInOut(duration: 2)){
                                 state = .ready
@@ -537,16 +537,16 @@ class DataService : ObservableObject, Stateable {
             case .success(let success):
                 if success {
                     DataService.shared.todaysDailyData = dailyData
-                    if DataService.shared.recentMoodPosts?.count ?? 0 > 0 {
-                        DataService.shared.recentMoodPosts?.removeFirst()
-                    }
-                    if let _ = DataService.shared.recentMoodPosts {
-                        DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+//                    if DataService.shared.loadedMoodPosts?.count ?? 0 > 0 {
+//                        DataService.shared.loadedMoodPosts?.removeFirst()
+//                    }
+                    if let _ = DataService.shared.loadedMoodPosts {
+                        DataService.shared.loadedMoodPosts?.append(UnsecureMoodPost(from: privatePost))
                     } else {
-                        DataService.shared.recentMoodPosts = []
-                        DataService.shared.recentMoodPosts?.append(UnsecureMoodPost(from: privatePost))
+                        DataService.shared.loadedMoodPosts = []
+                        DataService.shared.loadedMoodPosts?.append(UnsecureMoodPost(from: privatePost))
                     }
-                    DataService.shared.recentMoodPosts = DataService.shared.recentMoodPosts?.sorted(by: { $0.timestamp > $1.timestamp})
+                    DataService.shared.loadedMoodPosts = DataService.shared.loadedMoodPosts?.sorted(by: { $0.timestamp > $1.timestamp})
                     DataService.shared.numberOfEntries += 1
                     for contextContainer in dailyData.contextLogContainers {
                         if let c = UnsecureContext.getContext(from: contextContainer.contextId) {
@@ -621,7 +621,7 @@ class DataService : ObservableObject, Stateable {
                         
                         switch result {
                         case .success(_):
-                            self.recentMoodPosts?.removeAll(where: { $0.id == postID })
+                            self.loadedMoodPosts?.removeAll(where: { $0.id == postID })
                             try await getLoggedToday()
                         case .failure(let error):
                             cp("error updating context: \(error.localizedDescription)")
@@ -684,11 +684,16 @@ class DataService : ObservableObject, Stateable {
     /// - Parameter limit: The number of post documents to retreive
     /// - Returns: QuerySnapshot of the posts
     func fetchDocuments(limit: Int) async throws -> QuerySnapshot{
+        var validLimit = limit
         guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        if limit <= 0 {
+            validLimit = 1
+        }
         
         let userDocument = usersCollection.document(uid)
         let userPostsCollection = userDocument.collection("posts")
-        let query = userPostsCollection.order(by: "timestamp", descending: true).limit(to: limit)
+        let query = userPostsCollection.order(by: "timestamp", descending: true).limit(to: validLimit)
         
         return try await query.getDocuments()
     }
@@ -722,14 +727,27 @@ class DataService : ObservableObject, Stateable {
     }
     
     @MainActor
-    private func setRecentMoodPosts(quantity: Int) async throws {
-        self.recentMoodPosts = try await fetchRecentMoodPosts(quantity: quantity)
+    private func fetchMoodPosts(limit: Int) async throws {
+        
+        self.loadedMoodPosts = try await fetchRecentMoodPosts(limit: limit)
     }
     
-    public func fetchRecentMoodPosts(quantity: Int) async throws -> [UnsecureMoodPost] {
+    public func fetchNextMoodPosts() async throws {
+        moodPostLimit = moodPostLimit + moodPostScrollIncrease
+        
+        if moodPostLimit > numberOfEntries {
+            moodPostLimit = numberOfEntries + 1
+        }
+        
+        try await self.fetchMoodPosts(limit: moodPostLimit)
+    }
+    
+    
+    public func fetchRecentMoodPosts(limit: Int, after cutoffDate: Date? = nil) async throws -> [UnsecureMoodPost] {
         var posts: [UnsecureMoodPost] = []
-        let snapshot = try await fetchDocuments(limit: quantity)
+        let snapshot = try await fetchDocuments(limit: limit)
         var insecureFlag: Bool = false
+        var filteredPosts:[UnsecureMoodPost] = []
         
         if snapshot.count > 0 {
             for document in snapshot.documents {
@@ -747,13 +765,17 @@ class DataService : ObservableObject, Stateable {
             return []
         }
         
-        let cutoffDate = Calendar.current.date(byAdding: .day, value: userHasLoggedToday ? -7 : -8, to: Date())!
-        var filteredPosts:[UnsecureMoodPost] = []
-        
-        for post in posts {
-            if Calendar.current.startOfDay(for: post.timestamp) > Calendar.current.startOfDay(for: cutoffDate){
-                filteredPosts.append(post)
+        if let cutoff = cutoffDate {
+//            let cutoffDate = Calendar.current.date(byAdding: .day, value: -limit, to: Date())!
+            cp("fetchRecentMoodPosts cutoffDate: \(cutoff) and limit: \(limit)")
+            
+            for post in posts {
+                if Calendar.current.startOfDay(for: post.timestamp) > Calendar.current.startOfDay(for: cutoff){
+                    filteredPosts.append(post)
+                }
             }
+        } else {
+            filteredPosts = posts
         }
         
         if insecureFlag {
