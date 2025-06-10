@@ -8,7 +8,7 @@
 import Foundation
 
 /// The intensity of the emotion ranging from 0-3
-enum Weight : Int, Codable, Hashable {
+enum Weight : Int, Codable, Hashable, CaseIterable {
     case none = 0
     case slight = 1
     case moderate = 2
