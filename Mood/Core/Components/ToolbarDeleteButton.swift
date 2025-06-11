@@ -21,9 +21,11 @@ struct ToolbarDeleteButton: View {
             HStack {
                 Image(systemName: "trash")
                     .font(.headline)
-                    .tint(.appRed)
             }
         }
+        .buttonStyle(.borderedProminent)
+        .tint(.appRed)
+        
         .alert(deleteMessage, isPresented: $isShowingDeleteConfirmation) {
             Button("cancel", role: .cancel) {}
             
@@ -33,6 +35,7 @@ struct ToolbarDeleteButton: View {
             
         }
         .sensoryFeedback(.warning, trigger: hapticDeleteTrigger)
+        
     }
 }
 
@@ -60,7 +63,13 @@ extension View{
 }
 
 #Preview {
-    ToolbarDeleteButton(deleteMessage: "this will delete if you continue") {
-        print("DELETE ITEM!")
+    NavigationStack {
+        HStack {
+            Text("Display screen here ")
+        }
+        .withToolbarDeleteButton(deleteMessage: "this will delete if you continue!!") {
+            print("DELETE ITEM!")
+        }
+        .navigationTitle("delete button!!")
     }
 }

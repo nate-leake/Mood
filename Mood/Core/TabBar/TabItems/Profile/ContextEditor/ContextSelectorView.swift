@@ -110,15 +110,19 @@ struct ContextSelectorView: View {
                     Image(systemName: "plus")
                         .imageScale(.large)
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(.appPurple)
             }
         }
     }
 }
 
 #Preview {
-    ContextSelectorView()
-        .environmentObject(DataService.shared)
-        .onAppear {
-            DataService.shared.loadedContexts = UnsecureContext.defaultContexts
-        }
+    NavigationStack {
+        ContextSelectorView()
+            .environmentObject(DataService.shared)
+            .onAppear {
+                DataService.shared.loadedContexts = UnsecureContext.defaultContexts
+            }
+    }
 }

@@ -32,8 +32,9 @@ struct ContextTile: View {
         }
         .foregroundStyle(context.color.isLight() ? .black : .white)
         .frame(width: frameSize, height: frameSize)
-        .background(context.color)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .glassEffect(.regular.tint(context.color), in: RoundedRectangle(cornerRadius: 10))
+//        .background(context.color)
+//        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
@@ -177,6 +178,7 @@ struct ContextTileView: View {
                     Image(systemName: "plus")
                         .imageScale(.large)
                 }
+                .tint(.appPurple)
             }
         }
         .fullScreenCover(item: self.$selectedContext) { context in
@@ -188,8 +190,10 @@ struct ContextTileView: View {
 }
 
 #Preview {
-    ContextTileView()
-        .onAppear{
-            DataService.shared.loadedContexts = UnsecureContext.defaultContexts
-        }
+    NavigationStack {
+        ContextTileView()
+            .onAppear{
+                DataService.shared.loadedContexts = UnsecureContext.defaultContexts
+            }
+    }
 }

@@ -52,7 +52,8 @@ extension InternalTabBar {
             ZStack {
                 if localSelection == tab {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(tab.color.opacity(0.25))
+                        .fill(.clear)
+                        .glassEffect(.regular.tint(tab.color.invertModeVarient().opacity(0.2)))
                         .matchedGeometryEffect(id: "background_rect", in: namespace)
                         .frame(maxWidth: 50)
                 }
@@ -72,14 +73,16 @@ extension InternalTabBar {
         }
         
         .padding(6)
-        .background(.regularMaterial)
-        .clipShape(
-            RoundedRectangle(cornerRadius: 30)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 30)
-                .stroke(.thinMaterial, lineWidth: 2)
-        )
+//        .background(.ultraThinMaterial)
+        .glassEffect(.regular.tint(.appPurple.opacity(0.15)))
+        
+//        .clipShape(
+//            RoundedRectangle(cornerRadius: 30)
+//        )
+//        .overlay(
+//            RoundedRectangle(cornerRadius: 30)
+//                .stroke(.thinMaterial, lineWidth: 2)
+//        )
         .padding(.horizontal)
     }
     
