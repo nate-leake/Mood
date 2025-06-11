@@ -87,6 +87,7 @@ struct LogHistoryNavLink: View {
                                 .foregroundStyle(.appYellow)
                         }
                     }
+                    .symbolColorRenderingMode(.gradient)
                     
                     Image(systemName: "plus")
                         .resizable()
@@ -353,6 +354,8 @@ struct YourMoodView: View {
 }
 
 #Preview {
-    YourMoodView()
-        .environmentObject(DataService())
+    NavigationStack {
+        YourMoodView()
+            .environmentObject(DataService())
+    }
 }

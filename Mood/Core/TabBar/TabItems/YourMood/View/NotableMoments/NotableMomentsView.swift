@@ -35,8 +35,9 @@ struct NotableMomentsView: View {
                 } label: {
                     Image(systemName: "note.text.badge.plus")
                         .imageScale(.large)
-                        .foregroundStyle(.appGreen)
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(.appGreen)
             }
         }
     }
@@ -44,9 +45,12 @@ struct NotableMomentsView: View {
 
 #Preview {
     @Previewable @StateObject var dataService = DataService.shared
-    NotableMomentsView()
-        .environmentObject(dataService)
-        .onAppear {
-            dataService.loadedMoments = UnsecureNotableMoment.MOCK_DATA
-        }
+    
+    NavigationStack {
+        NotableMomentsView()
+            .environmentObject(dataService)
+            .onAppear {
+                dataService.loadedMoments = UnsecureNotableMoment.MOCK_DATA
+            }
+    }
 }
