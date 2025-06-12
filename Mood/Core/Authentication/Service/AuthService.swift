@@ -351,5 +351,6 @@ class AuthService: Stateable, ObservableObject {
             self.currentUser = nil
             self.userIsSignedIn = false
         }
+        DataService.shared.flushAllData()
     }
 }

@@ -113,7 +113,21 @@ class DataService : ObservableObject, Stateable {
                 self.state = .ready
             }
         }
+    }
+    
+    /// Resets all data in DataService to pre-login defaults. This will remove all user data from memory.
+    func flushAllData() {
+        self.userHasLoggedToday = false
+        self.logWindowOpen = false
+        self.todaysDailyData = nil
+        self.numberOfEntries = 0
+        self.state = .startup
+        self.userSignInNeedsMoreInformation = false
         
+        self.loadedMoodPosts = nil
+        self.loadedContexts = []
+        self.loadedObjectives = []
+        self.loadedMoments = []
     }
     
     /// Uploads any encodable object to the defined document. Sensitive data should be encrypted before calling this function.
