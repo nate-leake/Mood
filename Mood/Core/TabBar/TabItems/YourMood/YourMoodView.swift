@@ -234,6 +234,7 @@ struct NotableMomentsNavLink: View {
                     Text("notable moments")
                         .fontWeight(.bold)
                         .foregroundStyle(.appBlack.opacity(0.5))
+                        .font(.title3)
                     
                     
                     Text("keep track of significant moments")
@@ -258,6 +259,7 @@ struct LogHistoryNavLink: View {
                     Text("log history")
                         .fontWeight(.bold)
                         .foregroundStyle(.appBlack.opacity(0.5))
+                        .font(.title3)
                 }
                 Spacer()
                 ZStack {
@@ -321,6 +323,7 @@ struct YourMoodView: View {
                                 .padding(.horizontal)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white.opacity(0.75))
+                                .font(.title3)
                             
                             Spacer()
                         }
@@ -414,8 +417,10 @@ struct YourMoodView: View {
         .environmentObject(DataService.shared)
         .onAppear {
             Task {
-                try await Task.sleep(nanoseconds: 5_000_000_000)
+                try await Task.sleep(nanoseconds: 1_000_000_000)
                 DataService.shared.loadedMoodPosts = UnsecureMoodPost.MOCK_DATA
+                DataService.shared.todaysDailyData = DailyData.MOCK_DATA[0]
+                DataService.shared.userHasLoggedToday = true
             }
         }
 }
