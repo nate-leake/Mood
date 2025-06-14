@@ -76,9 +76,6 @@ struct YourMoodsChartsView: View {
                 .transition(.opacity.combined(with: .blurReplace))
                 
                 TabBarSpaceReservation()
-                    .onChange(of: moodPostTracker.moodPosts.count) { oldValue, newValue in
-                        print("old: \(oldValue), new: \(newValue)")
-                    }
             }
             .onAppear {
                 Task {
