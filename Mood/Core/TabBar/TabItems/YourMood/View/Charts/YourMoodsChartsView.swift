@@ -18,7 +18,7 @@ class MoodPostTracker: ObservableObject {
         self.moodPosts = []
         do {
             let cutoffDate = Calendar.current.date(byAdding: .day, value: -90, to: Date())!
-            let posts = try await DataService.shared.fetchRecentMoodPosts(limit: 90 * 4, after: cutoffDate)
+            let posts = try await DataService.shared.fetchRecentMoodPosts(after: cutoffDate)
             print("getting posts from after date \(cutoffDate)")
             withAnimation { self.moodPosts = posts }
             withAnimation { self.loadingSuccess = true }

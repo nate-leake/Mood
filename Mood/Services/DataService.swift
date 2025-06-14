@@ -52,7 +52,6 @@ class DataService : ObservableObject, Stateable {
     @Published var loadedObjectives: [UnsecureObjective] = []
     @Published var loadedMoments: [UnsecureNotableMoment] = []
     
-    private var moodPostLimit: Int = 7
     private let moodPostScrollIncrease: Int = 7
     
     private var usersCollection: CollectionReference = Firestore.firestore().collection("users")
@@ -91,6 +90,8 @@ class DataService : ObservableObject, Stateable {
     func refreshServiceData(){
         if let signedIn = AuthService.shared.userIsSignedIn {
             if signedIn {
+                var daysBack: Date = Calendar.current.date(byAdding: .day, value: -14, to: Date.now) ?? Date.now
+                daysBack = Calendar.current.startOfDay(for: daysBack)
                 self.state = .loading
                 cp("refreshing...")
                 Task {
@@ -98,7 +99,7 @@ class DataService : ObservableObject, Stateable {
                     try await fetchObjectives()
                     try await fetchMoments()
                     try await getLoggedToday()
-                    try await fetchMoodPosts(limit: moodPostLimit)
+                    try await fetchMoodPosts(after: daysBack) // fetch last 14 days of posts
                     try await getNumberOfEntries()
                     if self.userHasLoggedToday { self.updateAG() }
                     if loadedMoodPosts != nil {
@@ -712,6 +713,21 @@ class DataService : ObservableObject, Stateable {
         return try await query.getDocuments()
     }
     
+    
+    /// Gets all posts from the current date back to, and including, the provided date
+    /// - Parameter after: The oldest timestamp date you want to fetch back to
+    /// - Returns: QuerySnapshot of the posts
+    func fetchDocuments(after: Date) async throws -> QuerySnapshot{
+        guard let uid = Auth.auth().currentUser?.uid else {throw CustomError.invalidUID}
+        
+        let userDocument = usersCollection.document(uid)
+        let userPostsCollection = userDocument.collection("posts")
+        let query = userPostsCollection.whereField("timestamp", isGreaterThanOrEqualTo: after)
+        
+        return try await query.getDocuments()
+    }
+    
+    
     /// Gets the last mood post that the user uploaded
     /// - Returns: An Optional MoodPost which will be the most recent post from the user
     @MainActor
@@ -741,22 +757,63 @@ class DataService : ObservableObject, Stateable {
     }
     
     @MainActor
+    private func fetchMoodPosts(after: Date) async throws {
+        self.loadedMoodPosts = try await fetchRecentMoodPosts(after: after)
+    }
+    
+    @MainActor
     private func fetchMoodPosts(limit: Int) async throws {
-        
         self.loadedMoodPosts = try await fetchRecentMoodPosts(limit: limit)
     }
     
     public func fetchNextMoodPosts() async throws {
-        moodPostLimit = moodPostLimit + moodPostScrollIncrease
+        var postLimit = (loadedMoodPosts?.count ?? 0) + moodPostScrollIncrease
         
-        if moodPostLimit > numberOfEntries {
-            moodPostLimit = numberOfEntries + 1
+        if postLimit > numberOfEntries {
+            postLimit = numberOfEntries + 1
         }
         
-        try await self.fetchMoodPosts(limit: moodPostLimit)
+        try await self.fetchMoodPosts(limit: postLimit)
     }
     
     
+    /// Gets all posts from the current date back to (and including) the provided Date timestamp
+    /// - Parameter cutoffDate: The oldest dated timestamp you wish to fetch
+    /// - Returns: [UnsecureMoodPost] sorted by date in descending order
+    public func fetchRecentMoodPosts(after cutoffDate: Date) async throws -> [UnsecureMoodPost] {
+        var posts: [UnsecureMoodPost] = []
+        let snapshot = try await fetchDocuments(after: cutoffDate)
+        var insecureFlag: Bool = false
+        
+        if snapshot.count > 0 {
+            for document in snapshot.documents {
+                do {
+                    let securePost = try document.data(as: SecureMoodPost.self)
+                    let post = UnsecureMoodPost(from: securePost)
+                    posts.append(post)
+                } catch {
+                    insecureFlag = true
+                    let unsecurePost = try document.data(as: UnsecureMoodPost.self)
+                    posts.append(unsecurePost)
+                }
+            }
+        } else {
+            return []
+        }
+        
+        if insecureFlag {
+            cp("One or more posts in firebase firestore is not encrypted.", .warning)
+        }
+        
+        return posts
+    }
+    
+    
+    /// Gets limited posts from the current date back to (and including) the provided Date timestamp
+    /// - Parameters:
+    ///   - limit: the maximum number of posts you want to fetch
+    ///   - cutoffDate: the oldest dated timstamp  you want to fetch
+    /// - Returns: [UnsecureMoodPost] sorted by date descending
     public func fetchRecentMoodPosts(limit: Int, after cutoffDate: Date? = nil) async throws -> [UnsecureMoodPost] {
         var posts: [UnsecureMoodPost] = []
         let snapshot = try await fetchDocuments(limit: limit)
