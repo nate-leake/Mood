@@ -49,7 +49,9 @@ struct ContextButton: View {
         Button(
             action: {
                 if !wasLoggedAbout {
-                    self.selectedContext = context
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        self.selectedContext = context
+                    }
                 }
             }, label: {
                 if wasLoggedAbout {
@@ -157,6 +159,12 @@ struct ContextTileView: View {
                 }
             }
             
+            
+            if selectedContext != nil {
+                ContextLogView(context: $selectedContext)
+                    .environmentObject(viewModel)
+            }
+            
         }
         .onChange(of: viewModel.isUploaded) { old, new in
             if !old && new {
@@ -179,17 +187,15 @@ struct ContextTileView: View {
                 }
             }
         }
-        .fullScreenCover(item: self.$selectedContext) { context in
-            ContextLogView(context: context)
-                .environmentObject(viewModel)
-        }
         
     }
 }
 
 #Preview {
-    ContextTileView()
-        .onAppear{
-            DataService.shared.loadedContexts = UnsecureContext.defaultContexts
-        }
+    NavigationStack {
+        ContextTileView()
+            .onAppear{
+                DataService.shared.loadedContexts = UnsecureContext.defaultContexts
+            }
+    }
 }
