@@ -80,12 +80,18 @@ extension DailyData {
                 
                 var moodLogContainers: [MoodLogContainer] = []
                 
-                // random number of MoodLogContainers to be addd to moodLogContainers
+                // random number of MoodLogContainers to be added to moodLogContainers
                 let moodLogCount = Int.random(in: 1...Mood.allMoodNames.count-1)
+                
+                var availableMoods = Mood.allMoods
+                
                 
                 for _ in 0...moodLogCount {
                     
-                    let emotions: [String] = [Emotion.allEmotionNames.randomElement()!]
+                    let randomMood = Mood.allMoods.randomElement()!
+                    availableMoods.removeAll { $0.name == randomMood.name}
+                    
+                    let emotions: [String] = [randomMood.emotions.randomElement()!.name]
                     let weight: Weight = Weight.allCases.randomElement()!
                     
                     moodLogContainers.append( MoodLogContainer(emotions: emotions, weight: weight) )
