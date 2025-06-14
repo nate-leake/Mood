@@ -8,12 +8,38 @@
 import SwiftUI
 import Charts
 
+enum ChartSortType: String, CaseIterable, Identifiable {
+    case name = "name"
+    case impact = "impact"
+    
+    var id: String {self.rawValue}
+}
+
+enum ChartSortDirection: String, CaseIterable, Identifiable {
+    case ascending = "ascending"
+    case descending = "descending"
+    
+    var id: String {self.rawValue}
+}
+
 struct TodaysFeelingsChart: View {
-    @EnvironmentObject var dataService: DataService
+//    @EnvironmentObject var dataService: DataService
+    var contextLogContainers: [ContextLogContainer]
+    
+    var maxXScale: Double {
+        return (contextLogContainers.map{ Double($0.totalWeight) }.max() ?? 4.0)+0.5
+    }
+    
+    init(contextLogContainers: [ContextLogContainer]) {
+        self.contextLogContainers = contextLogContainers
+        
+        for clc in contextLogContainers {
+            clc.moodContainers = clc.moodContainers.sorted {$0.weight.rawValue > $1.weight.rawValue}
+        }
+    }
     
     var body: some View {
-
-        Chart(dataService.todaysDailyData!.contextLogContainers, id:\.contextId) { logContainer in
+        Chart(contextLogContainers, id:\.contextId) { logContainer in
             ForEach(logContainer.moodContainers, id: \.emotions) { moodContainer in
                 BarMark(
                     x: .value("weight", moodContainer.weight.rawValue == 0 ? 0.05 : Double(moodContainer.weight.rawValue)),
@@ -35,11 +61,8 @@ struct TodaysFeelingsChart: View {
                 }
             }
         }
-        .frame(height: (CGFloat(dataService.todaysDailyData?.contextLogContainers.count ?? 6) * 60.0)+40)
-        .chartXScale(domain: [
-            0,
-            (dataService.todaysDailyData?.contextLogContainers.map{ Double($0.totalWeight) }.max() ?? 4.0)+0.5
-        ])
+        .frame(height: (CGFloat(contextLogContainers.count) * 60.0)+40)
+        .chartXScale(domain: [0, maxXScale])
         .chartYAxis {
             AxisMarks(stroke: StrokeStyle(lineWidth: 0))
         }
@@ -61,7 +84,12 @@ struct TodaysFeelingsChart: View {
 struct TodaysFeelingsView: View {
     @EnvironmentObject var dataService: DataService
     @ObservedObject var analytics = AnalyticsGenerator.shared
+    @AppStorage("feelingsChartSortType") var chartSortType: ChartSortType = .impact
+    @AppStorage("feelingsChartSortDirection") var chartSortDirection: ChartSortDirection = .ascending
+    
     @State var impactStatement: String = ""
+    @State var chartData: [ContextLogContainer] = []
+    let listFormatter = ListFormatter()
     
     private func cp(_ text: String, state: PrintableStates = .none) {
         let finalString = "🖼️\(state.rawValue) TODAYS FEELINGS VIEW: " + text
@@ -69,58 +97,118 @@ struct TodaysFeelingsView: View {
     }
     
     func createImpactStatement(from items: [String]) -> String {
-        switch items.count {
-        case 0:
+        
+        if items.count == 0 {
             return "No items"
-        case 1:
-            return "\(items[0])"
-        case 2:
-            return "\(items[0]) and \(items[1])"
-        default:
-            let allButLast = items.dropLast().joined(separator: ", ")
-            let lastItem = items.last!
-            return "\(allButLast), and \(lastItem)"
+        }
+        
+        else {
+            return listFormatter.string(from: items) ?? "No items"
+        }
+    }
+    
+    func sortChartData() {
+        if let data = dataService.todaysDailyData {
+            
+            switch chartSortType {
+            case .impact:
+                switch chartSortDirection {
+                case .ascending:
+                    chartData = data.contextLogContainers.sorted {$0.totalWeight < $1.totalWeight}
+                case .descending:
+                    chartData = data.contextLogContainers.sorted {$0.totalWeight > $1.totalWeight}
+                }
+                
+            case .name:
+                switch chartSortDirection {
+                case .ascending:
+                    chartData = data.contextLogContainers.sorted {$0.contextName < $1.contextName}
+                case .descending:
+                    chartData = data.contextLogContainers.sorted {$0.contextName > $1.contextName}
+                }
+                
+            }
+            
         }
     }
     
     var body: some View {
         if dataService.todaysDailyData != nil {
-            VStack{
-                HStack{
-                    Text("today's feelings")
-                        .fontWeight(.bold)
-                        .foregroundStyle(.appBlack.opacity(0.5))
-                        .padding(.vertical, 5)
-                    Spacer()
+            VStack(alignment: .leading){
+                Text("today's feelings")
+                    .fontWeight(.bold)
+                    .foregroundStyle(.appBlack.opacity(0.5))
+                    .font(.title3)
+                    .padding(.top, 5)
+                
+                
+                Text("**\(impactStatement)** had the biggest impact on you")
+                    .padding(.bottom, 10)
+                
+                HStack {
+                    Picker("sorted by", selection: $chartSortType) {
+                        ForEach(ChartSortType.allCases) { type in
+                            Text("\(type.rawValue)").tag(type)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    
+                    Picker("sort order", selection: $chartSortDirection) {
+                        ForEach(ChartSortDirection.allCases) { type in
+                            if type == .ascending {
+                                Image(systemName: "arrow.up").tag(type)
+                            } else if type == .descending {
+                                Image(systemName: "arrow.down").tag(type)
+                            } else {
+                                Text("\(type.rawValue)").tag(type)
+                            }
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    
                 }
-                HStack{
-                    Text("**\(impactStatement)** had the biggest impact on you")
-                    Spacer()
-                }
+                
                 Spacer()
-                TodaysFeelingsChart()
+                TodaysFeelingsChart(contextLogContainers: chartData)
+                    .onChange(of: chartSortType, initial: true) {
+                        sortChartData()
+                    }
+                    .onChange(of: chartSortDirection, initial: true) {
+                        sortChartData()
+                    }
             }
-            .onChange(of: analytics.todaysBiggestImpacts, initial: true) {
+            .onChange(of: dataService.todaysDailyData, initial: true) {
+                analytics.calculateTBI()
+                if let data = dataService.todaysDailyData {
+                    chartData = data.contextLogContainers
+                    sortChartData()
+                }
+                
                 cp("todays biggest impacts changed")
                 print("\(analytics.todaysBiggestImpacts)")
                 impactStatement = createImpactStatement(from: analytics.todaysBiggestImpacts)
             }
         }
-        else {
-            VStack{
-                Text("Loading data...")
-                    .onAppear{
-                        DataService.shared.todaysDailyData = DailyData.MOCK_DATA[1]
-//                        print(DataService.shared.todaysDailyData?.contextLogContainers.count ?? "no daily data")
-                        
-//                        AnalyticsGenerator.shared.calculateTBI()
-                    }
-            }
-        }
+//        else {
+//            VStack{
+//            }
+//        }
     }
 }
 
 #Preview {
-    TodaysFeelingsView()
-        .environmentObject(DataService.shared)
+    @Previewable var randomData = DailyData.randomData(count: 15)
+    VStack {
+        TodaysFeelingsView()
+            .environmentObject(DataService.shared)
+            
+        Button {
+            DataService.shared.todaysDailyData = randomData.randomElement()
+        } label: {
+            Text("new data")
+        }
+    }
+    .onAppear {
+        DataService.shared.todaysDailyData = randomData.randomElement()
+    }
 }
