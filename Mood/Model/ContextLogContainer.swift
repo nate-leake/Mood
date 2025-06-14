@@ -159,6 +159,7 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
     ///   - weight: The intesnity of the emotions
     func addContextContainer(emotions: [String], weight: Weight) {
         self.moodContainers.append(MoodLogContainer(emotions: emotions, weight: weight))
+        self.totalWeight += weight.rawValue
     }
     
     /// Adds a MoodLogContainer to ContextLogContainer using [Emotion] for the emotions rather than [String]
@@ -172,6 +173,7 @@ class ContextLogContainer : ObservableObject, Codable, Hashable {
             emotionNames.append(emotion.name)
         }
         self.moodContainers.append(MoodLogContainer(emotions: emotionNames, weight: weight))
+        self.totalWeight += weight.rawValue
     }
 }
 
