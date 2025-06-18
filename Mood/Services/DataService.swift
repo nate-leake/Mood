@@ -44,6 +44,7 @@ class DataService : ObservableObject, Stateable {
     @Published var logWindowOpen: Bool = false
     @Published var todaysDailyData: DailyData?
     @Published var numberOfEntries: Int = 0
+    @Published var numberOfCompletedObjectives: Int = 0
     @Published var state: AppStateCase = .startup
     @Published var userSignInNeedsMoreInformation: Bool = false
     
@@ -101,6 +102,7 @@ class DataService : ObservableObject, Stateable {
                     try await getLoggedToday()
                     try await fetchMoodPosts(after: daysBack) // fetch last 14 days of posts
                     try await getNumberOfEntries()
+                    getNumberCompletedObjectives()
                     if self.userHasLoggedToday { self.updateAG() }
                     if loadedMoodPosts != nil {
                         await MainActor.run {
@@ -122,6 +124,7 @@ class DataService : ObservableObject, Stateable {
         self.logWindowOpen = false
         self.todaysDailyData = nil
         self.numberOfEntries = 0
+        self.numberOfCompletedObjectives = 0
         self.state = .startup
         self.userSignInNeedsMoreInformation = false
         
@@ -391,6 +394,12 @@ class DataService : ObservableObject, Stateable {
         }
         if objective.isCompleted != foundObjective?.isCompleted {
             foundObjective?.isCompleted = objective.isCompleted
+            
+            if objective.isCompleted {
+                self.numberOfCompletedObjectives += 1
+            } else {
+                self.numberOfCompletedObjectives -= 1
+            }
         }
         
         let encryptedObjective = SecureObjective(from: objective)
@@ -411,6 +420,11 @@ class DataService : ObservableObject, Stateable {
         do {
             try await docRef.delete()
             withAnimation {
+                if let obj = UnsecureObjective.getObjective(from: objectiveID) {
+                    if obj.isCompleted {
+                        self.numberOfCompletedObjectives -= 1
+                    }
+                }
                 self.loadedObjectives.removeAll(where: { $0.id == objectiveID } )
             }
             return .success(true)
@@ -693,6 +707,19 @@ class DataService : ObservableObject, Stateable {
         let snapshot = try await userPostsCollection.count.getAggregation(source: .server)
         cp("user has \(Int(truncating: snapshot.count)) entries")
         self.numberOfEntries = Int(truncating: snapshot.count)
+    }
+    
+    /// Calculates the number of completed Objectives from the loadedObjectives and sets the numberofCompletedObjectives
+    func getNumberCompletedObjectives() {
+        if self.loadedObjectives.count > 0 {
+            for objective in loadedObjectives {
+                if objective.isCompleted {
+                    self.numberOfCompletedObjectives += 1
+                }
+            }
+        } else {
+            cp("loadedObjectives count is 0. numberOfCompletedObjectives is 0.", .debug)
+        }
     }
     
     /// Gets a certain number of documents from the users "posts" collection

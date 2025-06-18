@@ -7,7 +7,49 @@
 
 import SwiftUI
 
+struct ProfileViewTile: View {
+    var title: String
+    var subtitle: String
+    var backgroundColor: Color
+    
+    var body: some View {
+        VStack(){
+            Text(title)
+                .font(.title)
+                .bold()
+                .padding()
+                .foregroundStyle(backgroundColor.optimalForegroundColor())
+                .frame(minWidth: 70)
+                .background(backgroundColor)
+                .clipShape(RoundedRectangle(cornerRadius: 8.0))
+            
+            Text(subtitle)
+                .font(.caption)
+                .frame(width: 70)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+            
+            Spacer()
+        }
+        
+    }
+}
 
+extension ProfileView {
+    
+    func topTileView() -> some View {
+        HStack(spacing: 20) {
+            Spacer()
+            
+            ProfileViewTile(title: "\(dataService.numberOfEntries)", subtitle: "entries", backgroundColor: .appGreen)
+            
+            ProfileViewTile(title: "\(dataService.numberOfCompletedObjectives)", subtitle: "completed objectives", backgroundColor: .appBlue)
+            
+            Spacer()
+        }
+        .frame(maxHeight: 130)
+    }
+}
 
 struct ProfileView: View {
     @EnvironmentObject var dataService: DataService
@@ -24,24 +66,10 @@ struct ProfileView: View {
             VStack{
                 
                 List{
-                    HStack {
-                        Spacer()
-                        VStack(){
-                            Text("\(dataService.numberOfEntries)")
-                                .font(.title)
-                            Text("entries")
-                        }
-                        .foregroundStyle(.white)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8.0)
-                                .fill(.appGreen)
-                                .frame(width: 80, height: 80)
-                        )
-                        .padding(.top, 3)
-                        .padding(.bottom, 3)
-                        Spacer()
-                    }
-                    .modifier(ListRowBackgroundModifer(foregroundColor: .clear))
+                    
+                    topTileView()
+                        .modifier(ListRowBackgroundModifer(foregroundColor: .clear))
+                    
                     
                     Section{
                         HStack{
@@ -108,5 +136,9 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView(user: User.MOCK_USERS[0])
-        .environmentObject(DataService())
+        .environmentObject(DataService.shared)
+        .onAppear{
+            DataService.shared.numberOfEntries = 1500
+            DataService.shared.numberOfCompletedObjectives = 10
+        }
 }
