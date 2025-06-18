@@ -17,16 +17,21 @@ struct LogItemView: View {
     }
     
     var body: some View {
-        Section{
+        VStack(spacing: 0){
             HStack {
                 Image(systemName: context.iconName)
                 //                    .opacity(0.8)
                 Text("\(context.name)")
                     .fontWeight(.bold)
                 //                    .opacity(0.8)
+                Spacer()
             }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
             .foregroundStyle(context.color.isLight() ? .black : .white)
-            .modifier(ListRowBackgroundModifer(foregroundColor: context.color.opacity(0.85)))
+            .frame(maxWidth: .infinity)
+            .background(context.color)
+//            .modifier(ListRowBackgroundModifer(foregroundColor: context.color.opacity(0.85)))
             
             VStack {
                 ForEach(contextLogContainer.moodContainers, id: \.moodName) {log in
@@ -46,18 +51,21 @@ struct LogItemView: View {
                                     .frame(maxWidth: .infinity)
                                     .padding(7)
                                     .background(Color(log.moodName).opacity(0.5))
-                                //                                    .foregroundStyle(Color(log.moodName).opacity(0.5).isLight() ? .black : .white)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
                         .padding(.leading, 5)
                     }
+                    .padding(.horizontal, 14)
                     .padding(.vertical, 7)
                 }
-                
             }
-            .modifier(ListRowBackgroundModifer())
+            .padding(.vertical, 7)
+            .background(Color.appPurple.opacity(0.15))
+            
+//            .modifier(ListRowBackgroundModifer())
         }
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
@@ -68,14 +76,19 @@ struct LogDetailView: View {
     
     var body: some View {
         
-        List{
+        ScrollView {
+            
             ForEach(post.contextLogContainers, id: \.contextId) { container in
                 LogItemView(contextLogContainer: container)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 8)
             }
+            
+            TabBarSpaceReservation()
             
         }
         .scrollContentBackground(.hidden)
-        .navigationTitle("\(ShortDate().string(from: post.timestamp))")
+        .navigationTitle("\(ShortDate().string(from: post.timestamp, includeTime: true))")
         .navigationBarTitleDisplayMode(.inline)
         .withToolbarDeleteButton(deleteMessage: "this action will permenantly erase this log. this action cannot be undone.") {
             Task {
@@ -97,4 +110,10 @@ struct LogDetailView: View {
     NavigationStack{
         LogDetailView(post: UnsecureMoodPost.MOCK_DATA[1])
     }
+}
+
+
+#Preview {
+    LogItemView(contextLogContainer: UnsecureMoodPost.MOCK_DATA[1].contextLogContainers[0])
+        .padding(.horizontal, 24)
 }

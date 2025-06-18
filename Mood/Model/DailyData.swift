@@ -54,6 +54,68 @@ class DailyData: Codable, Hashable{
 
 extension DailyData {
     static var TZO = TimeZone.current.secondsFromGMT(for: Date())
+    
+    static func randomData(count: Int) -> [DailyData]{
+        var data: [DailyData] = []
+        
+        // create the number of DailyData needed and add them to data
+        for i in 0...count {
+            var logContainers: [ContextLogContainer] = []
+            
+            // random number of ContextLogContainer to be added to logContainers
+            let contextLogCount = Int.random(in: 1...UnsecureContext.defaultContexts.count-1)
+            
+            // list all available indexes of the context ids
+            var availableContextIdx: [Int] = []
+            for int in 0...UnsecureContext.defaultContexts.count-1 {
+                availableContextIdx.append(int)
+            }
+            
+            // create the number of ContextLogContainers needed and add them to logContainers
+            for _ in 0...contextLogCount {
+                let randomContextIdx = availableContextIdx.randomElement()!
+                availableContextIdx.removeAll{ $0 == randomContextIdx }
+                
+                let cid = UnsecureContext.defaultContexts[randomContextIdx].id
+                
+                var moodLogContainers: [MoodLogContainer] = []
+                
+                // random number of MoodLogContainers to be added to moodLogContainers
+                let moodLogCount = Int.random(in: 1...Mood.allMoodNames.count-1)
+                
+                var availableMoods = Mood.allMoods
+                
+                
+                for _ in 0...moodLogCount {
+                    
+                    let randomMood = Mood.allMoods.randomElement()!
+                    availableMoods.removeAll { $0.name == randomMood.name}
+                    
+                    let emotions: [String] = [randomMood.emotions.randomElement()!.name]
+                    let weight: Weight = Weight.allCases.randomElement()!
+                    
+                    moodLogContainers.append( MoodLogContainer(emotions: emotions, weight: weight) )
+                    
+                }
+                
+                
+                let newLogContainer = ContextLogContainer(contextId: cid, moodLogContainers: moodLogContainers)
+                
+                logContainers.append(newLogContainer)
+            }
+            
+            let newData = DailyData(
+                date: Calendar.current.date(byAdding: .day, value: -i, to: Date())!, timeZoneOffset: TZO,
+                contextLogContainers: logContainers
+            )
+            
+            data.append(newData)
+        }
+        
+        
+        return data
+    }
+    
     static var MOCK_DATA : [DailyData] = [
         .init(date: Date(), timeZoneOffset: TZO,
               contextLogContainers: [

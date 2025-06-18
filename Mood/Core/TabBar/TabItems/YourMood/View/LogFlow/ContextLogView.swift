@@ -264,136 +264,185 @@ struct SlidableView<Content: View>: View {
 
 
 struct ContextLogView: View {
-    @Environment(\.dismiss) var dismissSheet
     @EnvironmentObject var viewModel: UploadMoodViewModel
     @StateObject var formManager: MoodFormManager = MoodFormManager()
-    var context: UnsecureContext
+    @Binding var context: UnsecureContext?
+    private var copyContext: UnsecureContext {
+        if let c = context {
+            return c
+        } else {
+            return UnsecureContext(name: "nil", iconName: "exclamationmark.triangle.fill", colorHex: "#0F0F0")
+        }
+    }
+    
+    @State var navBarVisibility: Visibility = .visible
     
     @State var contextEmotionPairs: [ContextLogContainer] = []
     
     private var animation: Animation = .easeInOut(duration: 0.25)
     
-    init(context: UnsecureContext) {
-        self.context = context
+    init(context c: Binding<UnsecureContext?>) {
+        self._context = c
     }
     
+    private func dismiss() {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            self.context = nil
+        }
+    }
+    
+//    init(context c: UnsecureContext? = nil) {
+//        self.context = c
+//        
+//        if let cont = c {
+//            self.copyContext = cont
+//        } else {
+//            self.copyContext = UnsecureContext(name: "nil", iconName: "warning", colorHex: "#0f0f00")
+//        }
+//    }
+    
     var body: some View {
-        VStack {
-            HStack(spacing:0){
-                Text("how do you feel about \(Text(context.name).bold()) ")
-                Image(systemName: context.iconName)
-                .bold()
-                .padding(0)
-            }
-            .foregroundStyle(context.color.isLight() ? .black : .white)
-            .padding(.bottom, 10)
-            .frame(maxWidth: .infinity)
-            .background(context.color)
-            
-            ScrollView{
-                
-                ForEach($formManager.formViewModels) { $form in
-                    SlidableView( isDeleteable: formManager.formViewModels.count > 1,
-                                  isDisclosed: $form.isDisclosed,
-                                  content:
-                                    CollapsableView(
-                                        isDisclosed: $form.isDisclosed,
-                                        thumbnail: ThumbnailView{ TitleWindowView(formViewModel: form) },
-                                        expanded: ExpandedView{ MoodFormView(formManager: formManager, formViewModel: form) }
-                                    )
-                                        .padding(.horizontal, 20)
-                                        .padding(.vertical, 5)
-                    ) {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            formManager.deleteFormViewModel(removing: form)
-                        }
-                    }
-                    
-                }
-            }
-            .frame(minHeight: 200, maxHeight: .infinity)
-            
+        ZStack {
+            Color.white.ignoresSafeArea()
             
             VStack {
-                if formManager.formViewModels.count < Mood.allMoods.count{
-                    Button{
-                        withAnimation (.spring(response: 0.8)){
-                            if formManager.formViewModels.count < Mood.allMoods.count {
-                                for form in formManager.formViewModels {
-                                    form.isDisclosed = false
-                                }
-                                formManager.addFormViewModel()
+                HStack(spacing:0){
+                    Text("how do you feel about \(Text(copyContext.name).bold()) ")
+                    Image(systemName: copyContext.iconName)
+                        .bold()
+                        .padding(0)
+                }
+                .foregroundStyle(copyContext.color.isLight() ? .black : .white)
+                .padding(.bottom, 10)
+                .frame(maxWidth: .infinity)
+                .background(copyContext.color)
+                
+                ScrollView{
+                    
+                    ForEach($formManager.formViewModels) { $form in
+                        SlidableView( isDeleteable: formManager.formViewModels.count > 1,
+                                      isDisclosed: $form.isDisclosed,
+                                      content:
+                                        CollapsableView(
+                                            isDisclosed: $form.isDisclosed,
+                                            thumbnail: ThumbnailView{ TitleWindowView(formViewModel: form) },
+                                            expanded: ExpandedView{ MoodFormView(formManager: formManager, formViewModel: form) }
+                                        )
+                                            .padding(.horizontal, 20)
+                                            .padding(.vertical, 5)
+                        ) {
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                formManager.deleteFormViewModel(removing: form)
                             }
                         }
-                    } label: {
-                        HStack{
-                            Image(systemName: "plus")
-                                .foregroundStyle(.appGreen)
-                            Text("add another mood")
-                        }
-                        .font(.headline)
-                        .frame(minWidth: 200, maxWidth: .infinity)
-                        .frame(height: 44)
-                        .foregroundStyle(.appBlack)
-                        .opacity(formManager.allSubmittable ? 1 : 0.5)
-                        .background(formManager.allSubmittable ? .appGreen.opacity(0.2) : .gray.opacity(0.15))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .disabled(!formManager.allSubmittable)
-                }
-                
-                Spacer()
-                
-                HStack {
-                    Button{
-                        formManager.resetFormViewModels()
-                        dismissSheet()
                         
-                    } label: {
-                        HStack{
-                            Image(systemName: "xmark")
-                                .foregroundStyle(.appRed)
-                            Text("cancel")
+                    }
+                }
+                .frame(minHeight: 200, maxHeight: .infinity)
+                
+                
+                VStack {
+                    if formManager.formViewModels.count < Mood.allMoods.count{
+                        Button{
+                            withAnimation (.spring(response: 0.8)){
+                                if formManager.formViewModels.count < Mood.allMoods.count {
+                                    for form in formManager.formViewModels {
+                                        form.isDisclosed = false
+                                    }
+                                    formManager.addFormViewModel()
+                                }
+                            }
+                        } label: {
+                            HStack{
+                                Image(systemName: "plus")
+                                    .foregroundStyle(.appGreen)
+                                Text("add another mood")
+                            }
+                            .font(.headline)
+                            .frame(minWidth: 200, maxWidth: .infinity)
+                            .frame(height: 44)
+                            .foregroundStyle(.appBlack)
+                            .opacity(formManager.allSubmittable ? 1 : 0.5)
+                            .background(formManager.allSubmittable ? .appGreen.opacity(0.2) : .gray.opacity(0.15))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
-                        .font(.headline)
-                        .foregroundStyle(.appBlack)
-                        .frame(width: 150, height: 44)
-                        .background(.appRed.opacity(0.15))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .disabled(!formManager.allSubmittable)
                     }
                     
                     Spacer()
                     
-                    Button{
-                        //                    print("isSubmittable: \(isSubmittable.description), arry isEmpty: \(!viewModel.formViewModels.isEmpty), weight is selected: \( (viewModel.formViewModels.first?.selectedEmotions.isEmpty) )")
-                        if formManager.allSubmittable {
-                            viewModel.createContextLogContainersFromFormViewModels(contextID: context.id, moodFormManager: formManager)
-                            dismissSheet()
+                    HStack {
+                        Button{
+                            formManager.resetFormViewModels()
+                            self.dismiss()
+                            
+                        } label: {
+                            HStack{
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.appRed)
+                                Text("cancel")
+                            }
+                            .font(.headline)
+                            .foregroundStyle(.appBlack)
+                            .frame(width: 150, height: 44)
+                            .background(.appRed.opacity(0.15))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                         
-                    } label: {
-                        HStack{
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.appPurple)
-                            Text("save")
+                        Spacer()
+                        
+                        Button{
+                            //                    print("isSubmittable: \(isSubmittable.description), arry isEmpty: \(!viewModel.formViewModels.isEmpty), weight is selected: \( (viewModel.formViewModels.first?.selectedEmotions.isEmpty) )")
+                            if formManager.allSubmittable {
+                                viewModel.createContextLogContainersFromFormViewModels(contextID: copyContext.id, moodFormManager: formManager)
+                                self.dismiss()
+                            }
+                            
+                        } label: {
+                            HStack{
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.appPurple)
+                                Text("save")
+                            }
+                            .font(.headline)
+                            .foregroundStyle(.appBlack)
+                            .frame(width: 150, height: 44)
+                            .opacity(formManager.allSubmittable ? 1 : 0.5)
+                            .background(formManager.allSubmittable ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
-                        .font(.headline)
-                        .foregroundStyle(.appBlack)
-                        .frame(width: 150, height: 44)
-                        .opacity(formManager.allSubmittable ? 1 : 0.5)
-                        .background(formManager.allSubmittable ? .appPurple.opacity(0.15) : .gray.opacity(0.15))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .disabled(!formManager.allSubmittable)
                     }
-                    .disabled(!formManager.allSubmittable)
                 }
+                .padding(.horizontal, 35)
+                .frame(height: 110)
             }
-            .padding(.horizontal, 35)
-            .frame(height: 110)
+        }
+        .withTabBarVisibilityController()
+        .zIndex(100)
+        .transition(
+            .move(edge: .bottom)
+        )
+        .toolbarVisibility(navBarVisibility, for: .navigationBar)
+        .animation(.easeInOut(duration: 1), value: self.navBarVisibility)
+        .onAppear {
+            Task {
+                try await Task.sleep(nanoseconds: 190_000_000)
+                navBarVisibility = .hidden
+            }
+        }
+        .onDisappear {
+            Task {
+                try await Task.sleep(nanoseconds: 190_000_000)
+                navBarVisibility = .visible
+            }
         }
     }
 }
 
 #Preview {
-    ContextLogView(context: UnsecureContext.defaultContexts[4])
+    @Previewable @State var context: UnsecureContext? = UnsecureContext.defaultContexts[4]
+    
+    ContextLogView(context: $context)
         .environmentObject(UploadMoodViewModel())
 }

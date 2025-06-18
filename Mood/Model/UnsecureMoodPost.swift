@@ -123,27 +123,20 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
 }
 
 extension UnsecureMoodPost {
-    static var MOCK_DATA : [UnsecureMoodPost] = [
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[0]
-             ),
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[1]
-             ),
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[2]
-             ),
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[3]
-             ),
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[4]
-             ),
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[5]
-             ),
-        .init(id: NSUUID().uuidString,
-              data: DailyData.MOCK_DATA[6]
-             )
-    ]
+    static var MOCK_DATA : [UnsecureMoodPost] {
+        var posts: [UnsecureMoodPost] = []
+        let numberOfPosts: Int = 100
+        
+        let randomDailyData = DailyData.randomData(count: numberOfPosts)
+        
+        for day in randomDailyData {
+            let post = UnsecureMoodPost(id: NSUUID().uuidString,
+                  data: day
+            )
+            
+            posts.append(post)
+        }
+        
+        return posts
+    }
 }

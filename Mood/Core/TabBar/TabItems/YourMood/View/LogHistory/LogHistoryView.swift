@@ -79,21 +79,39 @@ struct LogDayView: View {
 }
 
 struct LogHistoryView: View {
-    @EnvironmentObject var dataService: DataService
+    @ObservedObject var dataService: DataService = DataService.shared
     
     var body: some View {
         
-        ScrollView{
-            if let moodPosts = dataService.recentMoodPosts {
-                ForEach(moodPosts, id: \.id){ post in
-                    
-                    LogDayView(post: post)
-                        .padding(.bottom, 10)
-                    
+        ScrollView {
+            LazyVStack {
+                if let moodPosts = dataService.loadedMoodPosts {
+                    ForEach(moodPosts, id: \.id){ post in
+                        
+                        LogDayView(post: post)
+                            .padding(.bottom, 10)
+                            .onAppear{
+                                if post.id == moodPosts.last?.id {
+                                    Task {
+                                        try await dataService.fetchNextMoodPosts()
+                                    }
+                                }
+                            }
+                            .scrollTransition { content, phase in
+                                // phase.value will be -1 for views in the top leading phase, 1 for views in the bottom trailing phase, and 0 for all other views.
+                                // we can use this in a ternary operator so that only the bottom element will have the effect
+                                content
+                                    .opacity(phase.value > 0 ? (phase.isIdentity ? 1 : 0.77) : 1)
+                                    .scaleEffect(phase.value > 0 ? (phase.isIdentity ? 1 : 0.95) : 1)
+                                    .blur(radius: phase.value > 0 ? (phase.isIdentity ? 0 : 0.5) : 0)
+                            }
+                            
+                    }
                 }
+                TabBarSpaceReservation()
             }
-            TabBarSpaceReservation()
         }
+        
         .scrollContentBackground(.hidden)
         .navigationTitle("log history")
     }
@@ -110,7 +128,7 @@ struct LogHistoryView: View {
     }
     .onAppear{
         dataService.loadedContexts = UnsecureContext.defaultContexts
-        dataService.recentMoodPosts = UnsecureMoodPost.MOCK_DATA
+        dataService.loadedMoodPosts = UnsecureMoodPost.MOCK_DATA
     }
     
 }

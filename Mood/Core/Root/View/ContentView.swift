@@ -16,6 +16,7 @@ struct ContentView: View {
     @StateObject var authService: AuthService = AuthService.shared
     @State var appStatus: AppStateCase = .startup
     @State var appEnteredBackgroundTime: Date = Date.now
+    @State var isShowingPrivacyScreen: Bool = false
     
     private func testMassUpload(){
         Task {
@@ -47,12 +48,39 @@ struct ContentView: View {
                 } else if let currentUser = viewModel.currentUser {
                     ZStack {
                         MainTabBar(user: currentUser)
+                        
                         if !authService.isUnlocked {
                             ValidatePinView()
                                 .zIndex(.infinity)
                                 .onChange(of: authService.isUnlocked) { old, new in
                                     print("old: \(old), new: \(new)")
                                 }
+                        }
+                        
+                        if isShowingPrivacyScreen {
+                            ZStack {
+                                ZStack{
+                                    Color.splashScreen
+                                    
+                                    HStack{
+                                        Image("MoodSymbol")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 170)
+                                            .symbolRenderingMode(.multicolor)
+                                    }
+                                }
+                                .ignoresSafeArea()
+                                
+                                VStack {
+                                    Spacer()
+                                    Text("made by humans")
+                                        .foregroundStyle(.appPurple)
+                                        .font(.system(size: 17, weight: .bold))
+                                }
+                            }
+                            .zIndex(1000)
+                            .transition(.opacity)
                         }
                     }
                 }
@@ -66,6 +94,15 @@ struct ContentView: View {
             if new == .inactive && old == .background {
                 if Date().timeIntervalSince(appEnteredBackgroundTime) > 600 {
                     dataService.refreshServiceData()
+                }
+            }
+            if new == .inactive && old == .active {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    self.isShowingPrivacyScreen = true
+                }
+            } else if new == .active && old == .inactive {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    self.isShowingPrivacyScreen = false
                 }
             }
         }
