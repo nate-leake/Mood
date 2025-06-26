@@ -68,7 +68,7 @@ struct MoodFormView: View {
                                 )
                                 .foregroundStyle(
                                     formViewModel.weight == .none ?
-                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    (formViewModel.selectedMood?.getColor())!.optimalForegroundColor() :
                                         (.appBlack)
                                 )
                                 .animation(animation, value: formViewModel.weight)
@@ -88,7 +88,7 @@ struct MoodFormView: View {
                                 )
                                 .foregroundStyle(
                                     formViewModel.weight == .slight ?
-                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    (formViewModel.selectedMood?.getColor())!.optimalForegroundColor() :
                                         (.appBlack)
                                 )
                                 .animation(animation, value: formViewModel.weight)
@@ -108,7 +108,7 @@ struct MoodFormView: View {
                                 )
                                 .foregroundStyle(
                                     formViewModel.weight == .moderate ?
-                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
+                                    (formViewModel.selectedMood?.getColor())!.optimalForegroundColor() :
                                         (.appBlack)
                                 )
                                 .animation(animation, value: formViewModel.weight)
@@ -126,8 +126,8 @@ struct MoodFormView: View {
                                 )
                                 .foregroundStyle(
                                     formViewModel.weight == .extreme ?
-                                    ((formViewModel.selectedMood?.getColor().isLight())! ? Color.black : Color.white) :
-                                        (.appBlack)
+                                     (formViewModel.selectedMood?.getColor())!.optimalForegroundColor() :
+                                            .appBlack
                                 )
                                 .animation(animation, value: formViewModel.weight)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
@@ -293,7 +293,7 @@ struct ContextLogView: View {
     
 //    init(context c: UnsecureContext? = nil) {
 //        self.context = c
-//        
+//
 //        if let cont = c {
 //            self.copyContext = cont
 //        } else {
@@ -303,7 +303,7 @@ struct ContextLogView: View {
     
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color.appWhite.ignoresSafeArea()
             
             VStack {
                 HStack(spacing:0){
