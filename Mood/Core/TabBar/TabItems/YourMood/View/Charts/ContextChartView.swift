@@ -20,16 +20,22 @@ struct ContextChartView: View {
     @State var chartSelection: String?
     
     var body: some View {
-        ScrollView {
-            HStack {
-                Text("\(Image(systemName: context.iconName)) \(context.name)")
+        VStack {
+            ZStack() {
+                Color(context.color).ignoresSafeArea()
+                VStack {
+                    
+                    Text("\(Image(systemName: context.iconName)) \(context.name)")
+                        .font(.title2)
+                        .padding(.bottom, 7)
+                    
+                }
             }
             .foregroundStyle(context.color.optimalForegroundColor())
-            .padding()
-            .background(context.color)
-            .clipShape(Capsule())
+            .frame(height: 30)
             
             SegmentedTimePickerView()
+                .padding(.top, 3)
                 .padding(.horizontal, 24)
             
             Text("using ^[\(dataPoints.count) data point](inflect: true) sourced from ^[\(moodPostSourceCount) log](inflect: true)")
@@ -45,25 +51,24 @@ struct ContextChartView: View {
                 .padding(.horizontal, 24)
                 .padding(.vertical, 10)
             
-            
-            
+            Spacer()
         }
         .onChange(of: chartsViewingDaysBack, initial: true) {
             dataPoints = []
             moodPostSourceCount = 0
             chartSelection = nil
-//            print("there are \(context.associatedPostIDs.count) post ids for this context")
+            //            print("there are \(context.associatedPostIDs.count) post ids for this context")
             
             for associatedPostId in context.associatedPostIDs {
                 
-//                let posts = chartService.moodPostsAfterPickerSelection(viewingDaysBack: chartsViewingDaysBack)
-                let posts = dataService.loadedMoodPosts!
-#warning("posts are currently configured for previews only")
+                let posts = chartService.moodPostsAfterPickerSelection(viewingDaysBack: chartsViewingDaysBack)
+                //                let posts = dataService.loadedMoodPosts!
+                //#warning("posts are currently configured for previews only")
                 
                 if let post = posts.first(where: { $0.id == associatedPostId }) {
                     moodPostSourceCount += 1
                     let contextLogContainers = post.contextLogContainers
-//                    print("\(post.id) on \(post.timestamp.shortDate())")
+                    //                    print("\(post.id) on \(post.timestamp.shortDate())")
                     
                     // at least one clc should contain the correct context id
                     for clc in contextLogContainers {
@@ -71,7 +76,7 @@ struct ContextChartView: View {
                             for mlc in clc.moodContainers {
                                 dataPoints.append(MoodData(date: post.timestamp, contextId: context.id, moodType: mlc.moodName, intensity: mlc.weight.rawValue))
                             }
-//                            print("post \(post.id) contains context id with date \(post.timestamp.shortDate())")
+                            //                            print("post \(post.id) contains context id with date \(post.timestamp.shortDate())")
                             
                         }
                     }
@@ -83,7 +88,7 @@ struct ContextChartView: View {
             
             pieChartData = ChartService.shared.generatePieChartData(moodData: dataPoints)
             lineChartData = ChartService.shared.generateLineChartData(moodData: dataPoints)
-//            print("there are \(dataPoints.count) data points")
+            //            print("there are \(dataPoints.count) data points")
         }
     }
     
@@ -103,5 +108,5 @@ struct ContextChartView: View {
                 dataService.previewSetup()
             }
     }
-
+    
 }
