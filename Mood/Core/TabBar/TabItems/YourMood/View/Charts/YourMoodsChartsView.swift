@@ -7,50 +7,22 @@
 
 import SwiftUI
 
-class MoodPostTracker: ObservableObject {
-    @Published var moodPosts: [UnsecureMoodPost] = [UnsecureMoodPost]()
-    @Published var loadingSuccess: Bool = false
-    @Published var isLoading: Bool = true
-    
-    @MainActor
-    func getRelevantPosts() async {
-        isLoading = true
-        self.moodPosts = []
-        do {
-            let cutoffDate = Calendar.current.date(byAdding: .day, value: -90, to: Date())!
-            let posts = try await DataService.shared.fetchRecentMoodPosts(after: cutoffDate)
-            print("getting posts from after date \(cutoffDate)")
-            withAnimation { self.moodPosts = posts }
-            withAnimation { self.loadingSuccess = true }
-            print("mood posts loaded: \(self.moodPosts.count)")
-        } catch {
-            loadingSuccess = false
-        }
-        withAnimation { isLoading = false }
-    }
-}
-
 struct YourMoodsChartsView: View {
-    @StateObject private var moodPostTracker: MoodPostTracker = MoodPostTracker()
+    @StateObject private var chartService: ChartService = ChartService.shared
+    @StateObject private var moodPostTracker: ChartMoodPostTracker = ChartMoodPostTracker.shared
     
     @State private var viewingDaysBack: Int = 14
     
     var body: some View {
         VStack {
-            Picker("days back", selection: $viewingDaysBack) {
-                Text("90 days").tag(90)
-                Text("30 days").tag(30)
-                Text("2 weeks").tag(14)
-                Text("1 week").tag(7)
-            }
-            .pickerStyle(.segmented)
+            SegmentedTimePickerView()
             .padding(.horizontal, 24)
                         
             ScrollView {
                 VStack(alignment: .leading){
                     
                     if moodPostTracker.loadingSuccess{
-                        MoodLineChartBreakdownView(viewingDaysBack: viewingDaysBack)
+                        MoodLineChartBreakdownView()
                             .environmentObject(moodPostTracker)
                             .padding(.horizontal)
                             .padding(.top, 15)
@@ -76,11 +48,6 @@ struct YourMoodsChartsView: View {
                 .transition(.opacity.combined(with: .blurReplace))
                 
                 TabBarSpaceReservation()
-            }
-            .onAppear {
-                Task {
-                    await moodPostTracker.getRelevantPosts()
-                }
             }
         }
     }

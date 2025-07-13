@@ -70,10 +70,10 @@ struct MoodLineChart: View {
 }
 
 struct MoodLineChartBreakdownView: View {
-    @EnvironmentObject var moodPostTracker: MoodPostTracker
+    @EnvironmentObject var moodPostTracker: ChartMoodPostTracker
+    @AppStorage("chartsViewingDaysBackSelection") private var chartsViewingDaysBack: Int = 14
     //    let viewingDataType: ViewingDataType
     var height: CGFloat = 250
-    var viewingDaysBack: Int
     
     @State var operationalData : [MoodData] = []
     @State var YAxisRangeMax: Int = 10
@@ -91,7 +91,7 @@ struct MoodLineChartBreakdownView: View {
                     MoodLineChart(
                         moodName: moodName,
                         operationalData: operationalData,
-                        numberOfDaysVisible: viewingDaysBack,
+                        numberOfDaysVisible: chartsViewingDaysBack,
                         YAxisRangeMax: YAxisRangeMax
                     )
 
@@ -134,15 +134,13 @@ struct MoodLineChartBreakdownView: View {
 }
 
 #Preview {
-    @Previewable @StateObject var postTracker = MoodPostTracker()
+    @Previewable @StateObject var postTracker = ChartMoodPostTracker()
     
     @Previewable @State var viewingDaysBack: Int = 14
     @Previewable @State var opData = AnalyticsGenerator().aggregateMoodIntensityByDate(moodPosts: UnsecureMoodPost.MOCK_DATA)
     @Previewable @State var YAxisRangeMax = 10
     
-    MoodLineChartBreakdownView(
-        viewingDaysBack: 14
-    )
+    MoodLineChartBreakdownView()
     .environmentObject(postTracker)
     .onAppear {
         postTracker.moodPosts = UnsecureMoodPost.MOCK_DATA
