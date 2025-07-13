@@ -32,7 +32,7 @@ extension MoodData {
         .init(date: Date.now, contextId: "3594A955-4CC1-4F18-9143-6902ACB8187E", moodType: "anger", intensity: 3),
         .init(date: Date.now, contextId: "D9DCDC1D-8E57-4937-8877-DD7BA364BC72", moodType: "neutrality", intensity: 0),
         .init(date: Date.now, contextId: "4854C8B2-B7B8-43B4-8A3C-276B3D334206", moodType: "sadness", intensity: 1),
-        .init(date: Date.now, contextId: "FE0FF895-DEE0-4226-B4A9-4CA74B663DA7", moodType: "happy", intensity: 1)
+        .init(date: Date.now, contextId: "FE0FF895-DEE0-4226-B4A9-4CA74B663DA7", moodType: "happiness", intensity: 1)
     ]
 }
 
@@ -123,9 +123,9 @@ struct UnsecureMoodPost: Identifiable, Hashable, Codable {
 }
 
 extension UnsecureMoodPost {
-    static var MOCK_DATA : [UnsecureMoodPost] {
+    static func MOCK_DATA(numberOfDays: Int = 90) -> [UnsecureMoodPost]{
         var posts: [UnsecureMoodPost] = []
-        let numberOfPosts: Int = 100
+        let numberOfPosts: Int = numberOfDays
         
         let randomDailyData = DailyData.randomData(count: numberOfPosts)
         
@@ -138,5 +138,9 @@ extension UnsecureMoodPost {
         }
         
         return posts
+    }
+    
+    static var MOCK_DATA : [UnsecureMoodPost] {
+        return MOCK_DATA(numberOfDays: 90)
     }
 }
