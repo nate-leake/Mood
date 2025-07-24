@@ -10,7 +10,7 @@ import Charts
 
 struct MoodLineChart: View {
     var moodName: String
-    var operationalData: [MoodData]
+    var chartData: [LineChartData]
     var numberOfDaysVisible: Int
     var YAxisRangeMax: Int = 10
     var height: CGFloat = 250
@@ -39,49 +39,32 @@ struct MoodLineChart: View {
     
     var body: some View {
         
-        Chart(operationalData) { moodData in
-            if moodData.moodType == moodName {
-                LineMark(
-                    x: .value("date", moodData.date, unit: viewingUnits),
-                    y: .value("intensity", moodData.intensity)
-                )
-                .foregroundStyle(Color(moodName))
-                .interpolationMethod(.monotone)
-            }
-        }
-        .frame(height: height-80)
-//        .chartXVisibleDomain(length: 86400 * numberOfDaysVisible)
-        .chartYScale(domain: [0, YAxisRangeMax])
-        .chartXScale(
-            domain: [
-                Calendar.current.date(byAdding: .day, value: -numberOfDaysVisible, to: Date())!,
-                Calendar.current.date(byAdding: .day, value: addingDaysAhead, to: Date())!
-            ]
-        ) // Fixed X-axis range for past 7 days
-//        .chartXAxis {
-//            AxisMarks(values: .stride(by: .day)) { value in
-//                AxisValueLabel(format: .dateTime, centered: true) // Display the weekday on the X-axis
-//                AxisTick(centered: true)
-//                AxisGridLine(centered: true)
-//            }
-//        }
-        
+        SingleSeriesLineChart<Date, Int>(chartData: chartData)
+            .frame(height: height-80)
+            .chartYScale(domain: [0, YAxisRangeMax])
+            .chartXScale(
+                domain: [
+                    Calendar.current.date(byAdding: .day, value: -numberOfDaysVisible, to: Date())!,
+                    Calendar.current.date(byAdding: .day, value: addingDaysAhead, to: Date())!
+                ]
+            )
     }
 }
 
 struct MoodLineChartBreakdownView: View {
-    @EnvironmentObject var moodPostTracker: MoodPostTracker
+    @EnvironmentObject var moodPostTracker: ChartMoodPostTracker
+    @AppStorage("chartsViewingDaysBackSelection") private var chartsViewingDaysBack: Int = 14
     //    let viewingDataType: ViewingDataType
     var height: CGFloat = 250
-    var viewingDaysBack: Int
     
-    @State var operationalData : [MoodData] = []
+    @State var operationalData : [LineChartData] = []
     @State var YAxisRangeMax: Int = 10
     
     var body: some View {
 
         ScrollView {
             ForEach(Mood.allMoodNames, id:\.self) { moodName in
+                let subChartData = operationalData.filter{ $0.category == moodName }
                 VStack(alignment: .leading){
                     Text("\(moodName)")
                         .fontWeight(.bold)
@@ -90,33 +73,10 @@ struct MoodLineChartBreakdownView: View {
 
                     MoodLineChart(
                         moodName: moodName,
-                        operationalData: operationalData,
-                        numberOfDaysVisible: viewingDaysBack,
+                        chartData: subChartData,
+                        numberOfDaysVisible: chartsViewingDaysBack,
                         YAxisRangeMax: YAxisRangeMax
                     )
-
-                    //                    Chart {
-//                        ForEach(operationalData) { data in
-//                            if data.moodType == moodName {
-//                                LineMark(
-//                                    x: .value("date", data.date, unit: .day),
-//                                    y: .value("intensity", data.intensity)
-//                                )
-//                                .foregroundStyle(Color(moodName))
-//                                .interpolationMethod(.monotone)
-//                            }
-//                        }
-//                    }
-//                    .frame(height: height-80)
-//                    .chartYScale(domain: [0, YAxisRangeMax])
-//                    .chartXScale(domain: .automatic) // Fixed X-axis range for past 7 days
-//                    .chartXAxis {
-//                        AxisMarks(values: .stride(by: .day)) { value in
-//                            AxisValueLabel(format: .dateTime, centered: true) // Display the weekday on the X-axis
-//                            AxisTick(centered: true)
-//                            AxisGridLine(centered: true)
-//                        }
-//                    }
                 }
                 .padding()
             }
@@ -125,8 +85,10 @@ struct MoodLineChartBreakdownView: View {
         .onChange(of: moodPostTracker.moodPosts, initial: true) { old, new in
             withAnimation(.smooth(duration: 0.3)) {
                 operationalData = []
-                operationalData = AnalyticsGenerator().aggregateMoodIntensityByDate(moodPosts: new)
-                YAxisRangeMax = operationalData.map{$0.intensity}.max() ?? 8
+                let moodData = AnalyticsGenerator().aggregateMoodIntensityByDate(moodPosts: new)
+                
+                operationalData = ChartService.shared.generateLineChartData(moodData: moodData)
+                YAxisRangeMax = operationalData.map{$0.value}.max() ?? 8
                 YAxisRangeMax += 2
             }
         }
@@ -134,45 +96,19 @@ struct MoodLineChartBreakdownView: View {
 }
 
 #Preview {
-    @Previewable @StateObject var postTracker = MoodPostTracker()
+    @Previewable @StateObject var postTracker = ChartMoodPostTracker()
     
     @Previewable @State var viewingDaysBack: Int = 14
     @Previewable @State var opData = AnalyticsGenerator().aggregateMoodIntensityByDate(moodPosts: UnsecureMoodPost.MOCK_DATA)
     @Previewable @State var YAxisRangeMax = 10
     
-    MoodLineChartBreakdownView(
-        viewingDaysBack: 14
-    )
+    MoodLineChartBreakdownView()
     .environmentObject(postTracker)
     .onAppear {
-        postTracker.moodPosts = UnsecureMoodPost.MOCK_DATA
+        Task {
+            try await Task.sleep(nanoseconds: 1_000_000)
+            postTracker.moodPosts = UnsecureMoodPost.MOCK_DATA
+        }
     }
 }
 
-//#Preview {
-//    @Previewable @State var viewingDaysBack: Int = 14
-//    @Previewable @State var opData = AnalyticsGenerator().aggregateMoodIntensityByDate(moodPosts: UnsecureMoodPost.MOCK_DATA)
-//    @Previewable @State var YAxisRangeMax = 10
-//    
-//    VStack {
-//        Picker("days back", selection: $viewingDaysBack) {
-//            Text("90 days").tag(90)
-//            Text("30 days").tag(30)
-//            Text("2 weeks").tag(14)
-//            Text("1 week").tag(7)
-//        }
-//        .pickerStyle(.segmented)
-//        .padding(.horizontal, 24)
-//        
-//        MoodLineChart(
-//            moodName: "happiness",
-//            operationalData: opData,
-//            numberOfDaysVisible: viewingDaysBack,
-//            YAxisRangeMax: YAxisRangeMax
-//        )
-//        .onAppear{
-//            YAxisRangeMax = opData.map{$0.intensity}.max() ?? 8
-//            YAxisRangeMax += 2
-//        }
-//    }
-//}

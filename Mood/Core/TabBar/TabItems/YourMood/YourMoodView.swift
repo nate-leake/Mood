@@ -57,13 +57,13 @@ struct YourChartsNavLink: View {
             
     var body: some View {
         NavigationLink{
-            YourMoodsChartsView()
+            ChartSelectorView()
         } label: {
             
             HStack(alignment: .top) {
                 
                 VStack(alignment: .leading) {
-                    Text("recent moods")
+                    Text("charts")
                         .fontWeight(.bold)
                         .foregroundStyle(.appBlack.opacity(0.5))
                         .font(.title3)

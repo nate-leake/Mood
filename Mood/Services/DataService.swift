@@ -134,6 +134,34 @@ class DataService : ObservableObject, Stateable {
         self.loadedMoments = []
     }
     
+    func previewSetup(numberOfDays: Int = 90) {
+        self.loadedMoodPosts = UnsecureMoodPost.MOCK_DATA(numberOfDays: numberOfDays)
+        self.loadedContexts = UnsecureContext.defaultContexts
+        self.loadedObjectives = UnsecureObjective.MOCK_DATA
+        self.loadedMoments = UnsecureNotableMoment.MOCK_DATA
+        
+        // add post ids to context.associatedPostIDs
+        if let posts = self.loadedMoodPosts {
+            for context in loadedContexts {
+                for post in posts {
+                    for container in post.contextLogContainers {
+                        if container.contextId == context.id {
+                            context.associatedPostIDs.append(post.id)
+    //                                print("\npost id: \(post.id)")
+    //                                print("\(container.contextName) \(container.contextId) \(ShortDate().string(from:post.timestamp)) matches \(dataService.loadedContexts[0].id)")
+    //                                let mlcs = container.moodContainers
+    //
+    //                                for mlc in mlcs {
+    //                                    print("\t\(mlc.moodName)")
+    //                                }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
     /// Uploads any encodable object to the defined document. Sensitive data should be encrypted before calling this function.
     /// - Parameters:
     ///   - document: The Firebase DocumentReference
