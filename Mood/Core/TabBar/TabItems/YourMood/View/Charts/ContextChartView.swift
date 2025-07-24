@@ -46,7 +46,7 @@ struct ContextChartView: View {
                 .frame(height: 170)
                 .padding(.vertical, 10)
             
-            MultiSeriseLineChart(chartData: lineChartData, selectedSeries: chartSelection)
+            MultiSeriesLineChart(chartData: lineChartData, selectedSeries: chartSelection)
                 .frame(height: 200)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 10)

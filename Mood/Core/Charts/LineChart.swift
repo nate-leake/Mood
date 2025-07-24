@@ -8,7 +8,64 @@
 import SwiftUI
 import Charts
 
-struct MultiSeriseLineChart: View {
+struct ChartScaleModifier<X: Plottable & Comparable, Y: Plottable & Comparable>: ViewModifier {
+    var xDomain: ClosedRange<X>?
+    var yDomain: ClosedRange<Y>?
+
+    func body(content: Content) -> some View {
+        var modified = AnyView(content)
+
+        if let x = xDomain {
+            modified = AnyView(modified.chartXScale(domain: x))
+        }
+
+        if let y = yDomain {
+            modified = AnyView(modified.chartYScale(domain: y))
+        }
+
+        return modified
+    }
+}
+
+struct SingleSeriesLineChart<X: Plottable & Comparable, Y: Plottable & Comparable>: View {
+    var chartData: [LineChartData]
+    var xDomain: ClosedRange<X>? = nil
+    var yDomain: ClosedRange<Y>? = nil
+    
+    private func lineMark(item: LineChartData) -> some ChartContent {
+        let lineWidth: CGFloat = 2
+        let frameSize: CGFloat = 10
+        let color = item.color
+        
+        let mark: some ChartContent = LineMark(
+            x: .value("date", item.date),
+            y: .value("intensity", item.value)
+        )
+        .foregroundStyle(color)
+        .interpolationMethod(.catmullRom)
+        .lineStyle(.init(lineWidth: lineWidth))
+        .symbol {
+            Circle()
+                .fill(color)
+                .frame(width: frameSize, height: frameSize)
+        }
+        
+        return mark
+        
+    }
+    
+    var body: some View {
+        Chart {
+            ForEach(chartData, id: \.category) { item in
+                lineMark(item: item)
+            }
+        }
+        .modifier(ChartScaleModifier(xDomain: xDomain, yDomain: yDomain))
+        
+    }
+}
+
+struct MultiSeriesLineChart: View {
     var chartData: [LineChartData]
     var selectedSeries: String?
     var legendVisibility: Visibility = .hidden
@@ -73,7 +130,7 @@ struct MultiSeriseLineChart: View {
     }
 }
 
-#Preview {
+#Preview("multi series") {
     @Previewable @StateObject var dataService: DataService = DataService.shared
     @Previewable @StateObject var analyticsGenerator: AnalyticsGenerator = AnalyticsGenerator.shared
     @Previewable @StateObject var chartService: ChartService = ChartService.shared
@@ -81,7 +138,7 @@ struct MultiSeriseLineChart: View {
     @Previewable @State var chartData: [LineChartData] = []
     @Previewable @State var selectedSeries = "fearful"
 
-    MultiSeriseLineChart(chartData: chartData, selectedSeries: selectedSeries)
+    MultiSeriesLineChart(chartData: chartData, selectedSeries: selectedSeries)
         .frame(height: 300)
         .onAppear{
             dataService.previewSetup(numberOfDays: 10)
@@ -89,4 +146,23 @@ struct MultiSeriseLineChart: View {
             chartData = ChartService.shared.generateLineChartData(moodData: moodData)
         }
     
+}
+
+#Preview("single series") {
+    @Previewable @StateObject var dataService: DataService = DataService.shared
+    @Previewable @StateObject var analyticsGenerator: AnalyticsGenerator = AnalyticsGenerator.shared
+    @Previewable @StateObject var chartService: ChartService = ChartService.shared
+
+    @Previewable @State var chartData: [LineChartData] = []
+    
+    SingleSeriesLineChart<Date, Int>(chartData: chartData, xDomain:
+        Calendar.current.date(byAdding: .day, value: -14, to: Date())!...Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+    )
+        .frame(height: 300)
+        .onAppear{
+            dataService.previewSetup(numberOfDays: 10)
+            let moodData = analyticsGenerator.aggregateMoodIntensityByDate(moodPosts:  dataService.loadedMoodPosts ?? [])
+                .filter {$0.moodType == "happiness"}
+            chartData = ChartService.shared.generateLineChartData(moodData: moodData)
+        }
 }
