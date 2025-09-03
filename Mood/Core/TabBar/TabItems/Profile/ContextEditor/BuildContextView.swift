@@ -27,9 +27,8 @@ struct ContextPreviewTile: View {
                 .padding(.bottom)
                 .multilineTextAlignment(.leading)
         }
-        .foregroundStyle(color.isLight() ? .black : .white)
         .frame(width: frameSize, height: frameSize)
-        .background(color)
+        .backgroundWithContrastingForeground(color)
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }

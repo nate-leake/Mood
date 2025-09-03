@@ -47,17 +47,17 @@ struct MoodLoggedView: View {
                 }
             }
             .font(.title)
-            .foregroundStyle(getGreatestEmotionColor().darkModeVariant().mix(with: getGreatestEmotionColor().lightModeVariant(), by: 0.5).isLight() ? .black : .white)
+            .foregroundStyle(getGreatestEmotionColor().darkModeVariant().mix(with: getGreatestEmotionColor().lightModeVariant(), by: 0.5).optimalForegroundColor())
             .opacity(0.7)
             .bold()
             
             Divider()
                 .frame(width: 150)
-                .background(getGreatestEmotionColor().darkModeVariant().mix(with: getGreatestEmotionColor().lightModeVariant(), by: 0.5).isLight() ? .black : .white)
+                .background(getGreatestEmotionColor().darkModeVariant().mix(with: getGreatestEmotionColor().lightModeVariant(), by: 0.5).optimalForegroundColor())
                 .offset(y: 20)
             
             Text("thank you for sharing")
-                .foregroundStyle(getGreatestEmotionColor().darkModeVariant().mix(with: getGreatestEmotionColor().lightModeVariant(), by: 0.5).isLight() ? .black : .white)
+                .foregroundStyle(getGreatestEmotionColor().darkModeVariant().mix(with: getGreatestEmotionColor().lightModeVariant(), by: 0.5).optimalForegroundColor())
                 .opacity(appear ? 0.7 : 0)
                 .offset(y: appear ? 35 : 20)
                 .blur(radius: appear ? 0 : 5)

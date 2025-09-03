@@ -61,9 +61,9 @@ struct ObjectiveTileView: View {
                 .fill(color)
             
             Text(label)
-                .foregroundStyle(color.isLight() ? .black : .white)
                 .multilineTextAlignment(.center)
                 .bold()
+                .backgroundWithContrastingForeground(color)
                 .padding()
             
             VStack {
