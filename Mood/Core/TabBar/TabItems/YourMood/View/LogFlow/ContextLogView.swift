@@ -422,26 +422,30 @@ struct ContextLogView: View {
         .transition(
             .move(edge: .bottom)
         )
-        .toolbarVisibility(navBarVisibility, for: .navigationBar)
-        .animation(.easeInOut(duration: 1), value: self.navBarVisibility)
-        .onAppear {
-            Task {
-                try await Task.sleep(nanoseconds: 190_000_000)
-                navBarVisibility = .hidden
-            }
-        }
-        .onDisappear {
-            Task {
-                try await Task.sleep(nanoseconds: 190_000_000)
-                navBarVisibility = .visible
-            }
-        }
+        .navigationTitle("")
+        .toolbar(.hidden, for: .navigationBar)
+//        .toolbarVisibility(.hidden, for: .navigationBar)
+//        .animation(.easeInOut(duration: 1), value: self.navBarVisibility)
+//        .onAppear {
+//            Task {
+//                try await Task.sleep(nanoseconds: 190_000_000)
+//                navBarVisibility = .hidden
+//            }
+//        }
+//        .onDisappear {
+//            Task {
+//                try await Task.sleep(nanoseconds: 190_000_000)
+//                navBarVisibility = .visible
+//            }
+//        }
     }
 }
 
 #Preview {
     @Previewable @State var context: UnsecureContext? = UnsecureContext.defaultContexts[4]
     
-    ContextLogView(context: $context)
-        .environmentObject(UploadMoodViewModel())
+    NavigationStack {
+        ContextLogView(context: $context)
+            .environmentObject(UploadMoodViewModel())
+    }
 }

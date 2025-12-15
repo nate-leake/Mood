@@ -21,8 +21,8 @@ struct ToolbarDeleteButton: View {
             HStack {
                 Image(systemName: "trash")
                     .font(.headline)
-                    .tint(.appRed)
             }
+            .foregroundStyle(.appRed)
         }
         .alert(deleteMessage, isPresented: $isShowingDeleteConfirmation) {
             Button("cancel", role: .cancel) {}
@@ -62,5 +62,20 @@ extension View{
 #Preview {
     ToolbarDeleteButton(deleteMessage: "this will delete if you continue") {
         print("DELETE ITEM!")
+    }
+}
+
+#Preview("Delete in nav bar") {
+    NavigationStack {
+        VStack {
+            Text("delete something!")
+        }
+        .navigationTitle("deleting preview")
+        .navigationBarTitleDisplayMode(.inline)
+        .withToolbarDeleteButton(deleteMessage: "this action will permenantly erase this context from all entries. if you wish to keep this data but no longer see the context, please hide the context instead. this action cannot be undone.") {
+            Task {
+                
+            }
+        }
     }
 }
