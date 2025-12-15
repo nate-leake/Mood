@@ -100,8 +100,8 @@ class DataService : ObservableObject, Stateable {
                     try await fetchObjectives()
                     try await fetchMoments()
                     try await getLoggedToday()
-                    try await fetchMoodPosts(after: daysBack) // fetch last 14 days of posts
                     try await getNumberOfEntries()
+                    try await fetchMoodPosts(after: daysBack) // fetch last 14 days of posts
                     getNumberCompletedObjectives()
                     if self.userHasLoggedToday { self.updateAG() }
                     if loadedMoodPosts != nil {
@@ -814,6 +814,12 @@ class DataService : ObservableObject, Stateable {
     @MainActor
     private func fetchMoodPosts(after: Date) async throws {
         self.loadedMoodPosts = try await fetchRecentMoodPosts(after: after)
+        
+        // if the user has not logged at all since the afterDate, load the last 14 posts regardless of date.
+        // this will add something into log history to kick off loading history.
+        if (self.loadedMoodPosts?.isEmpty ?? true) && self.numberOfEntries > 0 {
+            try await self.fetchMoodPosts(limit: 14)
+        }
     }
     
     @MainActor
