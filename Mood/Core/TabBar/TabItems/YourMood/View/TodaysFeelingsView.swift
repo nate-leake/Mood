@@ -56,7 +56,7 @@ struct TodaysFeelingsChart: View {
                         .font(.caption)
                         .foregroundStyle(
                             moodContainer.weight.rawValue == 0 ? .appBlack :
-                                Mood.getMood(from: moodContainer.moodName)?.getColor().isLight() ?? true ? .black : .white
+                                Color(moodContainer.moodName).optimalForegroundColor()
                         )
                 }
             }

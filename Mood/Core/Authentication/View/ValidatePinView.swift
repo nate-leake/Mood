@@ -105,7 +105,7 @@ struct ValidatePinView: View {
                     
                     Text("or")
                         .font(.body)
-                        .foregroundStyle(Color.appPurple.isLight() ? .black : .white)
+                        .foregroundStyle(Color.appPurple.optimalForegroundColor())
                     
                     Button {
                         bioAuth()

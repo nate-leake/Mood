@@ -93,7 +93,7 @@ struct CompleteSignUpView: View, Hashable {
                     } label: {
                         var buttonText: String {
                             if viewModel.isSigningUpFromSignIn {
-                                return "continue signn in"
+                                return "continue signing in"
                             } else {
                                 return "complete sign up"
                             }

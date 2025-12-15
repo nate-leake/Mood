@@ -14,6 +14,7 @@
 		AF0451832DD8008300DBEECC /* TabBarItemsPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0451822DD8008300DBEECC /* TabBarItemsPreferenceKey.swift */; };
 		AF0628B62DA1FD6C0092071B /* UnsecureObjective.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */; };
 		AF0628B82DA205240092071B /* ObjectivesBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0628B72DA205240092071B /* ObjectivesBuilderView.swift */; };
+		AF06AB662E47A9960004AD44 /* AutoContrast.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06AB652E47A9960004AD44 /* AutoContrast.swift */; };
 		AF1283B22AB67AC70086AD5B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */; };
 		AF16D7622CC5F931002BF1DC /* ContextSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF16D7612CC5F931002BF1DC /* ContextSelectorView.swift */; };
 		AF16D7682CC60494002BF1DC /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = AF16D7672CC60494002BF1DC /* SymbolPicker */; };
@@ -102,6 +103,7 @@
 		AFC4D8682DD54ACC00758411 /* TabBarVisibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */; };
 		AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */; };
 		AFCD61E62AE73485002F873C /* TodaysFeelingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */; };
+		AFCF5A3F2E32F391002A566F /* PreparationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCF5A3E2E32F391002A566F /* PreparationView.swift */; };
 		AFD755DA2DC0345A007616D3 /* NotableMomentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */; };
 		AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */; };
 		AFDF21462DCAE89B0085DF77 /* ToolbarDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */; };
@@ -135,6 +137,7 @@
 		AF0451822DD8008300DBEECC /* TabBarItemsPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemsPreferenceKey.swift; sourceTree = "<group>"; };
 		AF0628B52DA1FD6C0092071B /* UnsecureObjective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsecureObjective.swift; sourceTree = "<group>"; };
 		AF0628B72DA205240092071B /* ObjectivesBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectivesBuilderView.swift; sourceTree = "<group>"; };
+		AF06AB652E47A9960004AD44 /* AutoContrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoContrast.swift; sourceTree = "<group>"; };
 		AF1283B12AB67AC70086AD5B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		AF16D7612CC5F931002BF1DC /* ContextSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextSelectorView.swift; sourceTree = "<group>"; };
 		AF1BEC062AB0EFFB0092FB0D /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
@@ -220,6 +223,7 @@
 		AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVisibilityController.swift; sourceTree = "<group>"; };
 		AFC9206C2AB3EB5700CAF441 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		AFCD61E52AE73485002F873C /* TodaysFeelingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysFeelingsView.swift; sourceTree = "<group>"; };
+		AFCF5A3E2E32F391002A566F /* PreparationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparationView.swift; sourceTree = "<group>"; };
 		AFD755D92DC0345A007616D3 /* NotableMomentTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableMomentTileView.swift; sourceTree = "<group>"; };
 		AFDC464E2CBDAD8200AD5782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AFDC4C432AB6649900B22C6C /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -307,6 +311,7 @@
 				AF841F9A2D220D050009709D /* CollapsableView.swift */,
 				AFDF21452DCAE89B0085DF77 /* ToolbarDeleteButton.swift */,
 				AFC4D8672DD54ACC00758411 /* TabBarVisibilityController.swift */,
+				AF06AB652E47A9960004AD44 /* AutoContrast.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 		AF6BFA3F2AAFCDBC005B4DDA /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AFCF5A3D2E32F372002A566F /* UserPerparation */,
 				AF04517A2DD7FFD900DBEECC /* TabBar */,
 				AF6E1EFD2E21F33E000D1E9F /* Charts */,
 				AF2A89802AB0CAFF00D05234 /* Components */,
@@ -575,6 +581,14 @@
 				AFB868772E1ABDC4004BBE79 /* SegmentedTimePickerView.swift */,
 			);
 			path = Charts;
+			sourceTree = "<group>";
+		};
+		AFCF5A3D2E32F372002A566F /* UserPerparation */ = {
+			isa = PBXGroup;
+			children = (
+				AFCF5A3E2E32F391002A566F /* PreparationView.swift */,
+			);
+			path = UserPerparation;
 			sourceTree = "<group>";
 		};
 		AFDC4C412AB662A500B22C6C /* View */ = {
@@ -837,6 +851,7 @@
 				AF3DF9E62AC619A7003453F1 /* ListRowBackgroundModifer.swift in Sources */,
 				AFB868762E1ABA7E004BBE79 /* DoubleExtension.swift in Sources */,
 				AF529DA62DBD8F6300C94C10 /* NotableMomentsView.swift in Sources */,
+				AFCF5A3F2E32F391002A566F /* PreparationView.swift in Sources */,
 				AFA7AF5D2C88EABF002E911B /* MoodLineChartBreakdownView.swift in Sources */,
 				AFC28D2E2D44786B002D2A53 /* LogHistoryView.swift in Sources */,
 				AF2C388A2E1993BB00AB6E6A /* DateExtension.swift in Sources */,
@@ -847,6 +862,7 @@
 				AF2AB8842AB3C6E6006B81AB /* WelcomeView.swift in Sources */,
 				AFC9206D2AB3EB5700CAF441 /* ColorExtension.swift in Sources */,
 				AFAADDF82ADF32D20065E9CE /* DataService.swift in Sources */,
+				AF06AB662E47A9960004AD44 /* AutoContrast.swift in Sources */,
 				AFE59E822C768BD1002285E8 /* NotificationService.swift in Sources */,
 				AF38A7D02DD903E80005DF94 /* AddContextView.swift in Sources */,
 				AFDC4C442AB6649900B22C6C /* RegistrationViewModel.swift in Sources */,
@@ -1033,7 +1049,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1073,7 +1089,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Mood/Mood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_ASSET_PATHS = "\"Mood/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

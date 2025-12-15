@@ -22,7 +22,7 @@ struct MoodTagView: View {
                             .padding(.all, 7)
                             .font(.body)
                             .background(selectedMood == tag ? tag.getColor() : .appBlack.opacity(0.15))
-                            .foregroundColor(selectedMood == tag ? (tag.getColor().isLight() ? .black : .white) : foregroundColorNotSelected)
+                            .foregroundColor(selectedMood == tag ? (tag.getColor().optimalForegroundColor()) : foregroundColorNotSelected)
                             .animation(.easeInOut(duration: 0.25), value: selectedMood == tag)
                             .clipShape(
                                 RoundedRectangle(cornerRadius: 50)

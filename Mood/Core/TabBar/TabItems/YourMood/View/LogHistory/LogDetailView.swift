@@ -28,10 +28,8 @@ struct LogItemView: View {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 10)
-            .foregroundStyle(context.color.isLight() ? .black : .white)
             .frame(maxWidth: .infinity)
-            .background(context.color)
-//            .modifier(ListRowBackgroundModifer(foregroundColor: context.color.opacity(0.85)))
+            .backgroundWithContrastingForeground(context.color)
             
             VStack {
                 ForEach(contextLogContainer.moodContainers, id: \.moodName) {log in
@@ -39,8 +37,7 @@ struct LogItemView: View {
                         Text("\(log.moodName)")
                             .frame(width:100)
                             .padding(7)
-                            .background(Color(log.moodName))
-                            .foregroundStyle(Color(log.moodName).isLight() ? .black : .white)
+                            .backgroundWithContrastingForeground(Color(log.moodName))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         
                         Spacer()

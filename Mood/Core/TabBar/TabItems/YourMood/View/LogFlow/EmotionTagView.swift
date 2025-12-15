@@ -29,7 +29,7 @@ struct EmotionTagView: View {
                         .padding(.all, 7)
                         .font(.body)
                         .background(getIsSelected(tag: tag) ? mood.getColor() : .appBlack.opacity(0.15))
-                        .foregroundColor(getIsSelected(tag: tag) ? (mood.getColor().isLight() ? .black : .white) : foregroundColorNotSelected)
+                        .foregroundColor(getIsSelected(tag: tag) ? (mood.getColor().optimalForegroundColor()) : foregroundColorNotSelected)
                         .cornerRadius(50)
                         .animation(.spring(duration: 0.8), value: getIsSelected(tag: tag))
                         .onTapGesture {

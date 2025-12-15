@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("lockAppOnBackground") var lockAppOnBackground: Bool = true
+    @AppStorage("isMoodFirstTimeLaunch") var isFirstLaunch: Bool = true
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = ContentViewModel()
     @StateObject var registrationViewModel = RegistrationViewModel()
@@ -48,6 +49,9 @@ struct ContentView: View {
                 } else if let currentUser = viewModel.currentUser {
                     ZStack {
                         MainTabBar(user: currentUser)
+//                            .onAppear{
+//                                isFirstLaunch = true
+//                            }
                         
                         if !authService.isUnlocked {
                             ValidatePinView()
@@ -55,6 +59,10 @@ struct ContentView: View {
                                 .onChange(of: authService.isUnlocked) { old, new in
                                     print("old: \(old), new: \(new)")
                                 }
+                        }
+                        
+                        if isFirstLaunch {
+                            PreparationView()
                         }
                         
                         if isShowingPrivacyScreen {

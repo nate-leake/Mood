@@ -49,6 +49,34 @@ extension Color {
         }
     }
     
+    func isLight() -> Bool {
+        @Environment(\.colorScheme) var colorScheme
+        
+        let uiColor = UIColor(self.resolved(for: colorScheme))
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+                
+        // Get the RGBA components of the color
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+                
+        // Calculate brightness using the formula for perceived luminance
+        let brightness = (red * 299 + green * 587 + blue * 114) / 1000
+                        
+        // Return true if brightness is greater than 0.5 (light color)
+        return brightness > 0.5
+    }
+    
+    /// Resolves system colors into actual light/dark variants
+    func resolved(for scheme: ColorScheme) -> Color {
+        let baseUIColor = UIColor(self)
+        let traits = UITraitCollection(userInterfaceStyle: scheme == .dark ? .dark : .light)
+        let resolvedColor = baseUIColor.resolvedColor(with: traits)
+        
+        return Color(resolvedColor)
+    }
+    
     /// Initialize the Color with a hex value
     /// - Parameter hex: The hex value as a string of the desired color
     init(hex: String) {
@@ -86,23 +114,6 @@ extension Color {
             blue:  Double(b) / 255,
             opacity: Double(a) / 255
         )
-    }
-    
-    func isLight() -> Bool {
-        let uiColor = UIColor(self)
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-                
-        // Get the RGBA components of the color
-        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-                
-        // Calculate brightness using the formula for perceived luminance
-        let brightness = (red * 299 + green * 587 + blue * 114) / 1000
-                        
-        // Return true if brightness is greater than 0.5 (light color)
-        return brightness > 0.5
     }
     
     func toHex() -> String? {

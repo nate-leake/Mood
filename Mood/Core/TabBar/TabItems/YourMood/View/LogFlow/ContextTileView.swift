@@ -30,9 +30,8 @@ struct ContextTile: View {
                 Spacer()
             }
         }
-        .foregroundStyle(context.color.isLight() ? .black : .white)
         .frame(width: frameSize, height: frameSize)
-        .background(context.color)
+        .backgroundWithContrastingForeground(context.color)
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
