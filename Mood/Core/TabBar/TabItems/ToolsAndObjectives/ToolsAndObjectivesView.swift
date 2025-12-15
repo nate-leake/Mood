@@ -66,11 +66,10 @@ struct ToolsAndObjectivesView: View {
                             .font(.footnote)
                             .bold()
                             .frame(width: 30, height: 30)
-                            .background(.white)
+                            .backgroundWithContrastingForeground(.indigo)
                             .clipShape(Circle())
                         
                         Text("external resources")
-                            .foregroundStyle(.white)
                             .bold()
                             .padding(7)
                         
@@ -78,11 +77,38 @@ struct ToolsAndObjectivesView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
-                    .background(.appPurple)
+                    .backgroundWithContrastingForeground(.appPurple)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.horizontal, 24)
                 }
                 
+                HStack {
+                    NavigationLink {
+                        Text("articles here")
+                    } label: {
+                        VStack() {
+                            Spacer()
+                            
+                            Image(systemName: "book.pages")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                            
+                            Spacer()
+                            
+                            Text("articles")
+                                .bold()
+                                .padding(.bottom, 10)
+                        }
+                        .frame(maxWidth: 150)
+                        .frame(maxHeight: 150)
+                        .backgroundWithContrastingForeground(.appGreen)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.horizontal, 24)
+                    }
+                    Spacer()
+                    
+                }
                 Spacer()
             }
             .padding(.top, 35)
